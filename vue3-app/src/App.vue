@@ -8,4 +8,8 @@
 
 <style lang="less"> 
 @import url('@/css/reset.css');
+#app {
+  margin: 0;
+  padding: 0;
+}
 </style>
