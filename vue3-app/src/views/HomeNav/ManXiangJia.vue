@@ -1,6 +1,6 @@
 <template>
     <div>
-        ManXiangJia
+        <input type="text">
     </div>
 </template>
 
