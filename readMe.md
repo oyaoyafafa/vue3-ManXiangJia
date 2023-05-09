@@ -1,4 +1,4 @@
-wsc test1
+wsc test2
 ##路由复用嵌套 view
 ```
     HomeNav
