@@ -4,20 +4,36 @@
         <router-view></router-view>
     </div>
     <nav>
-      <router-link to="/">漫想家</router-link>
-      <router-link to="/community">社区</router-link>
-      <router-link to="/pointShopping">积分商城</router-link>
-      <router-link to="/shoppingCart">购物袋</router-link>
-      <router-link to="/about">我的</router-link>
+      <router-link to="/">
+        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_shop_unselect.png" alt="" />
+        <p>漫想家</p>
+      </router-link>
+      <router-link to="community">
+        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+        <p>社区</p>
+      </router-link>
+      <router-link to="pointShopping">
+        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_score_store_unselect.png" alt="" />
+        <p>积分商城</p>
+      </router-link>
+      <router-link to="shoppingCart">
+        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_social_unselect.png" alt="" />
+        <p>购物袋</p>
+      </router-link>
+      <router-link to="about">
+        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+        <p>我的</p>
+      </router-link>
     </nav>
   </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { reactive } from 'vue'
+const isClick = reactive(false)
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .box {
   // background-color: pink;
   height: 100vh;
@@ -30,11 +46,19 @@ export default {};
     display: flex;
     justify-content: space-around;
     align-items: center;
-    height: 70rem;
+    height: 60rem;
     background-color: #ffffff;
     a {
       color: #cfcfd4;
       font-weight: bold;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        display: block;
+        width: 20rem;
+        height: 20rem;
+      }
       &.router-link-exact-active {
         color: #404040;
       }
