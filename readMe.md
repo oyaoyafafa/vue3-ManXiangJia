@@ -1,4 +1,4 @@
-wsc test2
+wsc test3
 ##路由复用嵌套 view
 ```
     HomeNav
@@ -86,3 +86,4 @@ wsc test2
                 订单详情
             我的修复
 ```
+
