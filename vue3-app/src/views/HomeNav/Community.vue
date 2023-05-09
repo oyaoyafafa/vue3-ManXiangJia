@@ -7,7 +7,7 @@
       <router-link to="/community/information">情报</router-link>
     </nav>
     <div>
-      <router-view></router-view>
+      <router-view />
     </div>
   </div>
 </template>

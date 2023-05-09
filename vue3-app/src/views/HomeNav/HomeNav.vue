@@ -1,9 +1,7 @@
 <template>
   <div class="box">
     <div>
-      <keep-alive>
         <router-view></router-view>
-      </keep-alive>
     </div>
     <nav>
       <router-link to="/">

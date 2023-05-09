@@ -1,5 +1,9 @@
-<script setup lang="js">
+<script setup >
+  import {informationListApi} from '../../api/community'
 
+  informationListApi().then( res =>{
+    console.log(res);
+  })
 </script>
 
 <template>
