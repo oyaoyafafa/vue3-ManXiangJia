@@ -2,6 +2,7 @@
   <div>
     <header>
       <h1>我的漫想家</h1>
+      <p>222</p>
     </header>
   </div>
 </template>
