@@ -8,19 +8,19 @@
         <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_shop_unselect.png" alt="" />
         <p>漫想家</p>
       </router-link>
-      <router-link to="community">
+      <router-link to="/community">
         <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
         <p>社区</p>
       </router-link>
-      <router-link to="pointShopping">
+      <router-link to="/pointShopping">
         <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_score_store_unselect.png" alt="" />
         <p>积分商城</p>
       </router-link>
-      <router-link to="shoppingCart">
+      <router-link to="/shoppingCart">
         <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_social_unselect.png" alt="" />
         <p>购物袋</p>
       </router-link>
-      <router-link to="about">
+      <router-link to="/about">
         <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
         <p>我的</p>
       </router-link>
