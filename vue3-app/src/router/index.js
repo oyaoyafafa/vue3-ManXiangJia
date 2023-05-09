@@ -1,5 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+import Follow from '@/views/Community/Follow.vue'
+import Club from '@/views/Community/Club.vue'
+import Information from '@/views/Community/Information.vue'
+import Recommend from '@/views/Community/Recommend.vue'
+
+
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -16,6 +23,24 @@ const router = createRouter({
           //社区
           path:'community',
           component: () => import('@/views/HomeNav/Community.vue'),
+          children:[
+            {
+              path:'/community/follow',
+              component:Follow
+            },
+            {
+              path:'/community',
+              component:Recommend
+            },
+            {
+              path:'/community/club',
+              component:Club
+            },
+            {
+              path:'/community/information',
+              component:Information
+            },
+          ]
         },
         {
           //积分商城
