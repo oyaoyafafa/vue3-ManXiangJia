@@ -6,7 +6,6 @@ const hotSearchApi = () => axios.get('/api/goodsmanage/app/hotWord/ls', {
         osType: 1
     }
 })
-
 //销量结果/最新
 const searchResApi = () => axios.get('/api/goodsmanage/app/classify/classifygoods/ls', {
     params: {
@@ -17,18 +16,18 @@ const searchResApi = () => axios.get('/api/goodsmanage/app/classify/classifygood
         types: 12, //分类
         brands: 82, //品牌
         attributes: 4, //属性
-        minPrice: 0, //最低价
-        maxPrice: 300.0,//最高价
+        minPrice:0, //最低价
+        maxPrice: 300.0 ,//最高价
         osType: 1,
     }
 })
-
 //筛选列表
 const filterListApi = () => axios.get('/api/goodsmanage/app/classify/screen/index/ls', {
     params: {
         osType: 1
     }
 })
+
 
 
 
