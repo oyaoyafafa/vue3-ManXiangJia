@@ -11,7 +11,7 @@
 export default {}
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 div {
     background-color: #f4f5f5;
     width: 100vw;

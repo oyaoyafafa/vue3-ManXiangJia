@@ -1,15 +1,12 @@
 <template>
-    <div>
-        PointShopping
-    </div>
+  <div>PointShopping</div>
 </template>
 
-<script>
-    export default {
-        
-    }
+<script setup>
+import { pointListApi } from "@/api/pointShopping";
+pointListApi().then(res =>{
+    console.log(res);
+})
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

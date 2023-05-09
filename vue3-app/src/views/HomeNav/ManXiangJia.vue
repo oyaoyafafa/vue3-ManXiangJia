@@ -1,15 +1,14 @@
 <template>
-    <div>
-        <input type="text">
-    </div>
+  <div>
+    <input type="text" />
+  </div>
 </template>
 
-<script>
-    export default {
-        
-    }
+<script setup>
+import { bannerApi } from "@/api/manxiangjia";
+bannerApi().then((res) => {
+  console.log(res);
+});
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="less" scoped></style>
