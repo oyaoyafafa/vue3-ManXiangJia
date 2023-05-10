@@ -27,7 +27,7 @@ const recommendFallApi = () => axios.get('/api/userorg/app/article/randlist', {
 const clubRecommendApi = () => axios.get('/api/userorg/app/tribe/recommend/ls', {
     params: {
         pageNumber: 1,
-        pageSize: 10,
+        pageSize: 6,
         osType: 1
     }
 })
