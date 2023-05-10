@@ -27,8 +27,17 @@ const filterListApi = () => axios.get('/api/goodsmanage/app/classify/screen/inde
         osType: 1
     }
 })
+// 社区搜索列表
+const communitySearchRes = () => axios.get('/api/userorg/app/user/likeuserdetail',{
+    params:{
+        homesickId:"啊啊",//输入的关键词,
+        pageSize:20,
+        pageNumber:1,
+        osType:1
+    }
+})
 
 
 
 
-export { hotSearchApi, searchResApi, filterListApi, }
+export { hotSearchApi, searchResApi, filterListApi, communitySearchRes }

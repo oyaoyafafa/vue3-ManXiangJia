@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [
     vue(),
     Components({
-      resolvers: [VantResolver()]
+      resolvers: [VantResolver()],
     })
   ],
   resolve: {
@@ -26,9 +26,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
         headers: {
           Authorization: '7fa3177f-a9cb-4adc-8512-622554f7a09f',
-          'Content-Type': 'application/json; charset=UTF-8'
-        }
-      }
-    }
-  }
+          "Content-Type": 'application/json; charset=UTF-8'
+        },
+      },
+    },
+  },
+
 })
