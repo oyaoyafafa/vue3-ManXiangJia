@@ -37,8 +37,8 @@ clubListApi().then((res: any) => {
     <div class="all_list">
       <van-index-bar highlight-color="black">
         <!-- firstCode -->
-        <div v-for="(cluballItem,index) in clubAllList">
-          <van-index-anchor :index="cluballItem.firstCode" v-if="show" />
+        <div v-for="(cluballItem ,index) in clubAllList">
+          <van-index-anchor :index="cluballItem.firstCode"  v-show="clubAllList.filter(o => o.firstCode === cluballItem.firstCode).length > 1 ? (clubAllList.findIndex(o => o.firstCode === cluballItem.firstCode) ===index ?  1: 0 ) :  1"/>
           <van-cell>
             <van-image :src="cluballItem.logoImage + '?imageView=1&type=webp&thumbnail=247x0'
               " round width="30rem" height="30rem" />
@@ -85,13 +85,14 @@ clubListApi().then((res: any) => {
     width: 100vw;
     transform: translateX(-10rem);
     line-height: 18rem;
+    z-index: -99;
   }
 
   /deep/.van-cell__value {
     display: flex;
     align-items: center;
     color: black;
-    box-shadow: 0 1rem 0rem 0rem #f4f4f4;
+   
 
 
     .van-image {
@@ -103,7 +104,9 @@ clubListApi().then((res: any) => {
     width: 100vw;
     transform: translateX(-10rem);
   }
-
+/deep/.van-cell{
+  border-bottom: 1rem solid #f4f4f4;
+}
   /deep/.van-index-bar__sidebar {
     background-color: #e6e6e6;
     border-radius: 50rem;
