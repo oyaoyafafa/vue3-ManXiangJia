@@ -1,27 +1,55 @@
 <template>
   <div class="box">
     <div>
-        <router-view></router-view>
+      <router-view v-slot="{ Component }">
+        <keep-alive >
+          <component :is="Component" v-if="$route.meta.keepAlive" />
+        </keep-alive>
+        <component :is="Component" v-if="!$route.meta.keepAlive" />
+      </router-view>
+
+      <!-- <router-view></router-view> -->
     </div>
+
     <nav>
       <router-link to="/">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_shop_unselect.png" alt="" />
+        <img
+          v-if="!isClick"
+          src="../../../public/images/底部导航/ic_tab_shop_unselect.png"
+          alt=""
+        />
         <p>漫想家</p>
       </router-link>
       <router-link to="/community">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+        <img
+          v-if="!isClick"
+          src="../../../public/images/底部导航/ic_tab_mine_unselect.png"
+          alt=""
+        />
         <p>社区</p>
       </router-link>
       <router-link to="/pointShopping">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_score_store_unselect.png" alt="" />
+        <img
+          v-if="!isClick"
+          src="../../../public/images/底部导航/ic_tab_score_store_unselect.png"
+          alt=""
+        />
         <p>积分商城</p>
       </router-link>
       <router-link to="/shoppingCart">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_social_unselect.png" alt="" />
+        <img
+          v-if="!isClick"
+          src="../../../public/images/底部导航/ic_tab_social_unselect.png"
+          alt=""
+        />
         <p>购物袋</p>
       </router-link>
       <router-link to="/about">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+        <img
+          v-if="!isClick"
+          src="../../../public/images/底部导航/ic_tab_mine_unselect.png"
+          alt=""
+        />
         <p>我的</p>
       </router-link>
     </nav>
@@ -29,8 +57,8 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-const isClick = reactive(false)
+import { reactive } from "vue";
+const isClick = reactive(false);
 </script>
 
 <style lang="scss" scoped>
