@@ -40,4 +40,4 @@ const communitySearchRes = () => axios.get('/api/userorg/app/user/likeuserdetail
 
 
 
-export { hotSearchApi, searchResApi, filterListApi,communitySearchRes }
+export { hotSearchApi, searchResApi, filterListApi, communitySearchRes }

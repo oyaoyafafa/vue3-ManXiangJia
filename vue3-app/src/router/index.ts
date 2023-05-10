@@ -23,6 +23,9 @@ const router = createRouter({
           //社区
           path:'community',
           component: () => import('@/views/HomeNav/Community.vue'),
+          meta:{
+            keepAlive: true
+          },
           children:[
             {
               path:'/community/follow',
