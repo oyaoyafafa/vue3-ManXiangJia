@@ -13,11 +13,7 @@ export default defineConfig({
   plugins: [
     vue(),
     Components({
-<<<<<<< HEAD
-      resolvers: [VantResolver()]
-=======
       resolvers: [VantResolver()],
->>>>>>> e819ed6781475d87c0169de7a303d5ba24e92dd8
     })
   ],
   resolve: {
@@ -33,18 +29,10 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api/, ''),
         headers: {
           Authorization: '7fa3177f-a9cb-4adc-8512-622554f7a09f',
-<<<<<<< HEAD
-          'Content-Type': 'application/json; charset=UTF-8'
-        }
-      }
-    }
-  }
-=======
           "Content-Type": 'application/json; charset=UTF-8'
         },
       },
     },
   },
 
->>>>>>> e819ed6781475d87c0169de7a303d5ba24e92dd8
 })
