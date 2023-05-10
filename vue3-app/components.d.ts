@@ -27,6 +27,8 @@ declare module '@vue/runtime-core' {
     VanIndexBar: typeof import('vant/es')['IndexBar']
     VanList: typeof import('vant/es')['List']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
+    VanTab: typeof import('vant/es')['Tab']
+    VanTabs: typeof import('vant/es')['Tabs']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
