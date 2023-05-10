@@ -30,8 +30,8 @@ const active = ref(1);
 
 <style lang="less" scoped>
 .all {
-  padding-bottom: 70px;
   padding: 10rem;
+  padding-bottom: 70px;
 
   .top_nav {
     display: flex;
@@ -41,16 +41,19 @@ const active = ref(1);
     /deep/ .van-tabs {
       margin-bottom: 15rem;
       width: 50%;
-      span{
+
+      span {
         font-size: 14rem;
         color: #808080;
         font-weight: bold;
       }
-      .van-tab--active span{
+
+      .van-tab--active span {
         font-size: 16rem;
         color: black;
         font-weight: bolder;
       }
+
       .van-tabs__nav--line {
         padding-bottom: 15rem;
       }
@@ -69,5 +72,4 @@ const active = ref(1);
       margin-top: -13rem;
     }
   }
-}
-</style>
+}</style>
