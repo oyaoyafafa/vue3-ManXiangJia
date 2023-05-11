@@ -120,7 +120,6 @@ div {
           height: 210rem;
           display: flex;
           flex-direction: column;
-        //   justify-content: flex-end;
           background-color: white;
           margin-bottom: 10rem;
           border-radius: 5rem;

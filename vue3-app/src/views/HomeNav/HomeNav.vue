@@ -39,8 +39,6 @@
 <script setup>
 import { ref } from "vue";
 const isClick = ref(false);
-
-
 </script>
 
 <style lang="scss" scoped>
