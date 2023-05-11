@@ -1,42 +1,46 @@
 <script lang="ts">
-import { recommendFallApi } from "@/api/community";
-import ItemCard from "@/components/Community/ItemCard.vue";
-import { ref } from "vue";
+console.log('recom')
+
+import { recommendFallApi } from '@/api/community'
+import ItemCard from '@/components/Community/ItemCard.vue'
+import { ref } from 'vue'
 
 export default {
   setup() {
-    const list = ref([]);
-    const loading = ref(false);
-    const finished = ref(false);
-    const refreshing = ref(false);
-    
+    const list = ref([])
+    const loading = ref(false)
+    const finished = ref(false)
+    const refreshing = ref(false)
 
     const onLoad = () => {
-      recommendFallApi().then((res:any) => {
+      recommendFallApi().then((res: any) => {
         // console.log(res);
         // fallList.value = ;
         if (refreshing.value) {
-          list.value = [];
-          refreshing.value = false;
+          list.value = []
+          refreshing.value = false
         }
-        list.value = res.data.data.list;
-        loading.value = false;
-        console.log(list);
+        list.value = res.data.data.list
+        loading.value = false
+        console.log(list)
+
 
         if (list.value.length >= 1) {
           finished.value = true;
+
         }
-      });
-    };
+      })
+    }
     const onRefresh = () => {
       // 清空列表数据
-      finished.value = false;
+      finished.value = false
 
       // 重新加载数据
       // 将 loading 设置为 true，表示处于加载状态
-      loading.value = true;
-      onLoad();
-    };
+      loading.value = true
+      onLoad()
+    }
+
 
     return {
       list,
@@ -44,10 +48,10 @@ export default {
       loading,
       finished,
       onRefresh,
-      refreshing,
-    };
-  },
-};
+      refreshing
+    }
+  }
+}
 </script>
 
 <template>
@@ -78,6 +82,4 @@ export default {
   </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

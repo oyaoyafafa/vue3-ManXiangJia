@@ -2,10 +2,10 @@
   <div class="all">
     <div class="top_nav">
       <van-tabs v-model:active="active">
-        <van-tab title="关注 " to="/community/follow" />
-        <van-tab title="推荐 " to="/community" />
-        <van-tab title="部落 " to="/community/club" />
-        <van-tab title="情报 " to="/community/information" />
+        <van-tab title="关注" name="/follow" to="/community/follow" />
+        <van-tab title="推荐" name="/" to="/community" />
+        <van-tab title="部落" name="/club" to="/community/club" />
+        <van-tab title="情报" name="/information" to="/community/information" />
       </van-tabs>
       <van-icon name="search" @click="$router.push('/communitysearch')" />
     </div>
@@ -16,15 +16,39 @@
       <router-link to="/community/information">情报</router-link>
     </nav> -->
 
-    <div style="padding: 0 10rem;">
-      <router-view />
-    </div>
+
+    
+      <router-view v-slot="{ Component }"  style="padding: 0 10rem;">
+        <keep-alive>
+          <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+        </keep-alive>
+        <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
+      </router-view>
+
+
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-const active = ref(1)
+
+
+
+import { reactive, ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+// const activeNameList = reactive(['/follow', '', '/club', '/information'])
+
+
+// 路由切换配合Vant tab标签页切换
+const $route = useRoute()
+const active = ref('/')
+watch(
+  $route,
+  (newroute) => {
+    active.value = newroute.path.replace('/community', '') || '/'
+  },
+  { immediate: true }
+)
+
 </script>
 
 <style lang="less" scoped>
