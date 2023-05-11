@@ -74,46 +74,12 @@
   </div>
 </template>
 
-<<<<<<< HEAD
 <script setup>
 import { bannerApi } from "@/api/manxiangjia";
 bannerApi().then((res) => {
   console.log(res);
 });
 
-=======
-<script setup lang="ts">
-import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/manxiangjia'
-import { ref } from 'vue'
-const banner = ref<Array<any>>([])
-// 大图
-const classify = ref<Array<any>>([])
-// 模玩分类
-const recommend = ref<Array<any>>([])
-// 商品推荐
-const all = ref<Array<any>>([])
-// 全部商品
-bannerApi().then((res: any) => {
-  banner.value = res.data.data
-  console.log(res.data.data)
-})
-// 大图
-moplaySortApi().then((res: any) => {
-  console.log(res.data.data)
-  classify.value = res.data.data
-})
-// 模玩分类
-goodsRecommendApi().then((res: any) => {
-  console.log(res.data.data)
-  recommend.value = res.data.data
-})
-// 商品推荐
-goodsAllApi().then((res: any) => {
-  console.log(res.data.data.list)
-  all.value = res.data.data.list
-})
-// 全部商品
->>>>>>> dev-tg
 </script>
 
 <style lang="less" scoped>

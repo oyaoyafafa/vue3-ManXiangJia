@@ -39,11 +39,6 @@
 <script setup>
 import { ref } from "vue";
 const isClick = ref(false);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> dev-tg
 </script>
 
 <style lang="scss" scoped>
