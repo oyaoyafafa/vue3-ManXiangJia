@@ -3,27 +3,24 @@ import { clubRecommendApi, clubListApi } from "@/api/community";
 import { ref } from "vue";
 const clubRecommendList = ref([])
 const clubAllList = ref([])
+const loading = ref(true)
 
-clubRecommendApi().then((res: any) => {
+Promise.all([clubRecommendApi(),clubListApi()]).then(([res,res1])=>{
+  // console.log( "rec",res,res1);
   clubRecommendList.value = res.data.data.list
-
-})
-clubListApi().then((res: any) => {
-  console.log(res);
-
-  clubAllList.value = res.data.data
-  console.log(clubAllList);
-})
-
-// const code = computed(() => {
- 
-// })
+  clubAllList.value = res1.data.data
+  
+}) .finally(() => {
+  loading.value  = false;
+});
+console.log('club');
 
 </script>
 
 <template>
   <div class="club">
-    <div class="rec_list">
+    <van-loading color="#0094ff" v-show="loading"/>
+    <div class="rec_list" v-show="!loading">
       <p style="font-size: 14rem; color: #2c2c2c;">推荐</p>
       <ul>
         <li v-for="recItem in clubRecommendList">
@@ -34,7 +31,7 @@ clubListApi().then((res: any) => {
         </li>
       </ul>
     </div>
-    <div class="all_list">
+    <div class="all_list" v-show="!loading">
       <van-index-bar highlight-color="black">
         <!-- firstCode -->
         <div v-for="(cluballItem ,index) in clubAllList">

@@ -15,6 +15,8 @@ declare module '@vue/runtime-core' {
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    InfoBanner: typeof import('./src/components/Community/InfoBanner.vue')['default']
+    InfoItem: typeof import('./src/components/Community/InfoItem.vue')['default']
     ItemCard: typeof import('./src/components/Community/ItemCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
