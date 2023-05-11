@@ -6,14 +6,18 @@ import { ref } from 'vue'
 
 export default {
   setup() {
-  
-  
-
-
     const list = ref([])
     const loading = ref(false)
     const finished = ref(false)
     const refreshing = ref(false)
+
+    const fallList = (index1: any) => {
+      console.log(list.value.filter((item, index) => index % 2 == index1))
+
+      return list.value.filter((item, index) => index % 2 == index1)
+
+      // console.log( this.left_list);
+    }
 
     const onLoad = () => {
       followListApi().then((res: any) => {
@@ -29,10 +33,7 @@ export default {
         console.log(list)
 
         if (list.value.length >= 10) {
-
-          finished.value = true;
-
-
+          finished.value = true
         }
       })
     }
@@ -52,7 +53,8 @@ export default {
       loading,
       finished,
       onRefresh,
-      refreshing
+      refreshing,
+      fallList
     }
   }
 }
@@ -67,22 +69,30 @@ export default {
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <div
-          v-masonry
-          item-selector=".item"
-          fit-width="2"
-          horizontal-order="true"
-          column-width=".item"
-          gutter="8"
-        >
-          <!-- column-width="100"
+        <!-- column-width="100"
           gutter="10" -->
-          <lazy-component>
-            <ItemCard v-for="item in list" :item="item" />
-          </lazy-component>
+        <div class="fall_list">
+          <div class="fall_left">
+            <lazy-component>
+              <ItemCard v-for="item in fallList(0)" :item="item" />
+            </lazy-component>
+          </div>
+          <div class="fall_right">
+            <lazy-component>
+              <ItemCard v-for="item in fallList(1)" :item="item" />
+            </lazy-component>
+          </div>
         </div>
       </van-list>
     </van-pull-refresh>
   </div>
 </template>
-<style scoped></style>
+<style lang="scss" scoped>
+.fall_list {
+  display: flex;
+  justify-content: space-between;
+  & > div {
+    width: 49%;
+  }
+}
+</style>

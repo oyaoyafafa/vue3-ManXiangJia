@@ -4,7 +4,7 @@
 /*全局样式*/
 body {
   font-family: "微软雅黑", Arial, Verdana, Helvetica, sans-serif, "宋体";
-  font-size: 12px;
+  font-size: 12rem;
   color: #333;
   -webkit-touch-callout: none !important;
   -webkit-user-select: none;
@@ -62,9 +62,9 @@ a:focus {
 
 .clear {
   clear: both;
-  height: 0px;
+  height: 0rem;
   display: block;
-  line-height: 0px;
+  line-height: 0rem;
   visibility: hidden;
   overflow: hidden;
   zoom: 1;
@@ -95,14 +95,14 @@ h4,
 h5,
 h6 {
   font-weight: normal;
-  font-size: 12px;
+  font-size: 12rem;
 }
 
 textarea,
 input {
   word-wrap: break-word;
   word-break: break-all;
-  padding: 0px;
+  padding: 0rem;
   background: none;
 }
 
@@ -162,41 +162,41 @@ input:focus {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
-/* 12px的字体至28px 如果你是其他单位的如rem等,请自行斟酌修改使用*/
+/* 12rem的字体至28rem 如果你是其他单位的如rem等,请自行斟酌修改使用*/
 .fs12 {
-  font-size: 12px;
+  font-size: 12rem;
 }
 
 .fs14 {
-  font-size: 14px;
+  font-size: 14rem;
 }
 
 .fs16 {
-  font-size: 16px;
+  font-size: 16rem;
 }
 
 .fs18 {
-  font-size: 18px;
+  font-size: 18rem;
 }
 
 .fs20 {
-  font-size: 20px;
+  font-size: 20rem;
 }
 
 .fs22 {
-  font-size: 22px;
+  font-size: 22rem;
 }
 
 .fs24 {
-  font-size: 24px;
+  font-size: 24rem;
 }
 
 .fs26 {
-  font-size: 26px;
+  font-size: 26rem;
 }
 
 .fs28 {
-  font-size: 28px;
+  font-size: 28rem;
 }
 
 .fixed:after {
@@ -239,19 +239,19 @@ html .fixed {
 }
 .scrollbarchange::-webkit-scrollbar {
   /*滚动条整体样式*/
-  width: 5px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 1px;
+  width: 5rem; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 1rem;
   position: absolute;
-  right: 0px;
+  right: 0rem;
 }
 .scrollbarchange::-webkit-scrollbar-thumb {
   /*滚动条里面小方块*/
-  border-radius: 10px;
+  border-radius: 10rem;
   background: #e0e0e0;
 }
 .scrollbarchange::-webkit-scrollbar-track {
   /*滚动条里面轨道*/
-  border-radius: 10px;
+  border-radius: 10rem;
   background: #f2f2f2;
 }
 

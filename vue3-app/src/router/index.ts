@@ -7,6 +7,7 @@ import Recommend from '@/views/Community/Recommend.vue'
 import CommunitySearch from '@/views/Community/Search.vue'
 
 
+
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -108,6 +109,8 @@ const router = createRouter({
     
 
   ]
+
 })
+
 
 export default router

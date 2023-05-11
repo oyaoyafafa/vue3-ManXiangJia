@@ -1,7 +1,12 @@
 <template>
   <div class="all">
     <div class="top_nav">
-      <van-tabs v-model:active="active">
+      <!-- <router-link  to="/community/follow"  >关注</router-link>
+      <router-link  to="/community"   >推荐</router-link>
+      <router-link  to="/community/club"  >部落</router-link>
+      <router-link  to="/community/information"  >情报</router-link> -->
+
+      <van-tabs v-model:active="active" >
         <van-tab title="关注" name="/follow" to="/community/follow" />
         <van-tab title="推荐" name="/" to="/community" />
         <van-tab title="部落" name="/club" to="/community/club" />
@@ -16,27 +21,21 @@
       <router-link to="/community/information">情报</router-link>
     </nav> -->
 
-
-    
-      <router-view v-slot="{ Component }"  style="padding: 0 10rem;">
+    <div class="van-tabs__content van-tabs__content--animated">
+      <router-view v-slot="{ Component }" style="padding: 0 10rem">
         <keep-alive>
           <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
         </keep-alive>
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </router-view>
-
-
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
-
-
 import { reactive, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 // const activeNameList = reactive(['/follow', '', '/club', '/information'])
-
 
 // 路由切换配合Vant tab标签页切换
 const $route = useRoute()
@@ -48,7 +47,6 @@ watch(
   },
   { immediate: true }
 )
-
 </script>
 
 <style lang="less" scoped>
