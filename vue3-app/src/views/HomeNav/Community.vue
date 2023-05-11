@@ -7,7 +7,7 @@
         <van-tab title="部落 " to="/community/club" />
         <van-tab title="情报 " to="/community/information" />
       </van-tabs>
-      <van-icon name="search" />
+      <van-icon name="search" @click="$router.push('/communitysearch')" />
     </div>
     <!-- <nav>
       <router-link to="/community/follow">关注</router-link>
@@ -16,28 +16,30 @@
       <router-link to="/community/information">情报</router-link>
     </nav> -->
 
-
-    <div>
+    <div style="padding: 0 10rem;">
       <router-view />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-const active = ref(1);
+import { ref } from 'vue'
+const active = ref(1)
 </script>
 
 <style lang="less" scoped>
 .all {
-  padding: 10rem;
-  padding-bottom: 70px;
+  padding-bottom: 70rem;
 
   .top_nav {
+    background-color: #fff;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    position: sticky;
+    top: -1rem;
+    z-index: 101;
     /deep/ .van-tabs {
       margin-bottom: 15rem;
       width: 50%;
@@ -72,4 +74,5 @@ const active = ref(1);
       margin-top: -13rem;
     }
   }
-}</style>
+}
+</style>
