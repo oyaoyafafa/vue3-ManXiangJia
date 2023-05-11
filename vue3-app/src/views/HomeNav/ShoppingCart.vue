@@ -45,6 +45,7 @@ import { showToast } from 'vant'
 const loading = ref(false)
 const isAdd = ref(true)
 const commend = ref<Array<any>>([])
+console.log('cart');
 
 const onRefresh = () => {
   setTimeout(() => {
