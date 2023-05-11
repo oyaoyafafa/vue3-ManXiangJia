@@ -1,77 +1,112 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import Follow from '@/views/Community/Follow.vue'
 import Club from '@/views/Community/Club.vue'
 import Information from '@/views/Community/Information.vue'
 import Recommend from '@/views/Community/Recommend.vue'
-
+import CommunitySearch from '@/views/Community/Search.vue'
 
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
   routes: [
     {
+      name: 'HomeNav',
       path: '/',
       component: () => import('@/views/HomeNav/HomeNav.vue'),
-      children:[
+      meta: {
+        keepAlive: true
+      },
+      children: [
         {
           //漫想家
-          path:'',
+          name: 'ManXiangJia',
+          path: '',
           component: () => import('@/views/HomeNav/ManXiangJia.vue'),
+          meta: {
+            keepAlive: true 
+          },
         },
         {
           //社区
-          path:'community',
+          name: 'Community',
+          path: 'community',
           component: () => import('@/views/HomeNav/Community.vue'),
-          meta:{
+          meta: {
             keepAlive: true
           },
-          children:[
+          children: [
             {
-              path:'/community/follow',
-              component:Follow
+              name: 'Follow',
+              path: '/community/follow',
+              component: Follow,
+              meta: {
+                keepAlive: true
+              },
             },
             {
-              path:'/community',
-              component:Recommend
+              name: 'Recommend',
+              path: '/community',
+              component: Recommend,
+              meta: {
+                keepAlive: true
+              },
             },
             {
-              path:'/community/club',
-              component:Club
+              name: 'Club',
+              path: '/community/club',
+              component: Club,
+              meta: {
+                keepAlive: true
+              },
             },
             {
-              path:'/community/information',
-              component:Information
-            },
+              name: 'Information',
+              path: '/community/information',
+              component: Information,
+              meta: {
+                keepAlive: true
+              },
+            }
           ]
         },
         {
           //积分商城
-          path:'pointShopping',
+          name: 'PointShopping',
+          path: 'pointShopping',
           component: () => import('@/views/HomeNav/PointShopping.vue'),
-          meta:{
+          meta: {
             keepAlive: true
-          },
-
-
+          }
         },
         {
           //购物袋
-          path:'shoppingCart',
+          name: 'ShoppingCart',
+
+          path: 'shoppingCart',
           component: () => import('@/views/HomeNav/ShoppingCart.vue'),
-          meta:{
+          meta: {
             keepAlive: true
-          },
+          }
         },
         {
           //我的
-          path:'about',
+          name: 'About',
+          path: 'about',
           component: () => import('@/views/HomeNav/About.vue'),
-        },
-       
+          meta: {
+            keepAlive: true
+          },
+        }
       ]
     },
+    {
+      path:'/communitysearch',
+      name:'CommunitySearch',
+      component:CommunitySearch
+    }
     
+
   ]
 })
 

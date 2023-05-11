@@ -13,6 +13,7 @@ Promise.all([clubRecommendApi(),clubListApi()]).then(([res,res1])=>{
 }) .finally(() => {
   loading.value  = false;
 });
+console.log('club');
 
 </script>
 
