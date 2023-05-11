@@ -25,7 +25,7 @@ export default {
         loading.value = false;
         console.log(list);
 
-        if (list.value.length >= 20) {
+        if (list.value.length >= 10) {
           finished.value = true;
         }
       });

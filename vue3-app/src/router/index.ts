@@ -4,6 +4,8 @@ import Follow from '@/views/Community/Follow.vue'
 import Club from '@/views/Community/Club.vue'
 import Information from '@/views/Community/Information.vue'
 import Recommend from '@/views/Community/Recommend.vue'
+import CommunitySearch from '@/views/Community/Search.vue'
+
 
 
 
@@ -71,6 +73,11 @@ const router = createRouter({
        
       ]
     },
+    {
+      path:'/communitysearch',
+      name:'CommunitySearch',
+      component:CommunitySearch
+    }
     
   ]
 })
