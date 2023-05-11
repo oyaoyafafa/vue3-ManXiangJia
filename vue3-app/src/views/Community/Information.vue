@@ -1,4 +1,6 @@
 <script setup lang="ts">
+console.log('info');
+
 import { informationBannerApi, informationListApi } from "@/api/community";
 import { ref } from "vue";
 const bannerList = ref([])
