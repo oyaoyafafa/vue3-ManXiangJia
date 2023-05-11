@@ -49,11 +49,19 @@ const router = createRouter({
           //积分商城
           path:'pointShopping',
           component: () => import('@/views/HomeNav/PointShopping.vue'),
+          meta:{
+            keepAlive: true
+          },
+
+
         },
         {
           //购物袋
           path:'shoppingCart',
           component: () => import('@/views/HomeNav/ShoppingCart.vue'),
+          meta:{
+            keepAlive: true
+          },
         },
         {
           //我的
