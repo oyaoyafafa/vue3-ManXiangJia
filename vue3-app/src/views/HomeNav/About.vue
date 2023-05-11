@@ -155,7 +155,7 @@ const isLogin = reactive(false)
     }
   }
   .order {
-    width: 95%;
+    width: 350rem;
     height: 100rem;
     margin: 0 auto;
     border-radius: 2rem;
@@ -208,7 +208,7 @@ const isLogin = reactive(false)
   .newUser {
     margin: 0 auto;
     margin-top: -40rem;
-    width: 95%;
+    width: 350rem;
     img {
       border-radius: 2rem;
       width: 100%;
@@ -216,7 +216,7 @@ const isLogin = reactive(false)
     }
   }
   .common {
-    width: 95%;
+    width: 350rem;
     height: 100rem;
     margin: 0 auto;
     background-color: white;

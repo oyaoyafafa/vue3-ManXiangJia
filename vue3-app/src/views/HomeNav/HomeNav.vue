@@ -57,8 +57,8 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-const isClick = reactive(false);
+import { ref } from "vue";
+const isClick = ref(false);
 </script>
 
 <style lang="scss" scoped>
