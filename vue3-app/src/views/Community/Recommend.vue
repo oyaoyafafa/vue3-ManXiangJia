@@ -15,7 +15,6 @@ export default {
       recommendFallApi().then((res:any) => {
         // console.log(res);
         // fallList.value = ;
-
         if (refreshing.value) {
           list.value = [];
           refreshing.value = false;
@@ -24,7 +23,7 @@ export default {
         loading.value = false;
         console.log(list);
 
-        if (list.value.length >= 10) {
+        if (list.value.length >= 1) {
           finished.value = true;
         }
       });

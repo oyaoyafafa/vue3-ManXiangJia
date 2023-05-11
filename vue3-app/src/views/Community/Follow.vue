@@ -10,6 +10,8 @@ export default {
     const loading = ref(false);
     const finished = ref(false);
     const refreshing = ref(false);
+  
+
 
 
     const onLoad = () => {
