@@ -43,6 +43,9 @@ import { showToast } from 'vant'
 const conversion = ref<Array<any>>([])
 const loading = ref(false)
 
+console.log('shh');
+
+
 const onRefresh = () => {
   setTimeout(() => {
     showToast('刷新成功')

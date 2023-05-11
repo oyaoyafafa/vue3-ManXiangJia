@@ -8,7 +8,7 @@ defineProps<{
   <div class="item" v-masonry-tile>
     <van-image :src="item.images[0].videoImage ||
       item.images[0].url + '?imageView=1&type=webp&thumbnail=247x0'
-      " />
+      " width="172.5rem" height="auto" />
     <div class="desc">
       <h3>{{ item.title }}</h3>
       <div class="author">
