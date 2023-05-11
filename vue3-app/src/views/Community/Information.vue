@@ -1,9 +1,13 @@
 <script setup lang="ts">
+
 import { informationBannerApi, informationListApi } from '@/api/community'
 // import InfoBanner from '@/components/Community/InfoBanner.vue'
 import InfoItem from '@/components/Community/InfoItem.vue'
 
 import { ref } from 'vue'
+
+
+
 const bannerList = ref([])
 const downList = ref([])
 const loading = ref(true)

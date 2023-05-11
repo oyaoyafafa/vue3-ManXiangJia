@@ -100,8 +100,8 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-const isLogin = reactive(false)
+import { ref } from 'vue'
+const isLogin = ref(false)
 </script>
 
 <style lang="scss" scoped>
