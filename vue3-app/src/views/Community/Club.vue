@@ -15,6 +15,9 @@ Promise.all([clubRecommendApi(),clubListApi()]).then(([res,res1])=>{
 });
 console.log('club');
 
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import {savePosition} from '@/js/pageBarScrollTop.js'
+savePosition();
 </script>
 
 <template>

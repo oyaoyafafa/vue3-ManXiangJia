@@ -21,6 +21,14 @@ Promise.all([informationBannerApi(), informationListApi()])
   .finally(() => {
     loading.value = false
   })
+
+
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import {savePosition} from '@/js/pageBarScrollTop.js'
+savePosition();
+console.log('info');
+
 </script>
 
 <template>
