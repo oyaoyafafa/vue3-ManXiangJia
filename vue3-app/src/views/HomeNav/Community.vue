@@ -48,10 +48,8 @@ watch(
 <style lang="less" scoped>
 .all {
   padding-bottom: 70rem;
-
   .top_nav {
     background-color: #fff;
-
     display: flex;
     align-items: center;
     justify-content: space-between;

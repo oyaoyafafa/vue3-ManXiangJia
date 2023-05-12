@@ -3,6 +3,7 @@ import { recommendFallApi } from '@/api/community'
 import ItemCard from '@/components/Community/ItemCard.vue'
 
 import { ref } from 'vue'
+import { savePosition } from '@/js/pageBarScrollTop.js'
 
 export default {
   setup() {
@@ -31,10 +32,19 @@ export default {
         }
         list.value=res.data.data.list
         loading.value = false
+
         console.log(list)
+
+<<<<<<< HEAD
+        if (list.value.length >= 20) {
+          finished.value = true
+=======
+
 
         if (list.value.length >= 20) {
           finished.value = true
+
+>>>>>>> vue-man
         }
       })
     }
@@ -48,14 +58,22 @@ export default {
       onLoad()
     }
 
+
+    // 控制首页五个页面的滚动高度------------------------------------------------------------
+    savePosition();
     return {
       list,
       loading,
       finished,
       refreshing,
       onRefresh,
+<<<<<<< HEAD
       onLoad
       // fallList
+=======
+      onLoad,fallList,
+      savePosition
+>>>>>>> vue-man
     }
   },
 

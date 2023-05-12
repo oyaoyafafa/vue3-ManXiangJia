@@ -1,8 +1,13 @@
 <template>
   <div class="box">
     <div>
+<<<<<<< HEAD
       <!-- <router-view v-slot="{ Component }">
         <keep-alive >
+=======
+      <router-view v-slot="{ Component }">
+        <keep-alive>
+>>>>>>> vue-man
           <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
         </keep-alive>
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
@@ -12,24 +17,49 @@
     </div>
 
     <nav>
-      <router-link to="/">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_shop_unselect.png" alt="" />
+      <router-link to="/" @click.native="changePageNum(1)">
+        <img
+          v-if="pageNum === 1"
+          src="../../../public/images/底部导航/ic_tab_shop_select.png"
+          alt=""
+        />
+        <img v-else src="../../../public/images/底部导航/ic_tab_shop_unselect.png" alt="" />
         <p>漫想家</p>
       </router-link>
-      <router-link to="/community">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+      <router-link to="/community" @click.native="changePageNum(2)">
+        <img
+          v-if="pageNum === 2"
+          src="../../../public/images/底部导航/ic_tab_mine_select.png"
+          alt=""
+        />
+        <img v-else src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
         <p>社区</p>
       </router-link>
-      <router-link to="/pointShopping">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_score_store_unselect.png" alt="" />
+      <router-link to="/pointShopping" @click.native="changePageNum(3)">
+        <img
+          v-if="pageNum === 3"
+          src="../../../public/images/底部导航/ic_tab_score_store_select.png"
+          alt=""
+        />
+        <img v-else src="../../../public/images/底部导航/ic_tab_score_store_unselect.png" alt="" />
         <p>积分商城</p>
       </router-link>
-      <router-link to="/shoppingCart">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_social_unselect.png" alt="" />
+      <router-link to="/shoppingCart" @click.native="changePageNum(4)">
+        <img
+          v-if="pageNum === 4"
+          src="../../../public/images/底部导航/ic_tab_social_select.png"
+          alt=""
+        />
+        <img v-else src="../../../public/images/底部导航/ic_tab_social_unselect.png" alt="" />
         <p>购物袋</p>
       </router-link>
-      <router-link to="/about">
-        <img v-if="!isClick" src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+      <router-link to="/about" @click.native="changePageNum(5)">
+        <img
+          v-if="pageNum === 5"
+          src="../../../public/images/底部导航/ic_tab_mine_select.png"
+          alt=""
+        />
+        <img v-else src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
         <p>我的</p>
       </router-link>
     </nav>
@@ -37,8 +67,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
-const isClick = ref(false);
+import { reactive, ref, watch } from 'vue'
+// 控制下面导航的高亮
+const pageNum = ref(1)
+function changePageNum(topageNum) {
+  pageNum.value = topageNum
+}
+
+
+
 </script>
 
 <style lang="scss" scoped>
