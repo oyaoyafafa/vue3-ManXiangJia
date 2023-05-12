@@ -75,9 +75,9 @@ export default {
         @load="onLoad"
         finished-text="没有更多了"
       >
-<<<<<<< HEAD
+
         <!-- column-width="100"
-=======
+
         <div
           v-masonry
           item-selector=".item"
@@ -87,8 +87,8 @@ export default {
           gutter="8"
           
         >
-          <!-- column-width="100"
->>>>>>> dev-wsc
+        column-width="100"
+
           gutter="10" -->
         <div class="fall_list">
           <div class="fall_left">
