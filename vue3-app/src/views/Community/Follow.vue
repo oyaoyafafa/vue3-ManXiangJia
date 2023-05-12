@@ -1,12 +1,10 @@
 <script lang="ts">
 import { followListApi } from '../../api/community'
-
+import { savePosition } from '@/js/pageBarScrollTop.js'
 import ItemCard from '@/components/Community/ItemCard.vue'
 import { ref } from 'vue'
-
 export default {
   setup() {
-    console.log('follow')
 
     const list = ref([])
     const loading = ref(false)
@@ -27,10 +25,7 @@ export default {
         console.log(list)
 
         if (list.value.length >= 10) {
-
-          finished.value = true;
-
-
+          finished.value = true
         }
       })
     }
@@ -44,13 +39,16 @@ export default {
       onLoad()
     }
 
+     // 控制首页五个页面的滚动高度------------------------------------------------------------
+     savePosition();
     return {
       list,
       onLoad,
       loading,
       finished,
       onRefresh,
-      refreshing
+      refreshing,
+      savePosition
     }
   }
 }
@@ -62,8 +60,8 @@ export default {
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="没有更多了"
         @load="onLoad"
+        finished-text="没有更多了"
       >
         <div
           v-masonry
@@ -72,6 +70,7 @@ export default {
           horizontal-order="true"
           column-width=".item"
           gutter="8"
+          
         >
           <!-- column-width="100"
           gutter="10" -->

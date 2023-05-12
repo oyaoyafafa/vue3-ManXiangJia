@@ -86,7 +86,8 @@ const router = createRouter({
           path: 'shoppingCart',
           component: () => import('@/views/HomeNav/ShoppingCart.vue'),
           meta: {
-            keepAlive: true
+            keepAlive: true,
+            savedPosition:0
           }
         },
         {
@@ -107,7 +108,16 @@ const router = createRouter({
     }
     
 
-  ]
+  ],
+  // 仅当通过浏览器前进/后退 savedPosition 才有效
+  // scrollBehavior (to, from, savedPosition) {
+  //   console.log('scrollBehavior启动了',savedPosition);
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   } else {
+  //     return {top:0}
+  //   }
+  // }
 })
 
 export default router

@@ -30,9 +30,6 @@
 </template>
 
 <script setup lang="ts">
-
-
-
 import { reactive, ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 // const activeNameList = reactive(['/follow', '', '/club', '/information'])
@@ -54,10 +51,8 @@ watch(
 <style lang="less" scoped>
 .all {
   padding-bottom: 70rem;
-
   .top_nav {
     background-color: #fff;
-
     display: flex;
     align-items: center;
     justify-content: space-between;

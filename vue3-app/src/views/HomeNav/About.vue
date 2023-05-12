@@ -102,6 +102,11 @@
 <script setup>
 import { ref } from 'vue'
 const isLogin = ref(false)
+
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import {savePosition} from '@/js/pageBarScrollTop.js'
+savePosition();
 </script>
 
 <style lang="scss" scoped>
