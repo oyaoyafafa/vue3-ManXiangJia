@@ -28,9 +28,9 @@ const filterListApi = () => axios.get('/api/goodsmanage/app/classify/screen/inde
     }
 })
 // 社区搜索列表
-const communitySearchRes = () => axios.get('/api/userorg/app/user/likeuserdetail',{
+const communitySearchResApi = (val) => axios.get('/api/userorg/app/user/likeuserdetail',{
     params:{
-        homesickId:"啊啊",//输入的关键词,
+        homesickId:val,//输入的关键词,
         pageSize:20,
         pageNumber:1,
         osType:1
@@ -40,4 +40,4 @@ const communitySearchRes = () => axios.get('/api/userorg/app/user/likeuserdetail
 
 
 
-export { hotSearchApi, searchResApi, filterListApi, communitySearchRes }
+export { hotSearchApi, searchResApi, filterListApi, communitySearchResApi }
