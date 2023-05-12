@@ -105,6 +105,15 @@ const router = createRouter({
       name:'CommunitySearch',
       component:CommunitySearch
     }
+    ,{
+      //商品详情
+      name: 'Commodity',
+      path: '/commodity',
+      component: () => import('@/views/Commodity/CommodityDetails.vue'),
+      meta: {
+        keepAlive: true
+      },
+    }
     
 
   ]

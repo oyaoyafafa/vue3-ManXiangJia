@@ -44,8 +44,8 @@ const isClick = ref(false);
 <style lang="scss" scoped>
 .box {
   // background-color: pink;
-  height: 100vh;
-  width: 100vw;
+  // height: 100vh;
+  // width: 100vw;
 
   nav {
     position: fixed;

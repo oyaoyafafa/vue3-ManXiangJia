@@ -60,7 +60,7 @@
       <div class="all">
         <h1>全部商品</h1>
         <ul>
-          <li v-for="thing in all">
+          <li @click="toCommunity" v-for="thing in all">
             <img :src="thing.listedImage" alt="" />
             <div class="price">
               <p>{{ thing.title }}</p>
@@ -77,6 +77,7 @@
 <script setup lang="ts">
 import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/manxiangjia'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 const banner = ref<Array<any>>([])
 // 大图
 const classify = ref<Array<any>>([])
@@ -105,6 +106,10 @@ goodsAllApi().then((res: any) => {
   all.value = res.data.data.list
 })
 // 全部商品
+function toCommunity() {
+  console.log(111)
+  //   const router = useRouter()
+}
 </script>
 
 <style lang="less" scoped>
@@ -172,7 +177,7 @@ goodsAllApi().then((res: any) => {
   }
   .class {
     display: flex;
-    justify-content: start;
+    // justify-content: start;
     flex-wrap: nowrap;
     width: 360rem;
     margin: 16rem auto;
@@ -198,6 +203,7 @@ footer {
   // height: 100vh;
   // margin-bottom: 200rem;
   background-color: #f6f6f7;
+  padding-bottom: 80rem;
   .lucky {
     display: flex;
     width: 360rem;
