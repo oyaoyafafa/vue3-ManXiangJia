@@ -8,7 +8,10 @@ import { ref } from 'vue'
 
 
 
-const bannerList = ref([])
+const bannerList = ref<Array<{
+  topImage:any
+  id:Number
+}>>([])
 const downList = ref([])
 const loading = ref(true)
 
@@ -59,7 +62,6 @@ console.log('info');
             }
           ]"
           v-for="bannerItem in bannerList"
-          :key="bannerItem.id"
         >
           <span class="to_see">去看看</span>
         </van-swipe-item>

@@ -27,7 +27,7 @@ const onSearch = (val: any) => {
     .finally(() => {
       loading.value = false
     })
-  if (seachHistoryList.value.every((o) => o.msg !== val)) {
+  if (seachHistoryList.value.every((o:any) => o.msg !== val)) {
     seachHistoryList.value =  [{ id: Date.now(), msg: val },...seachHistoryList.value,]
   }
 }

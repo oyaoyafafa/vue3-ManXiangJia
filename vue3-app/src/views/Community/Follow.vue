@@ -63,15 +63,6 @@ export default {
 
     }
   },
-  activated() {
-    console.log(33);
-
-    setTimeout(() => {
-      
-      this.$redrawVueMasonry('followId')
-    }, 3000);
-   
-  }
   // deactivated() {
   //   console.log("lkai",this.masonry);
     
