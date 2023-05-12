@@ -56,6 +56,10 @@ pointListApi().then((res: any) => {
   console.log(res.data.data.list)
   conversion.value = res.data.data.list
 })
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import {savePosition} from '@/js/pageBarScrollTop.js'
+savePosition();
 </script>
 
 <style lang="scss" scoped>

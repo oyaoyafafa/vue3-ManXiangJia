@@ -1,11 +1,13 @@
 <script lang="ts">
 import { followListApi } from '../../api/community'
-
+import { savePosition } from '@/js/pageBarScrollTop.js'
 import ItemCard from '@/components/Community/ItemCard.vue'
 import { ref } from 'vue'
-
 export default {
   setup() {
+
+
+
     const list = ref([])
     const loading = ref(false)
     const finished = ref(false)
@@ -47,6 +49,8 @@ export default {
       onLoad()
     }
 
+     // 控制首页五个页面的滚动高度------------------------------------------------------------
+     savePosition();
     return {
       list,
       onLoad,
@@ -54,7 +58,9 @@ export default {
       finished,
       onRefresh,
       refreshing,
-      fallList
+      fallList,
+      savePosition
+
     }
   }
 }
@@ -66,10 +72,23 @@ export default {
       <van-list
         v-model:loading="loading"
         :finished="finished"
-        finished-text="没有更多了"
         @load="onLoad"
+        finished-text="没有更多了"
       >
+
         <!-- column-width="100"
+
+        <div
+          v-masonry
+          item-selector=".item"
+          fit-width="2"
+          horizontal-order="true"
+          column-width=".item"
+          gutter="8"
+          
+        >
+        column-width="100"
+
           gutter="10" -->
         <div class="fall_list">
           <div class="fall_left">
