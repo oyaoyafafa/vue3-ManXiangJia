@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { shoppingCartRecommendApi } from '@/api/shoppingCart'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { showToast } from 'vant'
 const loading = ref(false)
 const isAdd = ref(true)
@@ -57,6 +57,12 @@ shoppingCartRecommendApi().then((res: any) => {
   console.log(res.data.data.list)
   commend.value = res.data.data.list
 })
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import {savePosition} from '@/js/pageBarScrollTop.js'
+savePosition();
+
+
 </script>
 
 <style lang="less" scoped>
@@ -120,6 +126,7 @@ div {
           height: 210rem;
           display: flex;
           flex-direction: column;
+
           background-color: white;
           margin-bottom: 10rem;
           border-radius: 5rem;

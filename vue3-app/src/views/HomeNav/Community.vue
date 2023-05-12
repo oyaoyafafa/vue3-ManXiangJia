@@ -14,12 +14,7 @@
       </van-tabs>
       <van-icon name="search" @click="$router.push('/communitysearch')" />
     </div>
-    <!-- <nav>
-      <router-link to="/community/follow">关注</router-link>
-      <router-link to="/community">推荐</router-link>
-      <router-link to="/community/club">部落</router-link>
-      <router-link to="/community/information">情报</router-link>
-    </nav> -->
+ 
 
     <div class="van-tabs__content van-tabs__content--animated">
       <router-view v-slot="{ Component }" style="padding: 0 10rem">
@@ -28,6 +23,7 @@
         </keep-alive>
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
       </router-view>
+    <!-- <router-view />  -->
     </div>
   </div>
 </template>
@@ -52,10 +48,8 @@ watch(
 <style lang="less" scoped>
 .all {
   padding-bottom: 70rem;
-
   .top_nav {
     background-color: #fff;
-
     display: flex;
     align-items: center;
     justify-content: space-between;

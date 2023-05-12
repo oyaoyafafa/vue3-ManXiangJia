@@ -74,6 +74,7 @@
   </div>
 </template>
 
+
 <script setup lang="ts">
 import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/manxiangjia'
 import { ref } from 'vue'
@@ -105,6 +106,12 @@ goodsAllApi().then((res: any) => {
   all.value = res.data.data.list
 })
 // 全部商品
+
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import {savePosition} from '@/js/pageBarScrollTop.js'
+savePosition();
+
 </script>
 
 <style lang="less" scoped>
