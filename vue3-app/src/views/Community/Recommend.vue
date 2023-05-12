@@ -1,6 +1,7 @@
 <script lang="ts">
 import { recommendFallApi } from '@/api/community'
 import ItemCard from '@/components/Community/ItemCard.vue'
+
 import { ref } from 'vue'
 
 export default {
@@ -10,15 +11,17 @@ export default {
     const finished = ref(false)
     const refreshing = ref(false)
 
-    const fallList = (index1:any) => {
-      console.log(list.value.filter((item, index) => index % 2 == index1))
+    // const fallList = (index1: any) => {
+    //   console.log(list.value.filter((item, index) => index % 2 == index1))
 
-      return list.value.filter((item, index) => index % 2 == index1)
+    //   return list.value.filter((item, index) => index % 2 == index1)
 
-      // console.log( this.left_list);
-    }
+    //   // console.log( this.left_list);
+    // }
 
     const onLoad = () => {
+      console.log(111)
+
       recommendFallApi().then((res: any) => {
         // console.log(res);
         // fallList.value = ;
@@ -26,12 +29,12 @@ export default {
           list.value = []
           refreshing.value = false
         }
-        list.value = res.data.data.list
+        list.value=res.data.data.list
         loading.value = false
         console.log(list)
 
-        if (list.value.length >= 1) {
-          finished.value = true 
+        if (list.value.length >= 20) {
+          finished.value = true
         }
       })
     }
@@ -51,14 +54,23 @@ export default {
       finished,
       refreshing,
       onRefresh,
-      onLoad,fallList
+      onLoad
+      // fallList
     }
+  },
+
+  activated() {
+    console.log(44)
+
+    setTimeout(() => {
+      this.$redrawVueMasonry('recId')
+    }, 3000)
   }
 }
 </script>
 
 <template>
-  <div class="recommend">
+  <div class="recommend" style="height: 100vh; overflow: auto">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model:loading="loading"
@@ -66,10 +78,20 @@ export default {
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <!-- column-width="100"
-            
-          gutter="10" -->
-        <div class="fall_list">
+        <div
+          v-masonry="recId"
+          transition-duration="0s"
+          item-selector=".item"
+          class="pets"
+          gutter="8"
+          destroy-delay="0"
+        >
+          <!-- fit-width="true" -->
+          <!-- origin-left="false" -->
+          <ItemCard v-masonry-tile v-for="item in list" :key="item.id" :item="item" class="item" />
+        </div>
+
+        <!-- <div class="fall_list">
           <div class="fall_left">
             <lazy-component>
               <ItemCard v-for="item in fallList(0)" :item="item" />
@@ -80,7 +102,7 @@ export default {
               <ItemCard v-for="item in fallList(1)" :item="item" />
             </lazy-component>
           </div>
-        </div>
+        </div> -->
       </van-list>
     </van-pull-refresh>
   </div>
@@ -90,9 +112,14 @@ export default {
 .fall_list {
   display: flex;
   justify-content: space-between;
-  &>div{
+  & > div {
     width: 49%;
   }
-
+}
+// .pets {
+//   // margin: 0 auto;
+// }
+.item {
+  width: 49%;
 }
 </style>
