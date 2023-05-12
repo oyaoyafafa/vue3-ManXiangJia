@@ -1,11 +1,6 @@
 <script lang="ts">
-<<<<<<< HEAD
-import { followListApi } from '@/api/community'
-
-=======
 import { followListApi } from '../../api/community'
 import { savePosition } from '@/js/pageBarScrollTop.js'
->>>>>>> vue-man
 import ItemCard from '@/components/Community/ItemCard.vue'
 import { ref } from 'vue'
 export default {
@@ -94,22 +89,6 @@ export default {
         @load="onLoad"
         finished-text="没有更多了"
       >
-<<<<<<< HEAD
-        <div
-          v-masonry="followId"
-          transition-duration="0s"
-          item-selector=".card"
-          class="pets"
-          gutter="8"
-          destroy-delay="0"
-        >
-          <!-- fit-width="true" -->
-          <!-- origin-left="false" -->
-          <ItemCard v-masonry-tile v-for="item in list" :key="item.id" :item="item" class="card" />
-        </div>
-
-        <!-- <div class="fall_list">
-=======
 
         <!-- column-width="100"
 
@@ -126,7 +105,6 @@ export default {
 
           gutter="10" -->
         <div class="fall_list">
->>>>>>> vue-man
           <div class="fall_left">
             <lazy-component>
               <ItemCard v-for="item in fallList(0)" :item="item" />
@@ -137,7 +115,7 @@ export default {
               <ItemCard v-for="item in fallList(1)" :item="item" />
             </lazy-component>
           </div>
-        </div> -->
+        </div>
       </van-list>
     </van-pull-refresh>
   </div>

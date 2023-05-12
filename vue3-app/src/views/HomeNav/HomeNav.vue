@@ -1,17 +1,12 @@
 <template>
   <div class="box">
     <div>
-<<<<<<< HEAD
       <!-- <router-view v-slot="{ Component }">
-        <keep-alive >
-=======
-      <router-view v-slot="{ Component }">
         <keep-alive>
->>>>>>> vue-man
           <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
         </keep-alive>
         <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
-      </router-view> -->
+      </router-view>  -->
 
       <router-view></router-view>
     </div>

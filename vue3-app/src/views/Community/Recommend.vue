@@ -35,16 +35,11 @@ export default {
 
         console.log(list)
 
-<<<<<<< HEAD
-        if (list.value.length >= 20) {
-          finished.value = true
-=======
 
 
         if (list.value.length >= 20) {
           finished.value = true
 
->>>>>>> vue-man
         }
       })
     }
@@ -67,13 +62,8 @@ export default {
       finished,
       refreshing,
       onRefresh,
-<<<<<<< HEAD
-      onLoad
-      // fallList
-=======
-      onLoad,fallList,
+      onLoad,
       savePosition
->>>>>>> vue-man
     }
   },
 
