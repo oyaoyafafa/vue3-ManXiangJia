@@ -34,11 +34,12 @@ defineProps<{
 .information {
   display: flex;
   margin-bottom: 15rem;
+
   .img {
     width: 106rem;
     height: 86rem;
-    overflow: hidden;
     margin-right: 10rem;
+    flex-shrink: 0;
     img {
       border-radius: 8rem;
       height: 100%;

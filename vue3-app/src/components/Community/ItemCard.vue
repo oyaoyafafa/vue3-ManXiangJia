@@ -23,7 +23,7 @@ defineProps<{
 
 <style lang="less" scoped>
 .item {
-  width: 172.5rem;
+  width: 100%;
   margin-bottom: 15rem;
 
   .desc {
