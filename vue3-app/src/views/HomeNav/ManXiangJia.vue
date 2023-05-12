@@ -60,7 +60,7 @@
       <div class="all">
         <h1>全部商品</h1>
         <ul>
-          <li @click="toCommunity" v-for="thing in all">
+          <li @click="toCommodity" v-for="thing in all">
             <img :src="thing.listedImage" alt="" />
             <div class="price">
               <p>{{ thing.title }}</p>
@@ -78,6 +78,8 @@
 import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/manxiangjia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+const $router = useRouter()
 const banner = ref<Array<any>>([])
 // 大图
 const classify = ref<Array<any>>([])
@@ -86,6 +88,7 @@ const recommend = ref<Array<any>>([])
 // 商品推荐
 const all = ref<Array<any>>([])
 // 全部商品
+
 bannerApi().then((res: any) => {
   banner.value = res.data.data
   console.log(res.data.data)
@@ -106,9 +109,11 @@ goodsAllApi().then((res: any) => {
   all.value = res.data.data.list
 })
 // 全部商品
-function toCommunity() {
+function toCommodity() {
   console.log(111)
-  //   const router = useRouter()
+  $router.push({
+    path:"/commodity",
+  })
 }
 </script>
 
