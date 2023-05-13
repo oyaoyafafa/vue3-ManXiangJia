@@ -75,4 +75,14 @@ const commodityRecommend = (id) => axios.get('/api/goodsmanage/app/goods/detailr
     }
 })
 
-export { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi,luckyStarApi,moplatAllSortApi,goodsPresaleApi,commodityDetails,commodityRecommend }
+// 
+// order/app/userorder/lately/ls  
+const recentlyBuy = (id) => axios.get('/api/order/app/userorder/lately/ls',{
+    params: {
+        osType:1,
+        id:id,
+        pageSize:5
+    }
+})
+
+export { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi,luckyStarApi,moplatAllSortApi,goodsPresaleApi,commodityDetails,commodityRecommend,recentlyBuy }
