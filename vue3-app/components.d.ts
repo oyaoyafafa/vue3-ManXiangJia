@@ -12,7 +12,6 @@ declare module '@vue/runtime-core' {
     CommentsItem: typeof import('./src/components/Community/CommentsItem.vue')['default']
     CommunitySearchRes: typeof import('./src/components/Community/CommunitySearchRes.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    HotEst: typeof import('./src/components/Community/HotEst.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
     IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
     IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
@@ -46,7 +45,6 @@ declare module '@vue/runtime-core' {
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
-    WaterFall: typeof import('./src/components/Community/WaterFall.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
