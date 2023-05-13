@@ -33,7 +33,6 @@ export default {
         console.log(list)
 
 
-
         if (list.value.length >= 20) {
           finished.value = true
 
@@ -75,10 +74,17 @@ export default {
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <!-- column-width="100"
-            
-          gutter="10" -->
-        <div class="fall_list">
+      <div
+          v-masonry
+          transition-duration="false"
+          item-selector=".item"
+          class="pets"
+          gutter="8"
+        >
+          <ItemCard v-masonry-tile v-for="item in list" :key="item.id" :item="item" class="item" />
+        </div>
+
+        <!-- <div class="fall_list">
           <div class="fall_left">
             <lazy-component>
               <ItemCard v-for="item in fallList(0)" :item="item" />
@@ -89,7 +95,7 @@ export default {
               <ItemCard v-for="item in fallList(1)" :item="item" />
             </lazy-component>
           </div>
-        </div>
+        </div> -->
       </van-list>
     </van-pull-refresh>
   </div>
@@ -104,4 +110,8 @@ export default {
   }
 
 }
+.item {
+  width: 49%;
+}
+
 </style>
