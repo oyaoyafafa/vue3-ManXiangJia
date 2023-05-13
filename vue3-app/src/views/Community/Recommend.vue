@@ -7,7 +7,11 @@ import { savePosition } from '@/js/pageBarScrollTop.js'
 
 export default {
   setup() {
-    const list = ref([])
+    const list = ref<
+      Array<{
+        id: Number
+      }>
+    >([])
     const loading = ref(false)
     const finished = ref(false)
     const refreshing = ref(false)
@@ -30,15 +34,13 @@ export default {
           list.value = []
           refreshing.value = false
         }
-        list.value=res.data.data.list
+        list.value = res.data.data.list
         loading.value = false
 
         console.log(list)
 
-
         if (list.value.length >= 20) {
           finished.value = true
-
         }
       })
     }
@@ -52,9 +54,8 @@ export default {
       onLoad()
     }
 
-
     // 控制首页五个页面的滚动高度------------------------------------------------------------
-    savePosition();
+    savePosition()
     return {
       list,
       loading,
@@ -64,14 +65,6 @@ export default {
       onLoad,
       savePosition
     }
-  },
-
-  activated() {
-    console.log(44)
-
-    setTimeout(() => {
-      this.$redrawVueMasonry('recId')
-    }, 3000)
   }
 }
 </script>

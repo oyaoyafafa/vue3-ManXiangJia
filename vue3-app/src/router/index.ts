@@ -1,12 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Follow from '@/views/Community/Follow.vue'
-import Club from '@/views/Community/Club.vue'
-import Information from '@/views/Community/Information.vue'
-import Recommend from '@/views/Community/Recommend.vue'
-import CommunitySearch from '@/views/Community/Search.vue'
-
-
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -41,7 +34,7 @@ const router = createRouter({
             {
               name: 'Follow',
               path: '/community/follow',
-              component: Follow,
+              component: () => import( '@/views/Community/Follow.vue'),
               meta: {
                 keepAlive: true
               },
@@ -49,7 +42,7 @@ const router = createRouter({
             {
               name: 'Recommend',
               path: '/community',
-              component: Recommend,
+              component: () => import( '@/views/Community/Recommend.vue'),
               meta: {
                 keepAlive: true
               },
@@ -57,7 +50,7 @@ const router = createRouter({
             {
               name: 'Club',
               path: '/community/club',
-              component: Club,
+              component: () => import('@/views/Community/Club.vue'),
               meta: {
                 keepAlive: true
               },
@@ -65,7 +58,7 @@ const router = createRouter({
             {
               name: 'Information',
               path: '/community/information',
-              component: Information,
+              component: () => import('@/views/Community/Information.vue'),
               meta: {
                 keepAlive: true
               },
@@ -106,7 +99,22 @@ const router = createRouter({
     {
       path:'/communitysearch',
       name:'CommunitySearch',
-      component:CommunitySearch
+      component: () => import( '@/views/Community/Search.vue'),
+    },
+    {
+      path:'/communitygoodsdetail',
+      name:'GoodsDetail',
+      component: () => import('@/views/Community/GoodsDetail.vue'),
+    },
+    {
+      path:'/clubdetail',
+      name:'ClubDetail',
+      component: () => import('@/views/Community/ClubDetail.vue'),
+    },
+    {
+      path:'/infoDetail',
+      name:'InfoDetail',
+      component: () => import('@/views/Community/InfoDetail.vue'),
     }
     ,{
       //商品详情

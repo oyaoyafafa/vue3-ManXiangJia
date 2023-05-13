@@ -37,7 +37,16 @@ const communitySearchResApi = (val) => axios.get('/api/userorg/app/user/likeuser
     }
 })
 
+//社区详情搜索
+const communityInfoSearchResApi = (val) => axios.get('/api/userorg/app/news/ls',{
+    params:{
+        title:val,//输入的关键词,
+        pageSize:10,
+        pageNumber:1,
+    }
+})
 
 
 
-export { hotSearchApi, searchResApi, filterListApi, communitySearchResApi }
+
+export { hotSearchApi, searchResApi, filterListApi, communitySearchResApi,communityInfoSearchResApi }
