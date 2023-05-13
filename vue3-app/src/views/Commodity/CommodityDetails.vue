@@ -16,6 +16,7 @@
           <img :src="img.url" alt="" />
         </van-swipe-item>
       </van-swipe> -->
+      <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 1" alt="" />
       <h1>￥{{ deatil.integralNum }}</h1>
       <h2>{{ deatil.title }}</h2>
       <p>
@@ -54,8 +55,43 @@
       </ul>
     </div>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
+    <ul class="recentlyBuy">
+      <h1 v-if="buy">最近购买({{ buy.length }})</h1>
+      <h1 v-else>最近购买(0)</h1>
+      <li v-for="item in buy">
+        <p>
+          <img :src="item.url || '@/../public/images/default_header.png'" alt="" />
+          <span>{{ item.name }}</span>
+        </p>
+        <p>{{ item.price }}</p>
+        <p>{{ shijianc(item.date) }}</p>
+      </li>
+    </ul>
+    <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
+    <div class="pjia">
+      <div>
+        <p>商品评价({{ comment.length }})</p>
+        <p>
+          <span>全部</span>
+          <img src="@/../public/images/ic_grey_ind.png" alt="" />
+        </p>
+      </div>
+    </div>
+    <div class="dongtai">
+      <div>
+        <p>动态({{ dynamic.length }})</p>
+        <p>
+          <span>全部</span>
+          <img src="@/../public/images/ic_grey_ind.png" alt="" />
+        </p>
+      </div>
+      <!-- <p class="title">
+        <img v-for="img in dynamic[0].images" :src="img.url" alt="" />
+      </p> -->
+    </div>
+    <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
     <footer>
-      <van-action-bar style="z-index: 999; margin-bottom: -3rem">
+      <van-action-bar style="z-index: 899; margin-bottom: -3rem">
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
         <van-action-bar-button class="add" text="加入购物车" />
@@ -67,11 +103,15 @@
 </template>
 
 <script setup lang="ts">
-import { commodityDetails, commodityRecommend, recentlyBuy } from '@/api/manxiangjia'
+import {
+  commodityDetails,
+  commodityRecommend,
+  recentlyBuy,
+  dynamicApi,
+  commentApi
+} from '@/api/manxiangjia'
 import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-const deatil = ref<any>([])
-const recommend = ref<any>([])
 
 const showShare = ref(false)
 const options = [
@@ -92,27 +132,50 @@ const options = [
     icon: '@/../public/images/分享/ic_share_weibo.png'
   }
 ]
-
 const $route = useRoute()
 const $router = useRouter()
-console.log($route.query.id)
+// console.log($route.query.id)
+
+const deatil = ref<any>([])
 commodityDetails($route.query.id).then((res: any) => {
-  console.log(res.data.data)
+  // console.log(res.data.data)
   deatil.value = res.data.data
 })
 
+const recommend = ref<any>([])
 commodityRecommend($route.query.id).then((res: any) => {
-  console.log(res.data.data.list)
+  // console.log(res.data.data.list)
   recommend.value = res.data.data.list
 })
 
+const buy = ref<any>([])
 recentlyBuy($route.query.id).then((res: any) => {
-  console.log(res)
-  // recommend.value = res.data.data.list
+  // console.log('buy', res.data.data.list)
+  buy.value = res.data.data.list
+})
+
+const comment = ref<any>([])
+commentApi($route.query.id).then((res: any) => {
+  // console.log(res.data.data.list)
+  comment.value = res.data.data.list
+})
+
+const dynamic = ref<any>([])
+dynamicApi($route.query.id).then((res: any) => {
+  // console.log(res.data.data.list)
+  dynamic.value = res.data.data.list
 })
 
 function routerBack() {
   $router.back()
+}
+
+function shijianc(time: any) {
+  let date = new Date(time)
+  let Y = date.getFullYear() + '-'
+  let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
+  let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' '
+  return Y + M + D
 }
 </script>
 
@@ -144,8 +207,9 @@ nav {
       text-align: center;
       background-color: #39a9ed;
     }
+
     img {
-      width: 200rem;
+      width: 100%;
     }
     h1,
     h2 {
@@ -155,9 +219,14 @@ nav {
     h1 {
       font-weight: bolder;
       font-size: 18rem;
+      margin-bottom: 10rem;
     }
     h2 {
-      font-size: 14rem;
+      font-size: 16rem;
+      padding: 0 10rem;
+      line-height: 18rem;
+      margin-bottom: 15rem;
+      font-weight: bold;
     }
     p {
       display: flex;
@@ -211,6 +280,10 @@ nav {
           &:nth-child(2) {
             transform: scale(0.9);
             width: 120rem;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
           }
           &:nth-child(3) {
             padding: 5rem 0;
@@ -222,5 +295,69 @@ nav {
       }
     }
   }
+  .recentlyBuy {
+    padding: 0rem 10rem;
+    h1 {
+      margin-bottom: 15rem;
+      margin-top: 10rem;
+      font-size: 14rem;
+      font-weight: bold;
+    }
+    li {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15rem;
+      p {
+        &:nth-child(3) {
+          color: #cfcfcf;
+        }
+        img {
+          width: 20rem;
+          border-radius: 50%;
+          margin-right: 5rem;
+        }
+      }
+    }
+  }
+  .dongtai,
+  .pjia {
+    border-top: 1rem solid #f6f6f8;
+    div {
+      padding: 10rem;
+      display: flex;
+      justify-content: space-between;
+      p {
+        &:nth-child(1) {
+          font-weight: 14rem;
+          font-weight: bold;
+        }
+        &:nth-child(2) {
+          display: flex;
+          align-items: center;
+          color: #a4a4a4;
+        }
+      }
+    }
+    img {
+      width: 20rem;
+    }
+  }
+  // .pjia {
+  //   border-top: 1rem solid #f6f6f8;
+  //   div {
+  //     padding: 10rem;
+  //     display: flex;
+  //     justify-content: space-between;
+  //     p {
+  //       &:nth-child(1) {
+  //         font-weight: 14rem;
+  //         font-weight: bold;
+  //       }
+  //     }
+  //     img {
+  //       width: 20rem;
+  //     }
+  //   }
+  // }
 }
 </style>
