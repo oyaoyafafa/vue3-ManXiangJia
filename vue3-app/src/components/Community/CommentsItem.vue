@@ -20,10 +20,10 @@ const toDetail = (id: any) => {
       width="33rem"
       height="33rem"
       round
-      :src="commentsItem?.tbAppUserDetail.header + '?imageView=1&type=webp&thumbnail=247x0'"
+      :src="(commentsItem?.detail?.header ||commentsItem?.tbAppUserDetail?.header )+ '?imageView=1&type=webp&thumbnail=247x0'"
     />
     <div class="user">
-      <h3 class="user_name">{{ commentsItem?.tbAppUserDetail.nickName }}</h3>
+      <h3 class="user_name">{{( commentsItem?.detail?.nickName ||commentsItem?.tbAppUserDetail?.nickName )}}</h3>
       <p>
         <span>{{ commentsItem.content }}</span
         >{{ commentsItem.createTime }}
@@ -41,7 +41,7 @@ const toDetail = (id: any) => {
 .comments {
       display: flex;
       align-items: flex-start;
-      margin-bottom: 10rem;
+      margin-top: 10rem;
     }
     .user {
       margin-left: 10rem;
@@ -49,7 +49,6 @@ const toDetail = (id: any) => {
       h3 {
         font-size: 13rem;
         color: #a2a2a2;
-        margin-bottom: 5rem;
       }
       p {
         font-size: 12rem;

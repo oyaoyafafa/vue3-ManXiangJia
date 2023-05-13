@@ -16,16 +16,7 @@ export default {
     const finished = ref(false)
     const refreshing = ref(false)
 
-    // const fallList = (index1: any) => {
-    //   console.log(list.value.filter((item, index) => index % 2 == index1))
-
-    //   return list.value.filter((item, index) => index % 2 == index1)
-
-    //   // console.log( this.left_list);
-    // }
-
     const onLoad = () => {
-      console.log(111)
 
       recommendFallApi().then((res: any) => {
         // console.log(res);
@@ -70,7 +61,7 @@ export default {
 </script>
 
 <template>
-  <div class="recommend" style="height: 100vh; overflow: auto">
+  <div class="recommend" style="height: 100vh; overflow: auto;">
     <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
       <van-list
         v-model:loading="loading"
@@ -78,53 +69,26 @@ export default {
         finished-text="没有更多了"
         @load="onLoad"
       >
-          <!-- fit-width="true" -->
-          <!-- origin-left="false" -->
 
       <div
           v-masonry
           transition-duration="false"
           item-selector=".item"
           class="pets"
-          gutter="8"
+          gutter="5"
         >
 
           <ItemCard v-masonry-tile v-for="item in list" :key="item.id" :item="item" class="item" />
         </div>
 
-        <!-- <div class="fall_list">
-          <div class="fall_left">
-            <lazy-component>
-              <ItemCard v-for="item in fallList(0)" :item="item" />
-            </lazy-component>
-          </div>
-          <div class="fall_right">
-            <lazy-component>
-              <ItemCard v-for="item in fallList(1)" :item="item" />
-            </lazy-component>
-          </div>
-        </div> -->
       </van-list>
     </van-pull-refresh>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.fall_list {
-  display: flex;
-  justify-content: space-between;
-  & > div {
-    width: 49%;
-  }
-}
 // .pets {
 //   // margin: 0 auto;
 // }
-.item {
-  width: 49%;
-}
-.item {
-  width: 49%;
-}
 
 </style>

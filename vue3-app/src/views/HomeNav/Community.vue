@@ -2,7 +2,7 @@
   <div class="all">
     <div class="top_nav">
       <main>
-        <van-tabs v-model:active="active" animated>
+        <van-tabs v-model:active="active" animated >
           <van-tab title="关注" name="/follow" to="/community/follow">
             <Follow />
           </van-tab>
@@ -17,8 +17,8 @@
           </van-tab>
         </van-tabs>
       </main>
-      <van-icon name="search" @click="$router.push('/communitysearch')" />
     </div>
+    <van-icon name="search" class="search_btn" @click.native="$router.push('/communitysearch')" />
   </div>
 </template>
 
@@ -37,6 +37,7 @@ watch(
   $route,
   (newroute) => {
     active.value = newroute.path.replace('/community', '') || '/'
+
   },
   { immediate: true }
 )
@@ -45,48 +46,14 @@ watch(
 <style lang="less" scoped>
 .all {
   padding-bottom: 70rem;
-  // .top_nav {
-  //   background-color: #fff;
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: space-between;
-  //   position: sticky;
-  //   top: -1rem;
-  //   z-index: 101;
-  //   /deep/ .van-tabs {
-  //     margin-bottom: 15rem;
-  //     width: 100%;
-
-  //     span {
-  //       font-size: 14rem;
-  //       color: #808080;
-  //       font-weight: bold;
-  //     }
-
-  //     .van-tab--active span {
-  //       font-size: 16rem;
-  //       color: black;
-  //       font-weight: bolder;
-  //     }
-
-  //     .van-tabs__nav--line {
-  //       padding-bottom: 15rem;
-  //     }
-
-  //     .van-tabs__line {
-  //       bottom: 15rem;
-  //       background: #1c2431;
-  //       width: 25rem;
-  //     }
-  //   }
-
-  //   .van-icon {
-  //     font-size: 24rem;
-  //     padding-right: 8rem;
-  //     font-weight: bolder;
-  //     margin-top: -13rem;
-  //   }
-  // }
+  // box-sizing: border-box;
+}
+.search_btn {
+  position: fixed;
+  font-size: 24rem;
+  top: 10rem;
+  right: 15rem;
+  z-index: 99;
 }
 /deep/ .van-tabs {
   .van-tabs__wrap {
@@ -95,11 +62,26 @@ watch(
     left: 0;
     background-color: #ffffff;
     z-index: 1;
+    margin-bottom: 20rem;
+  }
+  .van-tabs__nav {
+    width: 50%;
   }
   .van-tab__panel > div {
     height: calc(100vh - 44rem - 60rem);
     overflow: scroll;
+    padding: 10rem;
   }
-
+  .van-tabs__line {
+    background-color: #1e1e1e;
+    width: 25rem;
+  }
+}
+/deep/ .van-tab--active {
+  span {
+    font-weight: bolder;
+    margin-top: -3rem;
+  }
+  font-size: 15rem;
 }
 </style>

@@ -46,7 +46,7 @@ savePosition()
 </script>
 
 <template>
-  <div class="club">
+  <div class="club" style="overflow-x:hidden">
     <van-loading color="#0094ff" v-show="loading" />
     <div class="rec_list" v-show="!loading">
       <p style="font-size: 14rem; color: #2c2c2c">推荐</p>
@@ -135,6 +135,7 @@ savePosition()
     }
   }
 
+
   /deep/.van-index-anchor {
     width: 100vw;
     transform: translateX(-10rem);
@@ -146,7 +147,7 @@ savePosition()
     background-color: #e6e6e6;
     border-radius: 50rem;
     padding: 5rem 0;
-    right: 2rem;
+    right: 382rem;
 
     span {
       padding: 0 3rem;

@@ -22,7 +22,7 @@ const toDetail = (id:any) => {
       :src="
         item.images[0].videoImage || item.images[0].url + '?imageView=1&type=webp&thumbnail=247x0'
       "
-      width="172.5rem"
+      width="173rem"
       height="auto"
     />
     <div class="desc">
@@ -43,10 +43,12 @@ const toDetail = (id:any) => {
 
 <style lang="less" scoped>
 .item {
-  width: 100%;
+  width: 49%;
   margin-bottom: 15rem;
 
   .desc {
+    width:173rem ;
+
     h3 {
       font-size: 14rem;
       font-weight: 600;
