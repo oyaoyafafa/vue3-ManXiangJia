@@ -3,7 +3,7 @@
     <header>
       <h1>我的漫想家</h1>
       <div class="login">
-        <span class="userLogin">
+        <span class="userLogin" @click="$router.push('/login')">
           <img class="user" src="../../../public/images/我的/default_header.png" alt="" />
           <span v-if="!isLogin">
             <h1 style="font-weight: bold;">点击注册/登录</h1>
@@ -101,8 +101,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import {useRouter} from 'vue-router'
 const isLogin = ref(false)
-
+const $router = useRouter();
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
 import {savePosition} from '@/js/pageBarScrollTop.js'

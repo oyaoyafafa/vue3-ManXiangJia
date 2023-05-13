@@ -121,11 +121,12 @@ const router = createRouter({
       name: 'Commodity',
       path: '/commodity',
       component: () => import('@/views/Commodity/CommodityDetails.vue'),
-      meta: {
-        keepAlive: true
-      },
+    },
+    {
+      path:'/login',
+      name:'Login',
+      component: () => import('@/views/Login/Login.vue'),
     }
-    
 
 
   ],

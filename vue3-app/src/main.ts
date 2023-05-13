@@ -8,7 +8,7 @@ import App from './App.vue'
 import router from './router'
 
 
-import { List, PullRefresh, Image as VanImage, Lazyload ,Icon ,Tab, Tabs, IndexBar, IndexAnchor,Loading, Swipe, SwipeItem,Search   } from 'vant';
+import { List, PullRefresh, Image as VanImage, Lazyload ,Icon ,Tab, Tabs, IndexBar, IndexAnchor,Loading, Swipe, SwipeItem,Search, Checkbox, CheckboxGroup   } from 'vant';
 import { VueMasonryPlugin } from 'vue-masonry';
 
 
@@ -24,7 +24,7 @@ app.mount('#app')
 
 
 // vant组件引入
-app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search )
+app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).app.use(Checkbox).app.use(CheckboxGroup);
 app.use(Lazyload, {
     lazyComponent: true,
 });
