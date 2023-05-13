@@ -33,11 +33,7 @@
   </div>
 </template>
 
-<script setup>
- 
-console.log('wsc merge test111');
-
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 .box {
