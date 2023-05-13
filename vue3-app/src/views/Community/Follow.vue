@@ -4,21 +4,16 @@ import { savePosition } from '@/js/pageBarScrollTop.js'
 import ItemCard from '@/components/Community/ItemCard.vue'
 import { ref } from 'vue'
 export default {
+  
   setup() {
     const list = ref([])
     const loading = ref(false)
     const finished = ref(false)
     const refreshing = ref(false)
 
-    const fallList = (index1: any) => {
-      console.log(list.value.filter((item, index) => index % 2 == index1))
-
-      return list.value.filter((item, index) => index % 2 == index1)
-
-      // console.log( this.left_list);
-    }
-
+    
     const onLoad = () => {
+      
       followListApi().then((res: any) => {
         // console.log(res);
         // fallList.value = ;
@@ -55,10 +50,10 @@ export default {
       finished,
       onRefresh,
       refreshing,
-      fallList,
       savePosition
     }
   },
+  
 }
 </script>
 

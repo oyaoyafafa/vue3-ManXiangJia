@@ -7,7 +7,7 @@ import { ref } from 'vue'
 const loading = ref(true)
 const $route = useRoute()
 const needId = $route.query.id
-const detail:any = ref(null)
+const detail: any = ref(null)
 const comments = ref<
   Array<{
     tbAppUserDetail: any
@@ -33,7 +33,7 @@ savePosition()
 </script>
 
 <template>
-  <div class="detail">
+  <div class="detail" style="padding-bottom: 70rem">
     <div class="top_tit">
       <i class="back_btn" @click="$router.back()">
         <svg
@@ -135,6 +135,10 @@ savePosition()
   display: flex;
   align-items: center;
   padding: 10rem;
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+  z-index: 99;
   .back_btn {
     margin-right: 15rem;
   }
@@ -204,7 +208,6 @@ savePosition()
   }
   ul {
     padding-top: 20rem;
-    
   }
 }
 </style>

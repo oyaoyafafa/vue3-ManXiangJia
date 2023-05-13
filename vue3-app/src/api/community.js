@@ -105,5 +105,15 @@ const communityGoodsCommentApi = (id) => axios.get('/api/userorg/app/article/com
     }
 })
 
+//情报文章评论
+const communityInfoCommentApi = (id) => axios.get('/api/userorg/app/news/comment', {
+    params: {
+        newsId:id,
+        pageNumber:1,
+        pageSize:10,
+    }
+})
 
-export { followRecommendApi, followListApi, recommendFallApi, clubRecommendApi, clubListApi, informationListApi, informationBannerApi ,communityGoodsDetailApi,communityGoodsCommentApi,clubDetailApi,clubArtcleApi,informationDetailApi}
+
+
+export { followRecommendApi, followListApi, recommendFallApi, clubRecommendApi, clubListApi, informationListApi, informationBannerApi ,communityGoodsDetailApi,communityGoodsCommentApi,clubDetailApi,clubArtcleApi,informationDetailApi,communityInfoCommentApi}
