@@ -1,11 +1,6 @@
 <template>
   <div class="all">
     <div class="top_nav">
-      <!-- <router-link  to="/community/follow"  >关注</router-link>
-      <router-link  to="/community"   >推荐</router-link>
-      <router-link  to="/community/club"  >部落</router-link>
-      <router-link  to="/community/information"  >情报</router-link> -->
-
       <van-tabs v-model:active="active" >
         <van-tab title="关注" name="/follow" to="/community/follow" />
         <van-tab title="推荐" name="/" to="/community" />

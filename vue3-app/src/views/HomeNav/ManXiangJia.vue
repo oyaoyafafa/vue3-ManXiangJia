@@ -48,7 +48,7 @@
       <div class="recommend">
         <h1>商品推荐</h1>
         <ul class="commendList">
-          <li v-for="item in recommend">
+          <li v-for="item in recommend" @click="toCommodity(item.goodId)">
             <div>
               <img :src="item.tbGoods.listedImage" alt="" />
             </div>
@@ -60,7 +60,7 @@
       <div class="all">
         <h1>全部商品</h1>
         <ul>
-          <li v-for="thing in all">
+          <li @click="toCommodity(thing.id)" v-for="thing in all">
             <img :src="thing.listedImage" alt="" />
             <div class="price">
               <p>{{ thing.title }}</p>
@@ -78,6 +78,10 @@
 <script setup lang="ts">
 import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/manxiangjia'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import {savePosition} from '@/js/pageBarScrollTop.js'
+
+
 const banner = ref<Array<any>>([])
 // 大图
 const classify = ref<Array<any>>([])
@@ -86,6 +90,7 @@ const recommend = ref<Array<any>>([])
 // 商品推荐
 const all = ref<Array<any>>([])
 // 全部商品
+
 bannerApi().then((res: any) => {
   banner.value = res.data.data
   console.log(res.data.data)
@@ -102,16 +107,25 @@ goodsRecommendApi().then((res: any) => {
 })
 // 商品推荐
 goodsAllApi().then((res: any) => {
-  console.log(res.data.data.list)
+  console.log("all",res.data.data.list)
   all.value = res.data.data.list
 })
 // 全部商品
 
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
-import {savePosition} from '@/js/pageBarScrollTop.js'
 savePosition();
 
+const $router = useRouter()
+function toCommodity(id:any) {
+  // console.log("id",id)
+  $router.push({
+    path:"/commodity",
+    query:{
+      id:id
+    }
+  })
+}
 </script>
 
 <style lang="less" scoped>
@@ -179,7 +193,7 @@ savePosition();
   }
   .class {
     display: flex;
-    justify-content: start;
+    // justify-content: start;
     flex-wrap: nowrap;
     width: 360rem;
     margin: 16rem auto;
@@ -205,6 +219,7 @@ footer {
   // height: 100vh;
   // margin-bottom: 200rem;
   background-color: #f6f6f7;
+  padding-bottom: 80rem;
   .lucky {
     display: flex;
     width: 360rem;
@@ -327,7 +342,7 @@ footer {
           p {
             margin-left: 10rem;
             &:nth-child(1) {
-              line-height: 12rem;
+              line-height: 14rem;
               transform: scale(0.9);
               margin-left: 5rem;
             }

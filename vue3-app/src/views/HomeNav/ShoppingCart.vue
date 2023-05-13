@@ -67,7 +67,7 @@ savePosition();
 
 <style lang="less" scoped>
 div {
-  width: 100vw;
+  // width: 100vw;
   header {
     position: fixed;
     z-index: 99;

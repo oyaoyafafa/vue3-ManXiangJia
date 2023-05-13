@@ -1,13 +1,6 @@
 <template>
   <div class="box">
     <div>
-      <!-- <router-view v-slot="{ Component }">
-        <keep-alive>
-          <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
-        </keep-alive>
-        <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
-      </router-view>  -->
-
       <router-view></router-view>
     </div>
 
@@ -76,8 +69,8 @@ function changePageNum(topageNum) {
 <style lang="scss" scoped>
 .box {
   // background-color: pink;
-  height: 100vh;
-  width: 100vw;
+  // height: 100vh;
+  // width: 100vw;
 
   nav {
     position: fixed;
