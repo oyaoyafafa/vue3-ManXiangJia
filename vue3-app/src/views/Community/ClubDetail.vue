@@ -1,30 +1,33 @@
 <script setup lang="ts">
 import { clubDetailApi, clubArtcleApi } from '@/api/community'
+// import HotEst from '@/components/Community/HotEst.vue'
+import NewEst from '@/components/Community/NewEst.vue'
+
 import { useRouter, useRoute } from 'vue-router'
 
 import { ref } from 'vue'
-const loading = ref(true)
 const $route = useRoute()
-const needId = $route.query.id
-const detail:any = ref({
-    notice:Array,
-    adminDetail:Object
-})
-const Artcle = ref([])
+const isloading = ref(true)
+const active = ref(0)
 
-Promise.all([clubDetailApi(needId), clubArtcleApi(needId, 1)])
-  .then(([res, res1]) => {
-    console.log('rec', res, res1)
+const needId = $route.query.id
+const detail: any = ref({
+  notice: Array,
+  adminDetail: Object
+})
+
+clubDetailApi(needId)
+  .then((res: any) => {
     detail.value = res.data.data
-    Artcle.value = res1.data.data.list
   })
   .finally(() => {
-    loading.value = false
+    isloading.value = false
   })
+
+// ///////////////////////////////////////////vant 组件list
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
 import { savePosition } from '@/js/pageBarScrollTop.js'
-import { reactive } from 'vue'
 savePosition()
 </script>
 
@@ -38,7 +41,7 @@ savePosition()
         }
       ]"
     >
-    <div class="mask"></div>
+      <div class="mask"></div>
       <h1 class="back">
         <i class="back_btn" @click="$router.back()">
           <svg
@@ -88,6 +91,16 @@ savePosition()
         </div>
       </div>
     </div>
+    <div class="tab">
+      <van-tabs v-model:active="active" sticky>
+        <van-tab title="最新">
+          <NewEst :needId="needId" :active="active+1"/>
+        </van-tab>
+        <van-tab title="最热">
+          <NewEst :needId="needId" :active="active+1"/>
+        </van-tab>
+      </van-tabs>
+    </div>
   </div>
 </template>
 
@@ -98,65 +111,63 @@ savePosition()
   background-size: cover;
   position: relative;
   color: white;
-  .mask{
+  .mask {
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: #00000074;
   }
-  .back{
+  .back {
     padding: 10rem;
   }
-  .welcome{
+  .welcome {
     text-align: center;
-    h1{
-        text-align: center;
-        font-size: 18rem;
-        margin-bottom: 5rem;
+    h1 {
+      text-align: center;
+      font-size: 18rem;
+      margin-bottom: 5rem;
     }
-    span{
-        padding: 5rem 20rem;
-        color: #cacccc;
-        background-color: #3636377d;
-        border-radius: 50rem;
+    span {
+      padding: 5rem 20rem;
+      color: #cacccc;
+      background-color: #3636377d;
+      border-radius: 50rem;
     }
   }
-  .admin_info{
+  .admin_info {
     margin-top: 20rem;
     display: flex;
     padding: 10rem;
     justify-content: space-between;
     align-items: center;
-    .admin{
-        display: flex;
-        .adm_name{
-            h3{
-                font-style: 14rem;
-            }
-            p{
-                color: #cacccc;
-            }
-            margin-left: 5rem;
-
+    .admin {
+      display: flex;
+      .adm_name {
+        h3 {
+          font-style: 14rem;
         }
+        p {
+          color: #cacccc;
+        }
+        margin-left: 5rem;
+      }
     }
   }
   .follow_btn {
-      margin-right: 10rem;
-      .no_follow {
-        background-color: #51565d;
-        color: #fff;
-        padding: 5rem 15rem;
-        border-radius: 50rem;
-      }
-      .followed {
-        padding: 5rem 10rem;
-        border-radius: 50rem;
-
-        color: #646464;
-        border: 1px solid #ccc;
-      }
+    margin-right: 10rem;
+    .no_follow {
+      background-color: #51565d;
+      color: #fff;
+      padding: 5rem 15rem;
+      border-radius: 50rem;
     }
-}
+    .followed {
+      padding: 5rem 10rem;
+      border-radius: 50rem;
 
+      color: #646464;
+      border: 1px solid #ccc;
+    }
+  }
+}
 </style>
