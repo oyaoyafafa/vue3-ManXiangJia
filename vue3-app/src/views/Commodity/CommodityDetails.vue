@@ -46,10 +46,14 @@
       </div>
       <ul class="item">
         <li v-for="item in recommend">
+          <img :src="item.listedImage" alt="" />
           <p>{{ item.title }}</p>
+          <p v-if="item.sellPrice != 0">￥{{ item.sellPrice }}</p>
+          <p v-else>￥---</p>
         </li>
       </ul>
     </div>
+    <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
     <footer>
       <van-action-bar style="z-index: 999; margin-bottom: -3rem">
         <van-action-bar-icon icon="service-o" text="客服" />
@@ -63,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { commodityDetails, commodityRecommend } from '@/api/manxiangjia'
+import { commodityDetails, commodityRecommend, recentlyBuy } from '@/api/manxiangjia'
 import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 const deatil = ref<any>([])
@@ -97,10 +101,15 @@ commodityDetails($route.query.id).then((res: any) => {
   deatil.value = res.data.data
 })
 
-// commodityRecommend($route.query.id).then((res: any) => {
-//   console.log(res.data.data.list)
-//   recommend.value = res.data.data
-// })
+commodityRecommend($route.query.id).then((res: any) => {
+  console.log(res.data.data.list)
+  recommend.value = res.data.data.list
+})
+
+recentlyBuy($route.query.id).then((res: any) => {
+  console.log(res)
+  // recommend.value = res.data.data.list
+})
 
 function routerBack() {
   $router.back()
@@ -187,6 +196,29 @@ nav {
         display: flex;
         align-items: center;
         color: #a4a4a4;
+      }
+    }
+    .item {
+      display: flex;
+      justify-content: space-around;
+      li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        P {
+          font-weight: bold;
+          &:nth-child(2) {
+            transform: scale(0.9);
+            width: 120rem;
+          }
+          &:nth-child(3) {
+            padding: 5rem 0;
+          }
+        }
+        img {
+          width: 80rem;
+        }
       }
     }
   }
