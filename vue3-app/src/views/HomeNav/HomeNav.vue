@@ -35,7 +35,6 @@
 
 <script setup>
 
-console.log('wsc merge test');
 
 </script>
 

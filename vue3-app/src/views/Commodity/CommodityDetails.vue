@@ -63,6 +63,8 @@
 </template>
 
 <script setup lang="ts">
+
+
 import { commodityDetails, commodityRecommend } from '@/api/manxiangjia'
 import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
