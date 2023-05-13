@@ -104,17 +104,17 @@ goodsRecommendApi().then((res: any) => {
 })
 // 商品推荐
 goodsAllApi().then((res: any) => {
-  console.log("all",res.data.data.list)
+  console.log('all', res.data.data.list)
   all.value = res.data.data.list
 })
 // 全部商品
 const $router = useRouter()
-function toCommodity(id:any) {
+function toCommodity(id: any) {
   // console.log("id",id)
   $router.push({
-    path:"/commodity",
-    query:{
-      id:id
+    path: '/commodity',
+    query: {
+      id: id
     }
   })
 }
@@ -122,16 +122,21 @@ function toCommodity(id:any) {
 
 <style lang="less" scoped>
 .input {
-  position: relative;
-  width: 360rem;
-  margin: 0 auto;
+  position: fixed;
+  width: 375rem;
+  height: 40rem;
+  background-color: white;
+  top: 0;
+  left: 0;
+  z-index: 999;
   input {
-    width: 100%;
+    width: 360rem;
     border: 1px solid #ebebeb;
     border-radius: 25rem;
     margin-top: 10rem;
     padding: 5rem;
     box-shadow: 0 0px 5px rgba(0, 0, 0, 0.4);
+    margin-left: 7.5rem;
   }
   input::-webkit-input-placeholder {
     color: #cccccc;
@@ -139,7 +144,7 @@ function toCommodity(id:any) {
   .search {
     position: absolute;
     top: 16rem;
-    right: 10rem;
+    right: 15rem;
     background-color: #f4f5f5;
     border-radius: 25rem;
     padding: 0rem 10rem;
@@ -152,7 +157,7 @@ function toCommodity(id:any) {
   width: 360rem;
   height: 136rem;
   margin: 0 auto;
-  margin-top: 16rem;
+  margin-top: 56rem;
   overflow: hidden;
   img {
     width: 100%;

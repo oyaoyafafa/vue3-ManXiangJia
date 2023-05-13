@@ -75,7 +75,7 @@ const commodityRecommend = (id) => axios.get('/api/goodsmanage/app/goods/detailr
     }
 })
 
-// 
+// 最近购买
 // order/app/userorder/lately/ls  
 const recentlyBuy = (id) => axios.get('/api/order/app/userorder/lately/ls',{
     params: {
@@ -85,4 +85,23 @@ const recentlyBuy = (id) => axios.get('/api/order/app/userorder/lately/ls',{
     }
 })
 
-export { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi,luckyStarApi,moplatAllSortApi,goodsPresaleApi,commodityDetails,commodityRecommend,recentlyBuy }
+// 动态
+// userorg/app/article/good/articlelist
+const dynamicApi = (id) => axios.get('/api/userorg/app/article/good/articlelist',{
+    params: {
+        osType:1,
+        goodId:id,
+        pageSize:5,
+        pageNumber:1
+    }
+})
+
+// 评论
+// goodsmanage/app/goods/comment/list/ls
+const commentApi = (id) => axios.get('/api/goodsmanage/app/goods/comment/list/ls',{
+    params: {
+        goodId:id,
+    }
+})
+
+export { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi,luckyStarApi,moplatAllSortApi,goodsPresaleApi,commodityDetails,commodityRecommend,recentlyBuy,dynamicApi,commentApi }

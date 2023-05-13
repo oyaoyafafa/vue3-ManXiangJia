@@ -134,13 +134,13 @@ pointListApi().then((res: any) => {
         li {
           display: flex;
           flex-direction: column;
-          width: 145rem;
+          width: 160rem;
           border-bottom: 1rem solid #f6f6f6;
           &:nth-child(2n) {
             border-left: 1rem solid #f6f6f6;
           }
           img {
-            width: 120rem;
+            width: 160rem;
             margin: 0 auto;
           }
           p {
