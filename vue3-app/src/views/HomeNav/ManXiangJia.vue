@@ -48,7 +48,7 @@
       <div class="recommend">
         <h1>商品推荐</h1>
         <ul class="commendList">
-          <li v-for="item in recommend">
+          <li v-for="item in recommend" @click="toCommodity(item.goodId)">
             <div>
               <img :src="item.tbGoods.listedImage" alt="" />
             </div>
@@ -60,7 +60,7 @@
       <div class="all">
         <h1>全部商品</h1>
         <ul>
-          <li @click="toCommodity" v-for="thing in all">
+          <li @click="toCommodity(thing.id)" v-for="thing in all">
             <img :src="thing.listedImage" alt="" />
             <div class="price">
               <p>{{ thing.title }}</p>
@@ -79,7 +79,6 @@ import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-const $router = useRouter()
 const banner = ref<Array<any>>([])
 // 大图
 const classify = ref<Array<any>>([])
@@ -105,14 +104,18 @@ goodsRecommendApi().then((res: any) => {
 })
 // 商品推荐
 goodsAllApi().then((res: any) => {
-  console.log(res.data.data.list)
+  console.log("all",res.data.data.list)
   all.value = res.data.data.list
 })
 // 全部商品
-function toCommodity() {
-  console.log(111)
+const $router = useRouter()
+function toCommodity(id:any) {
+  // console.log("id",id)
   $router.push({
     path:"/commodity",
+    query:{
+      id:id
+    }
   })
 }
 </script>
@@ -331,7 +334,7 @@ footer {
           p {
             margin-left: 10rem;
             &:nth-child(1) {
-              line-height: 12rem;
+              line-height: 14rem;
               transform: scale(0.9);
               margin-left: 5rem;
             }
