@@ -34,8 +34,8 @@
 </template>
 
 <script setup>
-
-console.log('wsc merge test');
+ 
+console.log('wsc merge test111');
 
 </script>
 
