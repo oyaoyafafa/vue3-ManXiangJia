@@ -5,9 +5,6 @@ import ItemCard from '@/components/Community/ItemCard.vue'
 import { ref } from 'vue'
 export default {
   setup() {
-
-
-
     const list = ref([])
     const loading = ref(false)
     const finished = ref(false)
@@ -49,8 +46,8 @@ export default {
       onLoad()
     }
 
-     // 控制首页五个页面的滚动高度------------------------------------------------------------
-     savePosition();
+    // 控制首页五个页面的滚动高度------------------------------------------------------------
+    savePosition()
     return {
       list,
       onLoad,
@@ -60,14 +57,8 @@ export default {
       refreshing,
       fallList,
       savePosition
-
     }
   },
-  // deactivated() {
-  //   console.log("lkai",this.masonry);
-    
-  //   // masonry.destroy()
-  // }
 }
 </script>
 
@@ -80,32 +71,14 @@ export default {
         @load="onLoad"
         finished-text="没有更多了"
       >
-
-        <!-- column-width="100"
-
         <div
           v-masonry
+          transition-duration="false"
           item-selector=".item"
-          fit-width="2"
-          horizontal-order="true"
-          column-width=".item"
+          class="pets"
           gutter="8"
-          
         >
-        column-width="100"
-
-          gutter="10" -->
-        <div class="fall_list">
-          <div class="fall_left">
-            <lazy-component>
-              <ItemCard v-for="item in fallList(0)" :item="item" />
-            </lazy-component>
-          </div>
-          <div class="fall_right">
-            <lazy-component>
-              <ItemCard v-for="item in fallList(1)" :item="item" />
-            </lazy-component>
-          </div>
+          <ItemCard v-masonry-tile v-for="item in list" :key="item.id" :item="item" class="item" />
         </div>
       </van-list>
     </van-pull-refresh>
@@ -113,13 +86,20 @@ export default {
 </template>
 <style lang="scss" scoped>
 .fall_list {
-  display: flex;
+  display: flex; 
   justify-content: space-between;
   & > div {
     width: 49%;
   }
+ 
 }
+
 .card {
   width: 49%;
 }
+
+.item {
+    width: 49%;
+  }
+
 </style>

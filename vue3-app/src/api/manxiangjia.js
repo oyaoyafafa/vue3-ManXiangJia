@@ -55,5 +55,24 @@ const goodsAllApi = () => axios.get('/api/goodsmanage/app/classify/index/classif
     }
 })
 
+// 商品详情
+// CommodityDetails
+// http://new.mxjclub.com/goodsmanage/app/goods/3241?osType=1
+// userorg/app/article/4175
+const commodityDetails = (id) => axios.get('/api/goodsmanage/app/goods/'+ id, {
+    params: {
+        osType:1,
+    }
+})
 
-export { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi,luckyStarApi,moplatAllSortApi,goodsPresaleApi }
+// http://new.mxjclub.com/goodsmanage/app/goods/detailrecommend/ls?id=3241&pageSize=3&pageNumber=1&osType=1
+//商品详情-商品推荐
+const commodityRecommend = (id) => axios.get('/api/goodsmanage/app/goods/detailrecommend/ls',{
+    params: {
+        osType:1,
+        id:id,
+        pageSize:3
+    }
+})
+
+export { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi,luckyStarApi,moplatAllSortApi,goodsPresaleApi,commodityDetails,commodityRecommend }

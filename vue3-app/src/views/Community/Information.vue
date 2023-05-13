@@ -129,6 +129,7 @@ console.log('info')
 </template>
 
 <style lang="less" scoped>
+
 .search {
   margin: 20rem;
   div {
@@ -186,4 +187,5 @@ console.log('info')
 /deep/ .van-swipe__indicators {
   display: none;
 }
+
 </style>

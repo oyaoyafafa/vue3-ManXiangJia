@@ -3,82 +3,40 @@
     <div>
       <router-view v-slot="{ Component }">
         <keep-alive>
-          <component :is="Component" :key="$route.name" v-if="$route.meta.keepAlive" />
+          <component :is="Component" />
         </keep-alive>
-        <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive" />
-      </router-view> 
-
-      <!-- <router-view></router-view> -->
+      </router-view>
     </div>
 
     <nav>
-      <router-link to="/" @click.native="changePageNum(1)">
-        <img
-          v-if="pageNum === 1"
-          src="../../../public/images/底部导航/ic_tab_shop_select.png"
-          alt=""
-        />
-        <img v-else src="../../../public/images/底部导航/ic_tab_shop_unselect.png" alt="" />
+      <router-link to="/home">
+        <div class="home-icon"></div>
         <p>漫想家</p>
       </router-link>
-      <router-link to="/community" @click.native="changePageNum(2)">
-        <img
-          v-if="pageNum === 2"
-          src="../../../public/images/底部导航/ic_tab_mine_select.png"
-          alt=""
-        />
-        <img v-else src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+      <router-link to="/community">
+        <div class="community-icon"></div>
         <p>社区</p>
       </router-link>
-      <router-link to="/pointShopping" @click.native="changePageNum(3)">
-        <img
-          v-if="pageNum === 3"
-          src="../../../public/images/底部导航/ic_tab_score_store_select.png"
-          alt=""
-        />
-        <img v-else src="../../../public/images/底部导航/ic_tab_score_store_unselect.png" alt="" />
+      <router-link to="/pointShopping">
+        <div class="pointShopping-icon"></div>
         <p>积分商城</p>
       </router-link>
-      <router-link to="/shoppingCart" @click.native="changePageNum(4)">
-        <img
-          v-if="pageNum === 4"
-          src="../../../public/images/底部导航/ic_tab_social_select.png"
-          alt=""
-        />
-        <img v-else src="../../../public/images/底部导航/ic_tab_social_unselect.png" alt="" />
+      <router-link to="/shoppingCart">
+        <div class="shoppingCart-icon"></div>
         <p>购物袋</p>
       </router-link>
-      <router-link to="/about" @click.native="changePageNum(5)">
-        <img
-          v-if="pageNum === 5"
-          src="../../../public/images/底部导航/ic_tab_mine_select.png"
-          alt=""
-        />
-        <img v-else src="../../../public/images/底部导航/ic_tab_mine_unselect.png" alt="" />
+      <router-link to="/about">
+        <div class="about-icon"></div>
         <p>我的</p>
       </router-link>
     </nav>
   </div>
 </template>
 
-<script setup>
-import { reactive, ref, watch } from 'vue'
-// 控制下面导航的高亮
-const pageNum = ref(1)
-function changePageNum(topageNum) {
-  pageNum.value = topageNum
-}
-
-
-
-</script>
+<script setup></script>
 
 <style lang="scss" scoped>
 .box {
-  // background-color: pink;
-  height: 100vh;
-  width: 100vw;
-
   nav {
     position: fixed;
     left: 0;
@@ -96,15 +54,52 @@ function changePageNum(topageNum) {
       display: flex;
       flex-direction: column;
       align-items: center;
-
-      img {
-        display: block;
+      div {
         width: 20rem;
         height: 20rem;
       }
-
-      &.router-link-exact-active {
+      .home-icon {
+        background: url('@/../public/images/底部导航/ic_tab_shop_unselect.png') no-repeat;
+        background-size: cover;
+      }
+      .community-icon {
+        background: url('@/../public/images/底部导航/ic_tab_social_unselect.png') no-repeat;
+        background-size: cover;
+      }
+      .pointShopping-icon {
+        background: url('@/../public/images/底部导航/ic_tab_score_store_unselect.png') no-repeat;
+        background-size: cover;
+      }
+      .shoppingCart-icon {
+        background: url('@/../public/images/底部导航/ic_tab_shopping_unselect.png') no-repeat;
+        background-size: cover;
+      }
+      .about-icon {
+        background: url('@/../public/images/底部导航/ic_tab_mine_unselect.png') no-repeat;
+        background-size: cover;
+      }
+      &.router-link-active {
         color: #404040;
+        .home-icon {
+          background: url('@/../public/images/底部导航/ic_tab_shop_select.png') no-repeat;
+          background-size: cover;
+        }
+        .community-icon {
+          background: url('@/../public/images/底部导航/ic_tab_social_select.png') no-repeat;
+          background-size: cover;
+        }
+        .pointShopping-icon {
+          background: url('@/../public/images/底部导航/ic_tab_score_store_select.png') no-repeat;
+          background-size: cover;
+        }
+        .shoppingCart-icon {
+          background: url('@/../public/images/底部导航/ic_tab_shopping_select.png') no-repeat;
+          background-size: cover;
+        }
+        .about-icon {
+          background: url('@/../public/images/底部导航/ic_tab_mine_select.png') no-repeat;
+          background-size: cover;
+        }
       }
     }
   }
