@@ -20,7 +20,9 @@ export function savePosition() {
   })
   // 激活本页面开始监听滚动事件
   onActivated(() => {
+    
     document.documentElement.scrollTop = $route.meta.savedPosition || 0
+    console.log($route.meta.savedPosition);
     window.addEventListener('scroll', pageScroll)
   })
   // 每次滚动保存滚动值
