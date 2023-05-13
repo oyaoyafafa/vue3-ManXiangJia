@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { communityGoodsCommentApi, communityGoodsDetailApi } from '@/api/community'
+import CommentsItem from '@/components/Community/CommentsItem.vue'
 import { useRouter, useRoute } from 'vue-router'
 
 import { ref } from 'vue'
@@ -123,25 +124,7 @@ savePosition()
       <p class="c_time">{{ detail?.createTime }}</p>
       <p class="all_comment">共{{ comments.length }}条评论</p>
       <ul v-if="comments.length">
-        <li v-for="commentsItem in comments">
-          <van-image
-            width="33rem"
-            height="33rem"
-            round
-            :src="commentsItem?.tbAppUserDetail.header + '?imageView=1&type=webp&thumbnail=247x0'"
-          />
-          <div class="user">
-            <h3 class="user_name">{{ commentsItem?.tbAppUserDetail.nickName }}</h3>
-            <p>
-              <span>{{ commentsItem.content }}</span
-              >{{ commentsItem.createTime }}
-            </p>
-          </div>
-          <div>
-            <van-icon name="like-o" />
-            <span class="like_num">{{ commentsItem.supportNum }}</span>
-          </div>
-        </li>
+        <CommentsItem v-for="commentsItem in comments" :commentsItem="commentsItem" />
       </ul>
     </div>
   </div>
@@ -221,29 +204,7 @@ savePosition()
   }
   ul {
     padding-top: 20rem;
-    li {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 10rem;
-    }
-    .user {
-      margin-left: 10rem;
-      flex: 1;
-      h3 {
-        font-size: 13rem;
-        color: #a2a2a2;
-        margin-bottom: 5rem;
-      }
-      p {
-        font-size: 12rem;
-        color: #a2a2a2;
-        span {
-          font-size: 13rem;
-          color: black;
-          margin-right: 10rem;
-        }
-      }
-    }
+    
   }
 }
 </style>

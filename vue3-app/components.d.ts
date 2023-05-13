@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CommentsItem: typeof import('./src/components/Community/CommentsItem.vue')['default']
     CommunitySearchRes: typeof import('./src/components/Community/CommunitySearchRes.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']

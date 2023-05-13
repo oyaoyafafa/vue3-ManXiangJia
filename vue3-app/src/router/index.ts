@@ -109,6 +109,11 @@ const router = createRouter({
       path:'/clubdetail',
       name:'ClubDetail',
       component: () => import('@/views/Community/ClubDetail.vue'),
+    },
+    {
+      path:'/infoDetail',
+      name:'InfoDetail',
+      component: () => import('@/views/Community/InfoDetail.vue'),
     }
     
 

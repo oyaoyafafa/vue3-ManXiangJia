@@ -2,20 +2,23 @@
 defineProps<{
   downItem: any
 }>()
+import { useRouter, useRoute } from 'vue-router'
+const $router = useRouter()
+const toDetail = (id: any) => {
+  $router.push({
+    path: '/infodetail',
+    query: {
+      id
+    }
+  })
+}
+
 </script>
 
 <template>
-  <!-- :style="{
-          backgroundImage: `url(${downItem.topImage}?fop=imageView/0/w/76/h/76)`
-        }" -->
-  <div class="information">
-    <!-- <div
-      class="img"
-      :style="{
-        backgroundImage: `url(${downItem.topImage}?fop=imageView/0/w/76/h/76)`
-      }"
-    >
-    </div> -->
+
+  <div class="information"  @click="toDetail(downItem.id)">
+  
     <div class="img">
       <img :src="downItem.topImage + '?fop=imageView/0/w/76/h/76)'" alt="" />
     </div>

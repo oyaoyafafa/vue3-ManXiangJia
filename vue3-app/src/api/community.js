@@ -71,12 +71,19 @@ const informationListApi = () => axios.get('/api/userorg/app/news/ls', {
     }
 })
 
-
 // 情报上部分的列表
 const informationBannerApi = () => axios.get('/api/userorg/app/news/recommend/ls', {
     params: {
         pageSize: 10,
         pageNumber: 1
+    }
+})
+
+
+// 情报详情
+const informationDetailApi = (id) => axios.get('/api/userorg/app/news/detail/ls', {
+    params: {
+       id
     }
 })
 
@@ -99,4 +106,4 @@ const communityGoodsCommentApi = (id) => axios.get('/api/userorg/app/article/com
 })
 
 
-export { followRecommendApi, followListApi, recommendFallApi, clubRecommendApi, clubListApi, informationListApi, informationBannerApi ,communityGoodsDetailApi,communityGoodsCommentApi,clubDetailApi,clubArtcleApi}
+export { followRecommendApi, followListApi, recommendFallApi, clubRecommendApi, clubListApi, informationListApi, informationBannerApi ,communityGoodsDetailApi,communityGoodsCommentApi,clubDetailApi,clubArtcleApi,informationDetailApi}

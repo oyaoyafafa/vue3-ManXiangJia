@@ -1,17 +1,18 @@
 <script setup lang="ts">
-
 import { informationBannerApi, informationListApi } from '@/api/community'
 // import InfoBanner from '@/components/Community/InfoBanner.vue'
 import InfoItem from '@/components/Community/InfoItem.vue'
 
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+const $router = useRouter()
 
-
-
-const bannerList = ref<Array<{
-  topImage:any
-  id:Number
-}>>([])
+const bannerList = ref<
+  Array<{
+    topImage: any
+    id: Number
+  }>
+>([])
 const downList = ref([])
 const loading = ref(true)
 
@@ -25,13 +26,19 @@ Promise.all([informationBannerApi(), informationListApi()])
     loading.value = false
   })
 
-
+const toDetail = (id: any) => {
+  $router.push({
+    path: '/infodetail',
+    query: {
+      id
+    }
+  })
+}
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
-import {savePosition} from '@/js/pageBarScrollTop.js'
-savePosition();
-console.log('info');
-
+import { savePosition } from '@/js/pageBarScrollTop.js'
+savePosition()
+console.log('info')
 </script>
 
 <template>
@@ -47,15 +54,15 @@ console.log('info');
       </div>
     </div>
     <div class="banner_list">
-      <van-skeleton v-show="loading" >
+      <van-skeleton v-show="loading">
         <template #template>
           <div :style="{ display: 'flex', width: '100%' }">
-            <van-skeleton-image :style="{flex: '1'}" />
+            <van-skeleton-image :style="{ flex: '1' }" />
           </div>
         </template>
       </van-skeleton>
-      <van-swipe :loop="false" lazy-render v-show="!loading">
-        <van-swipe-item
+      <van-swipe  lazy-render v-show="!loading">
+        <van-swipe-item  @click.native="toDetail(bannerItem.id)"
           :style="[
             {
               backgroundImage: `url(${bannerItem.topImage}?imageView=1&type=webp&thumbnail=247x0)`
@@ -63,7 +70,7 @@ console.log('info');
           ]"
           v-for="bannerItem in bannerList"
         >
-          <span class="to_see">去看看</span>
+          <span class="to_see" >去看看</span>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -75,6 +82,7 @@ console.log('info');
         :loading="loading"
         v-show="!loading"
       />
+
       <div>
         <van-skeleton v-show="loading">
           <template #template>
