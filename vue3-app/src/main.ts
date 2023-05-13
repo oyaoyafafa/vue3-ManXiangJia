@@ -24,7 +24,7 @@ app.mount('#app')
 
 
 // vant组件引入
-app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).app.use(Checkbox).app.use(CheckboxGroup);
+app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).use(Checkbox).use(CheckboxGroup);
 app.use(Lazyload, {
     lazyComponent: true,
 });
