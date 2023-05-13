@@ -14,6 +14,7 @@ const router = createRouter({
     {
       name: 'HomeNav',
       path: '/',
+      redirect:'/home',
       component: () => import('@/views/HomeNav/HomeNav.vue'),
       meta: {
         keepAlive: true
@@ -22,7 +23,7 @@ const router = createRouter({
         {
           //漫想家
           name: 'ManXiangJia',
-          path: '',
+          path: 'home',
           component: () => import('@/views/HomeNav/ManXiangJia.vue'),
           meta: {
             keepAlive: true 
@@ -33,9 +34,9 @@ const router = createRouter({
           name: 'Community',
           path: 'community',
           component: () => import('@/views/HomeNav/Community.vue'),
-          meta: {
-            keepAlive: true
-          },
+          // meta: {
+          //   keepAlive: true
+          // },
           children: [
             {
               name: 'Follow',
@@ -106,6 +107,15 @@ const router = createRouter({
       path:'/communitysearch',
       name:'CommunitySearch',
       component:CommunitySearch
+    }
+    ,{
+      //商品详情
+      name: 'Commodity',
+      path: '/commodity',
+      component: () => import('@/views/Commodity/CommodityDetails.vue'),
+      meta: {
+        keepAlive: true
+      },
     }
     
 
