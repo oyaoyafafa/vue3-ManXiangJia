@@ -36,7 +36,6 @@ export default {
         console.log(list)
 
 
-
         if (list.value.length >= 20) {
           finished.value = true
 
@@ -86,16 +85,17 @@ export default {
         finished-text="没有更多了"
         @load="onLoad"
       >
-        <div
-          v-masonry="recId"
-          transition-duration="0s"
+          <!-- fit-width="true" -->
+          <!-- origin-left="false" -->
+
+      <div
+          v-masonry
+          transition-duration="false"
           item-selector=".item"
           class="pets"
           gutter="8"
-          destroy-delay="0"
         >
-          <!-- fit-width="true" -->
-          <!-- origin-left="false" -->
+
           <ItemCard v-masonry-tile v-for="item in list" :key="item.id" :item="item" class="item" />
         </div>
 
@@ -130,4 +130,8 @@ export default {
 .item {
   width: 49%;
 }
+.item {
+  width: 49%;
+}
+
 </style>
