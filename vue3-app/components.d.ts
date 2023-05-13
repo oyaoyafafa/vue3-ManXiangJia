@@ -44,5 +44,5 @@ declare module '@vue/runtime-core' {
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
-  } 
+  }
 }
