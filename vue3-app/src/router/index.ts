@@ -1,12 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-import Follow from '@/views/Community/Follow.vue'
-import Club from '@/views/Community/Club.vue'
-import Information from '@/views/Community/Information.vue'
-import Recommend from '@/views/Community/Recommend.vue'
-import CommunitySearch from '@/views/Community/Search.vue'
-
-
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -14,6 +7,7 @@ const router = createRouter({
     {
       name: 'HomeNav',
       path: '/',
+      redirect:'/home',
       component: () => import('@/views/HomeNav/HomeNav.vue'),
       meta: {
         keepAlive: true
@@ -22,7 +16,7 @@ const router = createRouter({
         {
           //漫想家
           name: 'ManXiangJia',
-          path: '',
+          path: 'home',
           component: () => import('@/views/HomeNav/ManXiangJia.vue'),
           meta: {
             keepAlive: true 
@@ -33,14 +27,14 @@ const router = createRouter({
           name: 'Community',
           path: 'community',
           component: () => import('@/views/HomeNav/Community.vue'),
-          meta: {
-            keepAlive: true
-          },
+          // meta: {
+          //   keepAlive: true
+          // },
           children: [
             {
               name: 'Follow',
               path: '/community/follow',
-              component: Follow,
+              component: () => import( '@/views/Community/Follow.vue'),
               meta: {
                 keepAlive: true
               },
@@ -48,7 +42,7 @@ const router = createRouter({
             {
               name: 'Recommend',
               path: '/community',
-              component: Recommend,
+              component: () => import( '@/views/Community/Recommend.vue'),
               meta: {
                 keepAlive: true
               },
@@ -56,7 +50,7 @@ const router = createRouter({
             {
               name: 'Club',
               path: '/community/club',
-              component: Club,
+              component: () => import('@/views/Community/Club.vue'),
               meta: {
                 keepAlive: true
               },
@@ -64,7 +58,7 @@ const router = createRouter({
             {
               name: 'Information',
               path: '/community/information',
-              component: Information,
+              component: () => import('@/views/Community/Information.vue'),
               meta: {
                 keepAlive: true
               },
@@ -87,7 +81,8 @@ const router = createRouter({
           path: 'shoppingCart',
           component: () => import('@/views/HomeNav/ShoppingCart.vue'),
           meta: {
-            keepAlive: true
+            keepAlive: true,
+            savedPosition:0
           }
         },
         {
@@ -104,21 +99,46 @@ const router = createRouter({
     {
       path:'/communitysearch',
       name:'CommunitySearch',
-      component:CommunitySearch
+      component: () => import( '@/views/Community/Search.vue'),
+    },
+    {
+      path:'/communitygoodsdetail',
+      name:'GoodsDetail',
+      component: () => import('@/views/Community/GoodsDetail.vue'),
+    },
+    {
+      path:'/clubdetail',
+      name:'ClubDetail',
+      component: () => import('@/views/Community/ClubDetail.vue'),
+    },
+    {
+      path:'/infoDetail',
+      name:'InfoDetail',
+      component: () => import('@/views/Community/InfoDetail.vue'),
     }
     ,{
       //商品详情
       name: 'Commodity',
       path: '/commodity',
       component: () => import('@/views/Commodity/CommodityDetails.vue'),
-      meta: {
-        keepAlive: true
-      },
+    },
+    {
+      path:'/login',
+      name:'Login',
+      component: () => import('@/views/Login/Login.vue'),
     }
-    
 
-  ]
 
+  ],
+  // 仅当通过浏览器前进/后退 savedPosition 才有效
+  // scrollBehavior (to, from, savedPosition) {
+  //   console.log('scrollBehavior启动了',savedPosition);
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   } else {
+  //     return {top:0}
+  //   }
+  // }
 })
 
 

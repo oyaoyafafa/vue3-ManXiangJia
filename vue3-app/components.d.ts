@@ -9,6 +9,7 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    CommentsItem: typeof import('./src/components/Community/CommentsItem.vue')['default']
     CommunitySearchRes: typeof import('./src/components/Community/CommunitySearchRes.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
@@ -19,6 +20,7 @@ declare module '@vue/runtime-core' {
     InfoBanner: typeof import('./src/components/Community/InfoBanner.vue')['default']
     InfoItem: typeof import('./src/components/Community/InfoItem.vue')['default']
     ItemCard: typeof import('./src/components/Community/ItemCard.vue')['default']
+    NewEst: typeof import('./src/components/Community/NewEst.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
@@ -26,6 +28,8 @@ declare module '@vue/runtime-core' {
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
     VanCell: typeof import('vant/es')['Cell']
+    VanCheckbox: typeof import('vant/es')['Checkbox']
+    VanDivider: typeof import('vant/es')['Divider']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanIndexAnchor: typeof import('vant/es')['IndexAnchor']

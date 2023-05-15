@@ -1,53 +1,94 @@
 <script setup lang="ts">
-import { clubRecommendApi, clubListApi } from "@/api/community";
-import { ref } from "vue";
-const clubRecommendList = ref([])
-const clubAllList = ref([])
+import { clubRecommendApi, clubListApi } from '@/api/community'
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+const $router = useRouter()
+const clubRecommendList = ref<
+  Array<{
+    logoImage: any
+    id: number
+    name: string
+  }>
+>([])
+const clubAllList = ref<
+  Array<{
+    logoImage: any
+    id: number
+    name: string
+    firstCode:number
+  }>
+>([])
 const loading = ref(true)
 
-Promise.all([clubRecommendApi(),clubListApi()]).then(([res,res1])=>{
-  // console.log( "rec",res,res1);
-  clubRecommendList.value = res.data.data.list
-  clubAllList.value = res1.data.data
-  
-}) .finally(() => {
-  loading.value  = false;
-});
-console.log('club');
+Promise.all([clubRecommendApi(), clubListApi()])
+  .then(([res, res1]) => {
+    // console.log( "rec",res,res1);
+    clubRecommendList.value = res.data.data.list
+    clubAllList.value = res1.data.data
+  })
+  .finally(() => {
+    loading.value = false
+  })
 
+const toDetail = (id: any) => {
+  $router.push({
+    path: '/clubdetail',
+    query: {
+      id
+    }
+  })
+}
+console.log('club')
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import { savePosition } from '@/js/pageBarScrollTop.js'
+savePosition()
 </script>
 
 <template>
-  <div class="club">
-    <van-loading color="#0094ff" v-show="loading"/>
+  <div class="club" style="overflow-x:hidden">
+    <van-loading color="#0094ff" v-show="loading" />
     <div class="rec_list" v-show="!loading">
-      <p style="font-size: 14rem; color: #2c2c2c;">推荐</p>
+      <p style="font-size: 14rem; color: #2c2c2c">推荐</p>
       <ul>
-        <li v-for="recItem in clubRecommendList">
-          <van-image :src="recItem.logoImage + '?imageView=1&type=webp&thumbnail=247x0'
-            " round width="50rem" height="50rem" />
+        <li v-for="recItem in clubRecommendList" @click="toDetail(recItem.id)">
+          <van-image
+            :src="recItem.logoImage + '?imageView=1&type=webp&thumbnail=247x0'"
+            round
+            width="50rem"
+            height="50rem"
+          />
           <p>{{ recItem.name }}</p>
-
         </li>
       </ul>
     </div>
     <div class="all_list" v-show="!loading">
       <van-index-bar highlight-color="black">
         <!-- firstCode -->
-        <div v-for="(cluballItem ,index) in clubAllList">
-          <van-index-anchor :index="cluballItem.firstCode"  v-show="clubAllList.filter(o => o.firstCode === cluballItem.firstCode).length > 1 ? (clubAllList.findIndex(o => o.firstCode === cluballItem.firstCode) ===index ?  1: 0 ) :  1"/>
-          <van-cell>
-            <van-image :src="cluballItem.logoImage + '?imageView=1&type=webp&thumbnail=247x0'
-              " round width="30rem" height="30rem" />
+        <div v-for="(cluballItem, index) in clubAllList">
+          <van-index-anchor
+            :index="cluballItem.firstCode"
+            v-show="
+              clubAllList.filter((o) => o.firstCode === cluballItem.firstCode).length > 1
+                ? clubAllList.findIndex((o) => o.firstCode === cluballItem.firstCode) === index
+                  ? 1
+                  : 0
+                : 1
+            "
+          />
+          <van-cell @click="toDetail(cluballItem.id)">
+            <van-image
+              :src="cluballItem.logoImage + '?imageView=1&type=webp&thumbnail=247x0'"
+              round
+              width="30rem"
+              height="30rem"
+            />
             <p>{{ cluballItem.name }}</p>
           </van-cell>
         </div>
 
         <!-- {{  cluballItem.name}} -->
         <!-- </van-cell> -->
-
-
-
       </van-index-bar>
     </div>
   </div>
@@ -68,7 +109,6 @@ console.log('club');
       flex-flow: column;
       align-items: center;
       margin-bottom: 20rem;
-
     }
   }
 }
@@ -89,26 +129,25 @@ console.log('club');
     display: flex;
     align-items: center;
     color: black;
-   
-
 
     .van-image {
       margin-right: 10rem;
     }
   }
 
+
   /deep/.van-index-anchor {
     width: 100vw;
     transform: translateX(-10rem);
   }
-/deep/.van-cell{
-  border-bottom: 1rem solid #f4f4f4;
-}
+  /deep/.van-cell {
+    border-bottom: 1rem solid #f4f4f4;
+  }
   /deep/.van-index-bar__sidebar {
     background-color: #e6e6e6;
     border-radius: 50rem;
     padding: 5rem 0;
-    right: 2rem;
+    right: 382rem;
 
     span {
       padding: 0 3rem;
@@ -116,4 +155,8 @@ console.log('club');
     }
   }
 }
+// .club {
+//   height: calc(100vh - 44rem - 60rem);
+//   overflow: scroll;
+// }
 </style>

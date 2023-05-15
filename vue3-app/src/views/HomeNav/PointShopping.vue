@@ -40,6 +40,7 @@
 import { pointListApi } from '@/api/pointShopping'
 import { ref } from 'vue'
 import { showToast } from 'vant'
+import {savePosition} from '@/js/pageBarScrollTop.js'
 const conversion = ref<Array<any>>([])
 const loading = ref(false)
 
@@ -56,6 +57,9 @@ pointListApi().then((res: any) => {
   console.log(res.data.data.list)
   conversion.value = res.data.data.list
 })
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+savePosition();
 </script>
 
 <style lang="scss" scoped>

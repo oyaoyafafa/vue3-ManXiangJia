@@ -1,14 +1,18 @@
 <script setup lang="ts">
-
 import { informationBannerApi, informationListApi } from '@/api/community'
 // import InfoBanner from '@/components/Community/InfoBanner.vue'
 import InfoItem from '@/components/Community/InfoItem.vue'
 
 import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+const $router = useRouter()
 
-
-
-const bannerList = ref([])
+const bannerList = ref<
+  Array<{
+    topImage: any
+    id: Number
+  }>
+>([])
 const downList = ref([])
 const loading = ref(true)
 
@@ -21,6 +25,20 @@ Promise.all([informationBannerApi(), informationListApi()])
   .finally(() => {
     loading.value = false
   })
+
+const toDetail = (id: any) => {
+  $router.push({
+    path: '/infodetail',
+    query: {
+      id
+    }
+  })
+}
+
+// 控制首页五个页面的滚动高度------------------------------------------------------------
+import { savePosition } from '@/js/pageBarScrollTop.js'
+savePosition()
+console.log('info')
 </script>
 
 <template>
@@ -36,24 +54,23 @@ Promise.all([informationBannerApi(), informationListApi()])
       </div>
     </div>
     <div class="banner_list">
-      <van-skeleton v-show="loading" >
+      <van-skeleton v-show="loading">
         <template #template>
           <div :style="{ display: 'flex', width: '100%' }">
-            <van-skeleton-image :style="{flex: '1'}" />
+            <van-skeleton-image :style="{ flex: '1' }" />
           </div>
         </template>
       </van-skeleton>
-      <van-swipe :loop="false" lazy-render v-show="!loading">
-        <van-swipe-item
+      <van-swipe  lazy-render v-show="!loading">
+        <van-swipe-item  @click.native="toDetail(bannerItem.id)"
           :style="[
             {
               backgroundImage: `url(${bannerItem.topImage}?imageView=1&type=webp&thumbnail=247x0)`
             }
           ]"
           v-for="bannerItem in bannerList"
-          :key="bannerItem.id"
         >
-          <span class="to_see">去看看</span>
+          <span class="to_see" >去看看</span>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -65,6 +82,7 @@ Promise.all([informationBannerApi(), informationListApi()])
         :loading="loading"
         v-show="!loading"
       />
+
       <div>
         <van-skeleton v-show="loading">
           <template #template>
@@ -111,6 +129,7 @@ Promise.all([informationBannerApi(), informationListApi()])
 </template>
 
 <style lang="less" scoped>
+
 .search {
   margin: 20rem;
   div {
@@ -168,4 +187,5 @@ Promise.all([informationBannerApi(), informationListApi()])
 /deep/ .van-swipe__indicators {
   display: none;
 }
+
 </style>
