@@ -8,8 +8,9 @@ import App from './App.vue'
 import router from './router'
 
 
-import { List, PullRefresh, Image as VanImage, Lazyload ,Icon ,Tab, Tabs, IndexBar, IndexAnchor,Loading, Swipe, SwipeItem,Search   } from 'vant';
+import { List, PullRefresh, Image as VanImage, Lazyload ,Icon ,Tab, Tabs, IndexBar, IndexAnchor,Loading, Swipe, SwipeItem,Search  ,Sticky  } from 'vant';
 import { VueMasonryPlugin } from 'vue-masonry';
+import 'swiper/dist/css/swiper.min.css';
 
 
 const app = createApp(App)
@@ -24,7 +25,7 @@ app.mount('#app')
 
 
 // vant组件引入
-app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search )
+app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).use(Sticky )
 app.use(Lazyload, {
     lazyComponent: true,
 });
