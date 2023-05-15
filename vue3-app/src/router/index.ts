@@ -97,24 +97,34 @@ const router = createRouter({
       ]
     },
     {
+      // 社区搜索
       path:'/communitysearch',
       name:'CommunitySearch',
       component: () => import( '@/views/Community/Search.vue'),
     },
     {
+      // 社区卡片详情
       path:'/communitygoodsdetail',
       name:'GoodsDetail',
       component: () => import('@/views/Community/GoodsDetail.vue'),
     },
     {
+      // 社区部落详情
       path:'/clubdetail',
       name:'ClubDetail',
       component: () => import('@/views/Community/ClubDetail.vue'),
     },
     {
+      // 社区情报详情
       path:'/infoDetail',
       name:'InfoDetail',
       component: () => import('@/views/Community/InfoDetail.vue'),
+    },
+    {
+      // 用户详情
+      path:'/uerinfo',
+      name:'UserInfo',
+      component: () => import('@/views/Community/UserInfo.vue'),
     }
     ,{
       //商品详情

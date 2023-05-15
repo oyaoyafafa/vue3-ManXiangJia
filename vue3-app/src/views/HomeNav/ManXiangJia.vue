@@ -90,6 +90,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { savePosition } from '@/js/pageBarScrollTop.js'
 import { onMounted } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
 onMounted(() => {
   new Swiper('.swiper-container', {
