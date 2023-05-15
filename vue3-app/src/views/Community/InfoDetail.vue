@@ -1,45 +1,27 @@
 <script setup lang="ts">
-import { informationDetailApi, informationBannerApi,communityInfoCommentApi } from '@/api/community'
+import { infoDetailStore } from '@/stores/community/infoDetail.ts'
+import { storeToRefs } from 'pinia'
+import { onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import CommentsItem from '@/components/Community/CommentsItem.vue'
+import Swiper from 'swiper'
 
-
-import { ref } from 'vue'
-const loading = ref(true)
 const $route = useRoute()
 const needId = $route.query.id
-const detail: any = ref(null)
-const bannerList = ref<
-  Array<{
-    topImage: any
-    id: Number
-  }>
->([])
-const comments = ref<
-  Array<{
-    tbAppUserDetail: any
-    createTime: Number
-    supportNum: Number
-    content: string
-  }>
->([])
-
-Promise.all([informationBannerApi(), informationDetailApi(needId),communityInfoCommentApi(needId)])
-  .then(([res, res1,res2]) => {
-    // console.log( "rec",res,res1);
-    bannerList.value = res.data.data
-    detail.value = res1.data.data
-    comments.value = res2.data.data.list
-
-
+const infoDetail = infoDetailStore()
+const { detail, bannerList, loading, comments } = storeToRefs(infoDetail)
+const { getInfoDetail } = infoDetail
+getInfoDetail(needId)
+// 使用swiper组件
+onMounted(() => {
+  new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    slidesPerView: 'auto',
+    paginationClickable: true, // spaceBetween: 30, // freeMode: true,
+    observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+    observeParents: true // 修改swiper的父元素时，自动初始化swiper
   })
-  .finally(() => {
-    loading.value = false
-  })
-
-// 控制首页五个页面的滚动高度------------------------------------------------------------
-import { savePosition } from '@/js/pageBarScrollTop.js'
-savePosition()
+})
 </script>
 
 <template>
@@ -83,19 +65,35 @@ savePosition()
     <div class="footer">
       <p class="top_tit"><i>文章为原创作品</i></p>
       <h1>文章推荐</h1>
-      <div class="recBanner"></div>
+      <div class="recBanner">
+        <div class="swiper-container swiper-selectedSong">
+          <div class="swiper-wrapper">
+            <div
+              class="swiper-slide select-item"
+              v-for="bannerItem in bannerList"
+              :style="{
+                backgroundImage: `url(${bannerItem.topImage}?imageView=1&type=webp&thumbnail=247x0)`
+              }"
+            ></div>
+          </div>
+        </div>
+      </div>
       <div class="comments">
-        <p>共有{{  comments.length}}条评论</p>
+        <p>共有{{ comments.length }}条评论</p>
         <ul>
           <CommentsItem v-for="commentsItem in comments" :commentsItem="commentsItem" />
         </ul>
       </div>
+      <div class="footer_img">
+      <img src="../../../public/images/ease_default_avatar.png" alt="">
+      <p>没有更多了</p>
+    </div>
     </div>
   </div>
 </template>
 
 <style lang="less" scoped>
-.back_btn{
+.back_btn {
   position: fixed;
   top: 15rem;
   left: 10rem;
@@ -138,20 +136,32 @@ savePosition()
     }
   }
 }
-.footer{
-  i{
+.footer {
+  i {
     color: #919191;
   }
-  h1{
+  h1 {
     margin: 10rem 0;
     font-size: 16rem;
     font-weight: bold;
   }
   padding: 0 10rem;
-  .comments{
-    p{
+  .comments {
+    p {
       color: #a1a1a1;
     }
   }
 }
+.recBanner {
+  margin-bottom: 10rem;
+  .swiper-slide {
+    width: 125rem;
+    height: 125rem;
+    border-radius: 10rem;
+    margin-left: 10rem;
+    background-size: cover;
+    background-position: center;
+  }
+}
+
 </style>
