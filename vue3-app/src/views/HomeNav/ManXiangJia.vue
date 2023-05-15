@@ -18,11 +18,21 @@
           <img src="../../../public/images/sel_company.png" alt="" />
         </p>
       </div>
-      <div class="class">
+      <!-- <div class="class">
         <span v-for="things in classify">
           {{ things.name }}
         </span>
-      </div>
+      </div> -->
+      <!-- <div class="swiper-container swiper-selectedSong">
+        <div class="swiper-wrapper">
+          <div
+            class="swiper-slide select-item class"
+            v-for="things in classify"
+          >
+          {{ things.name }}
+        </div>
+        </div>
+      </div> -->
     </div>
     <div class="newUser">
       <img src="../../../public/images/我的/ic_main_poster.jpg" alt="" />
@@ -74,13 +84,22 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
 import { bannerApi, moplaySortApi, goodsRecommendApi, goodsAllApi } from '@/api/manxiangjia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import {savePosition} from '@/js/pageBarScrollTop.js'
+import { savePosition } from '@/js/pageBarScrollTop.js'
+import { onMounted } from 'vue'
 
+onMounted(() => {
+  new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    slidesPerView: 'auto',
+    paginationClickable: true, // spaceBetween: 30, // freeMode: true,
+    observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+    observeParents: true // 修改swiper的父元素时，自动初始化swiper
+  })
+})
 
 const banner = ref<Array<any>>([])
 // 大图
@@ -112,9 +131,8 @@ goodsAllApi().then((res: any) => {
 })
 // 全部商品
 
-
 // 控制首页五个页面的滚动高度------------------------------------------------------------
-savePosition();
+savePosition()
 
 const $router = useRouter()
 function toCommodity(id: any) {
