@@ -6,7 +6,7 @@ import { useRouter, useRoute } from 'vue-router'
 const $router = useRouter()
 // console.log();
 
-const toDetail = (id:any) => {
+const toDetail = (id: any) => {
   $router.push({
     path: '/communitygoodsdetail',
     query: {
@@ -18,26 +18,18 @@ const toDetail = (id:any) => {
 
 <template>
   <div class="item" v-masonry-tile @click="toDetail(item.id)">
-    <van-image
-      :src="
-        item.images[0].videoImage || item.images[0].url + '?imageView=1&type=webp&thumbnail=247x0'
-      "
-      width="173rem"
-      height="auto"
-    />
+    <van-image :src="item.images[0].videoImage || item.images[0].url + '?imageView=1&type=webp&thumbnail=247x0'
+      " width="173rem" height="auto" />
     <div class="desc">
       <h3>{{ item.title }}</h3>
       <div class="author">
-        <van-image
-          :src="item.isUserDetail.header + '?imageView=1&type=webp&thumbnail=247x0'"
-          round
-          width="15rem"
-          height="15rem"
-        />
+        <van-image :src="item.isUserDetail.header + '?imageView=1&type=webp&thumbnail=247x0'" round width="15rem"
+          height="15rem" />
         <p>{{ item.isUserDetail.nickName }}</p>
         <span><van-icon name="like-o" class="like_o" />{{ item.supportNum }}</span>
       </div>
     </div>
+   
   </div>
 </template>
 
@@ -47,7 +39,7 @@ const toDetail = (id:any) => {
   margin-bottom: 15rem;
 
   .desc {
-    width:173rem ;
+    width: 173rem;
 
     h3 {
       font-size: 14rem;
@@ -79,6 +71,8 @@ const toDetail = (id:any) => {
       }
     }
   }
+
+ 
 
   /deep/ img {
     border-top-left-radius: 5rem;

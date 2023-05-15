@@ -2,7 +2,7 @@
   <div class="all">
     <div class="top_nav">
       <main>
-        <van-tabs v-model:active="active" animated >
+        <van-tabs v-model:active="active" animated lazy-render swipeable>
           <van-tab title="关注" name="/follow" to="/community/follow">
             <Follow />
           </van-tab>

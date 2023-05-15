@@ -8,9 +8,9 @@ const followRecommendApi = () => axios.get('/api/userorg/app/focus', {
 })
 
 // 关注后的推荐列表
-const followListApi = () => axios.get('/api/userorg/app/article/attentionlist', {
+const followListApi = (n) => axios.get('/api/userorg/app/article/attentionlist', {
     params: {
-        pageNumber: 1,
+        pageNumber: n,
         pageSize: 10,
         osType: 1
     }
@@ -113,6 +113,9 @@ const communityInfoCommentApi = (id) => axios.get('/api/userorg/app/news/comment
         pageSize:10,
     }
 })
+
+
+
 
 
 

@@ -6,7 +6,7 @@ import { useRouter, useRoute } from 'vue-router'
 const $router = useRouter()
 const toDetail = (id: any) => {
   $router.push({
-    path: '/infodetail',
+    path: '/uerinfo',
     query: {
       id
     }
@@ -15,7 +15,7 @@ const toDetail = (id: any) => {
 </script>
 
 <template>
-  <div class="comments" @click="toDetail(commentsItem.id)">
+  <div class="comments" @click="toDetail(commentsItem?.detail?.userId ||commentsItem?.tbAppUserDetail?.userId)">
     <van-image
       width="33rem"
       height="33rem"
