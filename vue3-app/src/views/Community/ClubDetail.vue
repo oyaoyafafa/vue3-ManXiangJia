@@ -5,7 +5,7 @@ import NewEst from '@/components/Community/NewEst.vue'
 
 import { useRouter, useRoute } from 'vue-router'
 
-import { ref } from 'vue'
+import { ref,watch } from 'vue'
 const $route = useRoute()
 const isloading = ref(true)
 const active = ref(0)
@@ -24,11 +24,71 @@ clubDetailApi(needId)
     isloading.value = false
   })
 
-// ///////////////////////////////////////////vant 组件list
+// ///////////////////////////////////////////vant 组件list latestList
+const latestloading = ref(false)
+const latestfinished = ref(false)
+const latestrefreshing = ref(false)
 
-// 控制首页五个页面的滚动高度------------------------------------------------------------
-import { savePosition } from '@/js/pageBarScrollTop.js'
-savePosition()
+const newloading = ref(false)
+const newfinished = ref(false)
+const newrefreshing = ref(false)
+
+const latestList = ref<
+  Array<{
+    id: Number
+  }>
+>([])
+
+const newList = ref<
+  Array<{
+    id: Number
+  }>
+>([])
+
+const onLoad = (needId: any, orderType: any) => {
+  clubArtcleApi(needId, orderType).then((res: any) => {
+    if (orderType == 1) {
+      if (latestrefreshing.value) {
+        latestList.value = []
+        latestrefreshing.value = false
+      }
+      latestList.value = res.data.data.list
+      latestloading.value = false
+      console.log(latestList)
+      if (latestList.value.length >= 1) {
+        latestfinished.value = true
+      }
+    } else if (orderType == 2) {
+      if (newrefreshing.value) {
+        newList.value = []
+        newrefreshing.value = false
+      }
+      newList.value = res.data.data.list
+      newloading.value = false
+      console.log(newList)
+      if (newList.value.length >= 1) {
+        newfinished.value = true
+      }
+    }
+  })
+}
+onLoad(needId,1)
+onLoad(needId,2)
+const onRefresh = (needId: any, orderType: any) => {
+  if (orderType == 1) {
+    // 清空列表数据
+    latestfinished.value = false
+    // 重新加载数据
+    // 将 loading 设置为 true，表示处于加载状态
+    latestloading.value = true
+    onLoad(needId, orderType)
+  } else if (orderType == 2) {
+    newfinished.value = false
+    newloading.value = true
+    onLoad(needId, orderType)
+  }
+}
+
 </script>
 
 <template>
@@ -92,12 +152,64 @@ savePosition()
       </div>
     </div>
     <div class="tab">
-      <van-tabs v-model:active="active" sticky>
+      <van-tabs ref="tabs" v-model:active="active" sticky :lazy-render="false" @resize="resize">
         <van-tab title="最新">
-          <NewEst :needId="needId" :active="active+1"/>
+          <!-- <NewEst   :needId="needId" :active="1"/> -->
+          <div class="new" style="height: 100vh; overflow: auto">
+            <van-pull-refresh v-model="latestrefreshing" @refresh="onRefresh(needId, active + 1)">
+              <van-list
+                v-model:loading="latestloading"
+                :finished="latestfinished"
+                finished-text="没有更多了"
+                @load="onLoad(needId, active + 1)"
+              >
+                <div
+                  v-masonry
+                  transition-duration="false"
+                  item-selector=".item"
+                  class="pets"
+                  gutter="5"
+                >
+                  <ItemCard
+                    v-masonry-tile
+                    v-for="item in latestList"
+                    :key="item.id"
+                    :item="item"
+                    class="item"
+                  />
+                </div>
+              </van-list>
+            </van-pull-refresh>
+          </div>
         </van-tab>
         <van-tab title="最热">
-          <NewEst :needId="needId" :active="active+1"/>
+          <!-- <NewEst :needId="needId" :active="2" /> -->
+          <div class="new" style="height: 100vh; overflow: auto">
+            <van-pull-refresh v-model="newrefreshing" @refresh="onRefresh(needId, active + 1)">
+              <van-list
+                v-model:loading="newloading"
+                :finished="newfinished"
+                finished-text="没有更多了"
+                @load="onLoad(needId, active + 1)"
+              >
+                <div
+                  v-masonry
+                  transition-duration="false"
+                  item-selector=".item"
+                  class="pets"
+                  gutter="5"
+                >
+                  <ItemCard
+                    v-masonry-tile
+                    v-for="item in newList"
+                    :key="item.id"
+                    :item="item"
+                    class="item"
+                  />
+                </div>
+              </van-list>
+            </van-pull-refresh>
+          </div>
         </van-tab>
       </van-tabs>
     </div>
