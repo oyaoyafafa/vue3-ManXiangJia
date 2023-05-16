@@ -127,12 +127,12 @@ const orderDetails = (id) =>
 
 // goodsmanage/app/classify/classifygoods/ls
 // 模玩分类详情
-const classifyApi = (id,name) =>
+const classifyApi = (id,name,type) =>
   axios.get('/api/goodsmanage/app/classify/classifygoods/ls', {
     params: {
       id: id,
       title:name,
-      orderType:1
+      orderType:type
     }
   })
 

@@ -11,7 +11,8 @@
       <van-share-sheet v-model:show="showShare" :options="options" />
     </header>
     <section>
-      <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 1" alt="" />
+      <!-- <img v-show="img.type === 1" v-for="img in deatil.images " :src="img.url" alt="" /> -->
+      <img v-if="deatil.images" :src="deatil.images[0].url" />
       <h1>￥{{ deatil.totalPrice }}</h1>
       <h2>{{ deatil.title }}</h2>
       <p
@@ -42,7 +43,7 @@
         </p>
       </div>
       <ul class="item">
-        <li v-for="item in recommend">
+        <li @click="toCommodity(item.id)" v-for="item in recommend">
           <img :src="item.listedImage" alt="" />
           <p>{{ item.title }}</p>
           <p v-if="item.sellPrice != 0">￥{{ item.sellPrice }}</p>
@@ -146,6 +147,16 @@ dynamicApi($route.query.id).then((res: any) => {
 
 function routerBack() {
   $router.back()
+}
+
+function toCommodity(id: any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/commodity',
+    query: {
+      id: id
+    }
+  })
 }
 
 function shijianc(time: any) {

@@ -11,12 +11,8 @@
       <van-share-sheet v-model:show="showShare" :options="options" />
     </header>
     <section>
-      <!-- <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="img in deatil.images">
-          <img :src="img.url" alt="" />
-        </van-swipe-item>
-      </van-swipe> -->
-      <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 1" alt="" />
+      <!-- <img v-show="img.type === 1" v-for="img in deatil.images" :src="img.url"/> -->
+      <img v-if="deatil.images" :src="deatil.images[0].url"/>
       <h1 v-if="deatil.integralNum != 0">￥{{ deatil.integralNum }}</h1>
       <h1 v-else>￥---</h1>
       <h2>{{ deatil.title }}</h2>
@@ -47,7 +43,7 @@
         </p>
       </div>
       <ul class="item">
-        <li v-for="item in recommend">
+        <li @click="toCommodity(item.id)" v-for="item in recommend">
           <img :src="item.listedImage" alt="" />
           <p>{{ item.title }}</p>
           <p v-if="item.sellPrice != 0">￥{{ item.sellPrice }}</p>
@@ -78,7 +74,7 @@
         </p>
       </div>
     </div>
-    <div class="dongtai">
+    <div class="dongtai" @click="Todynamic"> 
       <div>
         <p>动态({{ dynamic.length }})</p>
         <p>
@@ -139,13 +135,13 @@ const $router = useRouter()
 
 const deatil = ref<any>([])
 commodityDetails($route.query.id).then((res: any) => {
-  // console.log(res.data.data)
+  console.log(res.data.data)
   deatil.value = res.data.data
 })
 
 const recommend = ref<any>([])
 commodityRecommend($route.query.id).then((res: any) => {
-  // console.log(res.data.data.list)
+  console.log(res.data.data.list)
   recommend.value = res.data.data.list
 })
 
@@ -169,6 +165,22 @@ dynamicApi($route.query.id).then((res: any) => {
 
 function routerBack() {
   $router.back()
+}
+
+function toCommodity(id: any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/commodity',
+    query: {
+      id: id
+    }
+  })
+}
+
+function Todynamic(){
+  $router.push({
+    path: '/dynamic',
+  })
 }
 
 function shijianc(time: any) {
@@ -233,6 +245,15 @@ nav {
       display: flex;
       justify-content: space-between;
       margin: 5rem 10rem;
+      &:nth-child(7) {
+        span {
+          &:nth-child(2) {
+            width: 320rem;
+            line-height: 14rem;
+            text-align: right;
+          }
+        }
+      }
     }
   }
   footer {

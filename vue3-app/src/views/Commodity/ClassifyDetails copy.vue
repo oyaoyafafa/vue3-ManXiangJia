@@ -3,159 +3,248 @@
     <header>
       <img @click="routerBack" src="@/../public/images/ic_back_goods.png" alt="" />
       <p>{{ $route.query.name }}</p>
-      <img @click="toHomesearch" src="@/../public/images/search_icon.png" alt="" />
+      <img src="@/../public/images/search_icon.png" alt="" />
     </header>
     <main>
-      <div class="title">
-        <div :class="{}">最新</div>
-        <div>销量</div>
+      <div class="searchRes">
+        <section class="togglelist">
+          <div @click="showNewRes = true" :class="{ active: showNewRes }">最新</div>
+          <div @click="showNewRes = false" :class="{ active: !showNewRes }">销量</div>
+        </section>
+        <section class="goodsList" ref="goodsList">
+          <van-pull-refresh v-show="showNewRes" v-model="refreshingNew" @refresh="onRefresh('new')">
+            <van-list
+              v-model:loading="loadingNew"
+              :finished="finishedNew"
+              finished-text="没有更多了"
+              @load="onLoad('new')"
+            >
+              <div class="newlist">
+                <div class="new" v-for="goods in newSearchRes" :key="goods.id">
+                  <div class="pic">
+                    <van-image
+                      width="177.5"
+                      height="177.5"
+                      :src="goods.listedImage"
+                      fit="contain"
+                    />
+                  </div>
+                  <p class="brief van-multi-ellipsis--l2">{{ goods.title }}</p>
+                  <p class="price">
+                    <span class="icon">￥</span>
+                    <span>{{
+                      (goods.sellNumber && goods.sellPrice.toFixed(1) != 0) || goods.type == 2
+                        ? goods.sellPrice
+                        : '---'
+                    }}</span>
+                  </p>
+                </div>
+              </div>
+            </van-list>
+          </van-pull-refresh>
+
+          <van-pull-refresh
+            v-show="!showNewRes"
+            v-model="refreshingHot"
+            @refresh="onRefresh('hot')"
+          >
+            <van-list
+              v-model:loading="loadingHot"
+              :finished="finishedHot"
+              finished-text="没有更多了"
+              @load="onLoad('hot')"
+            >
+              <div class="hotlist">
+                <div class="new" v-for="goods in hotSearchRes" :key="goods.id">
+                  <div class="pic">
+                    <van-image
+                      width="177.5"
+                      height="177.5"
+                      :src="goods.listedImage"
+                      fit="contain"
+                    />
+                  </div>
+                  <p class="brief van-multi-ellipsis--l2">{{ goods.title }}</p>
+                  <p class="price">
+                    <span class="icon">￥</span>
+                    <span>{{
+                      (goods.sellNumber && goods.sellPrice.toFixed(1) != 0) || goods.type == 2
+                        ? goods.sellPrice
+                        : '---'
+                    }}</span>
+                  </p>
+                </div>
+              </div>
+            </van-list>
+          </van-pull-refresh>
+        </section>
       </div>
     </main>
-    <footer>
-      <div @click="toOrder(goods.id)" class="goods" v-for="goods in classify">
-        <div>
-          <img :src="goods.listedImage" alt="" />
-        </div>
-        <div>
-          <p>{{ goods.title }}</p>
-          <h1>￥{{ goods.sellPrice }}</h1>
-        </div>
-      </div>
-    </footer>
   </div>
 </template>
 
-<script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router'
+<script setup>
+import { ref, computed, watch } from 'vue'
+// 搜索文本
+const searchText = ref('')
+// 筛选搜索的文本
+const filterSearchText = ref('')
+// 控制是否显示搜索结果
+// const showRes = ref(false)
+
+// 清空搜索文本
+// function clearSearchText() {
+//   searchText.value = ''
+// }
+
+// 获取热门搜索
+import { useHomeSearchStore } from '@/stores/homeSearch.ts'
 import { classifyApi } from '@/api/manxiangjia'
-import { ref, reactive } from 'vue'
-const $route = useRoute()
+import { storeToRefs } from 'pinia'
+const HomeSearchStore = useHomeSearchStore()
+HomeSearchStore.setHotSearchText()
+const { hotSearchText } = storeToRefs(HomeSearchStore)
+// 获取搜索记录
+// const { historySearch } = storeToRefs(HomeSearchStore)
+
+// 搜索
+import { useRouter } from 'vue-router'
 const $router = useRouter()
+const { newSearchRes, hotSearchRes } = storeToRefs(HomeSearchStore)
 
-const isShow = ref(false)
+const loadingNew = ref(false)
+const finishedNew = ref(false)
+const refreshingNew = ref(false)
 
-function routerBack() {
-  $router.back()
+const loadingHot = ref(false)
+const finishedHot = ref(false)
+const refreshingHot = ref(false)
+// classifyApi($route.query.id).then((res: any) => {
+//   // console.log('buy', res.data.data.list)
+//   buy.value = res.data.data.list
+// })
+
+function routerBack(){
+    $router.back()
 }
-const classify = ref<any>([])
-classifyApi($route.query.id, $route.query.name, $route.query.orderType).then((res: any) => {
-  console.log(res.data.data.list)
-  classify.value = res.data.data.list
-})
 
-function toOrder(id: any) {
-  // console.log("id",id)
-  $router.push({
-    path: '/order',
-    query: {
-      id: id
+const onLoad = async (mode) => {
+  if (mode === 'new') {
+    let pageNumber = Math.floor(HomeSearchStore.newSearchRes.length / 20) + 1
+    console.log('new触发onload', pageNumber)
+    // { orderType, pageNumber, title }
+    let p = await HomeSearchStore.setSearchRes({
+      orderType: 1,
+      pageNumber,
+      title: searchText.value
+    })
+    if (refreshingNew.value) {
+      HomeSearchStore.clearSearchRes(mode)
+      refreshingNew.value = false
     }
-  })
+    loadingNew.value = false
+    if (!p.data.data.hasNextPage) {
+      finishedNew.value = true
+    }
+  } else if (mode === 'hot') {
+    let pageNumber = Math.floor(HomeSearchStore.hotSearchRes.length / 20) + 1
+    console.log('hot触发onload', pageNumber)
+    // { orderType, pageNumber, title }
+    let p = await HomeSearchStore.setSearchRes({
+      orderType: 2,
+      pageNumber,
+      title: searchText.value
+    })
+    if (refreshingHot.value) {
+      HomeSearchStore.clearSearchRes(mode)
+      refreshingHot.value = false
+    }
+    loadingHot.value = false
+    if (!p.data.data.hasNextPage) {
+      finishedHot.value = true
+    }
+  }
 }
+const onRefresh = (mode) => {
+  console.log('触发onRefresh')
+  // 清空列表数据
+  // HomeSearchStore.clearSearchRes(mode)
+  if (mode === 'new') {
+    finishedNew.value = false
+    // 重新加载数据
+    // 将 loading 设置为 true，表示处于加载状态
+    loadingNew.value = true
+  } else if (mode === 'hot') {
+    finishedHot.value = false
+    // 重新加载数据
+    // 将 loading 设置为 true，表示处于加载状态
+    loadingHot.value = true
+  }
+  onLoad(mode)
+}
+// 筛选搜索
+const showNewRes = ref(true)
+// 保存切换高度
+const goodsList = ref(null)
+let tabScrollTop = {
+  new: 0,
+  hot: 0
+}
+watch(showNewRes, (n, o) => {
+  switch (o) {
+    case true:
+      tabScrollTop.new = goodsList.value.scrollTop
+      goodsList.value.scrollTop = tabScrollTop.hot
+      break
+    case false:
+      tabScrollTop.hot = goodsList.value.scrollTop
+      goodsList.value.scrollTop = tabScrollTop.new
+      break
+  }
+})
+// 弹出窗口与折叠栏参数
+const show = ref(false)
+function showPopup() {
+  show.value = true
+}
+const activeNames = ref(['1'])
+// 获取筛选标签
+HomeSearchStore.setSearchFilterTag()
+const { SearchFilterTag } = storeToRefs(HomeSearchStore)
 
-function toHomesearch() {
-  $router.push({
-    path: '/homesearch'
+const typeId = ref(null)
+const brandId = ref(null)
+const IPId = ref(null)
+const attributeId = ref(null)
+const maxPrice = ref('')
+const minPrice = ref('')
+// 筛选搜索
+function toFilter() {
+  HomeSearchStore.clearSearchRes()
+  HomeSearchStore.setSearchRes({
+    title: filterSearchText.value,
+    orderType: 1, //1最新 2销量
+    types: typeId.value, //分类筛选
+    ips: IPId.value, //Ip人物筛选
+    attributes: attributeId.value, //属性筛选
+    brands: brandId.value, //拼拍筛选
+    minPrice: minPrice.value, //最低价筛选
+    maxPrice: maxPrice.value //最高价筛选
+  })
+  HomeSearchStore.setSearchRes({
+    title: filterSearchText.value,
+    orderType: 2, //1最新 2销量
+    types: typeId.value, //分类筛选
+    ips: IPId.value, //Ip人物筛选
+    attributes: attributeId.value, //属性筛选
+    brands: brandId.value, //拼拍筛选
+    minPrice: minPrice.value, //最低价筛选
+    maxPrice: maxPrice.value //最高价筛选
   })
 }
 </script>
 
 <style lang="less" scoped>
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 5rem;
-  p {
-    font-size: 16rem;
-  }
-  img {
-    &:nth-child(1) {
-      width: 30rem;
-    }
-    &:nth-child(3) {
-      width: 20rem;
-    }
-  }
-}
-main {
-  .title {
-    display: flex;
-    font-size: 14rem;
-    justify-content: space-around;
-    div {
-      padding: 6rem 0;
-      border-bottom: 4rem solid #18202d;
-    }
-  }
-}
-footer {
-  margin-top: 15rem;
-  display: flex;
-  flex-wrap: wrap;
-  .goods {
-    width: 187rem;
-    div {
-      &:nth-child(1) {
-        width: 100%;
-        border: 1rem solid #f6f6f8;
-        height: 187rem;
-        img {
-          // width: 120rem;
-          width: auto;
-          height: auto;
-          max-width: 100%;
-          max-height: 100%;
-          position: relative;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
-      }
-      &:nth-child(2) {
-        width: 100%;
-        height: 70rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        line-height: 14rem;
-        P {
-          padding-right: 10rem;
-          padding-top: 10rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          display: -webkit-box;
-          -webkit-line-clamp: 2; // 控制多行的行数
-          -webkit-box-orient: vertical;
-        }
-        h1 {
-          font-size: 14rem;
-          font-weight: bold;
-          padding-bottom: 8rem;
-        }
-      }
-    }
-  }
-  // div {
-  //   width: 186rem;
-  //   &:nth-child(2n-1){
-  //     margin-right: 3rem;
-  //   }
-  //   img {
-  //     width: auto;
-  //     height: auto;
-  //     max-width: 100%;
-  //     max-height: 100%;
-  //     position: relative;
-  //     top: 50%;
-  //     left: 50%;
-  //     transform: translate(-50%, -50%);
-  //   }
-  // }
-}
-</style>
-
-<!-- <style lang="less" scoped>
 #homesearch {
   header {
     display: flex;
@@ -448,4 +537,4 @@ footer {
     }
   }
 }
-</style> -->
+</style>

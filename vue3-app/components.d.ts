@@ -17,23 +17,12 @@ declare module '@vue/runtime-core' {
     ItemCard: typeof import('./src/components/Community/ItemCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-<<<<<<< HEAD
-    TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     VanActionBar: typeof import('vant/es')['ActionBar']
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
-    VanCard: typeof import('vant/es')['Card']
-    VanCell: typeof import('vant/es')['Cell']
-    VanCheckbox: typeof import('vant/es')['Checkbox']
-=======
-    VanActionBar: typeof import('vant/es')['ActionBar']
-    VanActionBarButton: typeof import('vant/es')['ActionBarButton']
-    VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
-    VanBackTop: typeof import('vant/es')['BackTop']
     VanCell: typeof import('vant/es')['Cell']
     VanCollapse: typeof import('vant/es')['Collapse']
     VanCollapseItem: typeof import('vant/es')['CollapseItem']
->>>>>>> vue-man
     VanDivider: typeof import('vant/es')['Divider']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
@@ -43,14 +32,10 @@ declare module '@vue/runtime-core' {
     VanLoading: typeof import('vant/es')['Loading']
     VanPopup: typeof import('vant/es')['Popup']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
-<<<<<<< HEAD
+    VanSearch: typeof import('vant/es')['Search']
     VanShareSheet: typeof import('vant/es')['ShareSheet']
     VanSidebar: typeof import('vant/es')['Sidebar']
     VanSidebarItem: typeof import('vant/es')['SidebarItem']
-=======
-    VanSearch: typeof import('vant/es')['Search']
-    VanShareSheet: typeof import('vant/es')['ShareSheet']
->>>>>>> vue-man
     VanSkeleton: typeof import('vant/es')['Skeleton']
     VanSkeletonImage: typeof import('vant/es')['SkeletonImage']
     VanSkeletonParagraph: typeof import('vant/es')['SkeletonParagraph']

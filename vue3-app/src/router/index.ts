@@ -158,12 +158,18 @@ const router = createRouter({
       //分类详情
       name: 'ClassifyDetails',
       path: '/classify',
-      component: () => import('@/views/Commodity/ClassifyDetails.vue')
+      component: () => import('@/views/Commodity/ClassifyDetails.vue'),
     },
     {
-      path: '/homesearch',
       name: 'HomeSearch',
+      path: '/homesearch',
       component: () => import('@/views/other/HomeSearch.vue')
+    },
+    // 动态详情
+    {
+      name: 'DynamicCondition',
+      path: '/dynamic',
+      component: () => import('@/views/Commodity/DynamicCondition.vue')
     }
   ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效

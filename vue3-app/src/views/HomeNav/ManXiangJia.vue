@@ -1,13 +1,13 @@
 <template>
   <div>
     <!-- <van-search v-model="value" shape="round" placeholder="请输入搜索关键词" /> -->
-    <div class="input">
+    <div class="input" @click="toHomesearch">
       <input type="text" placeholder="输入搜索内容" @click="$router.push('/homesearch')" />
       <div class="search">
         <img src="../../../public/images/ic_search_shop.png" alt="" />
       </div>
     </div>
-    <div class="banner" v-for="banners in banner">
+    <div @click="toOrder(banners.itemId)" class="banner" v-for="banners in banner">
       <img :src="banners.image" alt="" />
     </div>
     <div class="classify">
@@ -165,6 +165,14 @@ function toReserve(){
   })
 }
 
+// 搜索
+function toHomesearch(){
+  $router.push({
+    path: '/homesearch'
+  })
+}
+
+
 // 模玩分类详情
 function toClassify(id: any,name:any) {
   // console.log("id",id)
@@ -172,7 +180,18 @@ function toClassify(id: any,name:any) {
     path: '/classify',
     query: {
       id: id,
-      name:name
+      name:name,
+      orderType:1
+    }
+  })
+}
+
+function toOrder(id: any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/order',
+    query: {
+      id: id
     }
   })
 }
