@@ -47,7 +47,7 @@ savePosition()
 
 <template>
   <div class="club" style="overflow-x:hidden">
-    <van-loading color="#0094ff" v-show="loading" />
+    <van-loading color="#0094ff" class="van_loading" v-show="loading" />
     <div class="rec_list" v-show="!loading">
       <p style="font-size: 14rem; color: #2c2c2c">推荐</p>
       <ul>
@@ -95,6 +95,12 @@ savePosition()
 </template>
 
 <style lang="less" scoped>
+/deep/ .van_loading{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
 .rec_list {
   ul {
     display: flex;
