@@ -9,20 +9,15 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ClubDetailFall: typeof import('./src/components/Community/ClubDetailFall.vue')['default']
     CommentsItem: typeof import('./src/components/Community/CommentsItem.vue')['default']
     CommunitySearchRes: typeof import('./src/components/Community/CommunitySearchRes.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
-    IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
     InfoBanner: typeof import('./src/components/Community/InfoBanner.vue')['default']
     InfoItem: typeof import('./src/components/Community/InfoItem.vue')['default']
     ItemCard: typeof import('./src/components/Community/ItemCard.vue')['default']
-    NewEst: typeof import('./src/components/Community/NewEst.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+<<<<<<< HEAD
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     VanActionBar: typeof import('vant/es')['ActionBar']
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
@@ -30,6 +25,15 @@ declare module '@vue/runtime-core' {
     VanCard: typeof import('vant/es')['Card']
     VanCell: typeof import('vant/es')['Cell']
     VanCheckbox: typeof import('vant/es')['Checkbox']
+=======
+    VanActionBar: typeof import('vant/es')['ActionBar']
+    VanActionBarButton: typeof import('vant/es')['ActionBarButton']
+    VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
+    VanBackTop: typeof import('vant/es')['BackTop']
+    VanCell: typeof import('vant/es')['Cell']
+    VanCollapse: typeof import('vant/es')['Collapse']
+    VanCollapseItem: typeof import('vant/es')['CollapseItem']
+>>>>>>> vue-man
     VanDivider: typeof import('vant/es')['Divider']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
@@ -37,10 +41,16 @@ declare module '@vue/runtime-core' {
     VanIndexBar: typeof import('vant/es')['IndexBar']
     VanList: typeof import('vant/es')['List']
     VanLoading: typeof import('vant/es')['Loading']
+    VanPopup: typeof import('vant/es')['Popup']
     VanPullRefresh: typeof import('vant/es')['PullRefresh']
+<<<<<<< HEAD
     VanShareSheet: typeof import('vant/es')['ShareSheet']
     VanSidebar: typeof import('vant/es')['Sidebar']
     VanSidebarItem: typeof import('vant/es')['SidebarItem']
+=======
+    VanSearch: typeof import('vant/es')['Search']
+    VanShareSheet: typeof import('vant/es')['ShareSheet']
+>>>>>>> vue-man
     VanSkeleton: typeof import('vant/es')['Skeleton']
     VanSkeletonImage: typeof import('vant/es')['SkeletonImage']
     VanSkeletonParagraph: typeof import('vant/es')['SkeletonParagraph']
@@ -49,6 +59,5 @@ declare module '@vue/runtime-core' {
     VanSwipeItem: typeof import('vant/es')['SwipeItem']
     VanTab: typeof import('vant/es')['Tab']
     VanTabs: typeof import('vant/es')['Tabs']
-    WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }

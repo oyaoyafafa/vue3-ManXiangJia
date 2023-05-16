@@ -3,7 +3,12 @@
     <header>
       <h1>我的漫想家</h1>
       <div class="login">
-        <span class="userLogin" @click="$router.push('/login')">
+        <span class="userLogin" @click="$router.push({
+          path:'/login',
+          query:{
+            f:'/about'
+          }
+        })">
           <img class="user" src="../../../public/images/我的/default_header.png" alt="" />
           <span v-if="!isLogin">
             <h1 style="font-weight: bold;">点击注册/登录</h1>

@@ -2,7 +2,7 @@
   <div>
     <!-- <van-search v-model="value" shape="round" placeholder="请输入搜索关键词" /> -->
     <div class="input">
-      <input type="text" placeholder="输入搜索内容" />
+      <input type="text" placeholder="输入搜索内容" @click="$router.push('/homesearch')" />
       <div class="search">
         <img src="../../../public/images/ic_search_shop.png" alt="" />
       </div>

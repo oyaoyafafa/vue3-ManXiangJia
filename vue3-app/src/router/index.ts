@@ -1,13 +1,12 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 
-
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
       name: 'HomeNav',
       path: '/',
-      redirect:'/home',
+      redirect: '/home',
       component: () => import('@/views/HomeNav/HomeNav.vue'),
       meta: {
         keepAlive: true
@@ -19,8 +18,8 @@ const router = createRouter({
           path: 'home',
           component: () => import('@/views/HomeNav/ManXiangJia.vue'),
           meta: {
-            keepAlive: true 
-          },
+            keepAlive: true
+          }
         },
         {
           //社区
@@ -34,18 +33,18 @@ const router = createRouter({
             {
               name: 'Follow',
               path: '/community/follow',
-              component: () => import( '@/views/Community/Follow.vue'),
+              component: () => import('@/views/Community/Follow.vue'),
               meta: {
                 keepAlive: true
-              },
+              }
             },
             {
               name: 'Recommend',
               path: '/community',
-              component: () => import( '@/views/Community/Recommend.vue'),
+              component: () => import('@/views/Community/Recommend.vue'),
               meta: {
                 keepAlive: true
-              },
+              }
             },
             {
               name: 'Club',
@@ -53,7 +52,7 @@ const router = createRouter({
               component: () => import('@/views/Community/Club.vue'),
               meta: {
                 keepAlive: true
-              },
+              }
             },
             {
               name: 'Information',
@@ -61,7 +60,7 @@ const router = createRouter({
               component: () => import('@/views/Community/Information.vue'),
               meta: {
                 keepAlive: true
-              },
+              }
             }
           ]
         },
@@ -82,7 +81,7 @@ const router = createRouter({
           component: () => import('@/views/HomeNav/ShoppingCart.vue'),
           meta: {
             keepAlive: true,
-            savedPosition:0
+            savedPosition: 0
           }
         },
         {
@@ -92,77 +91,81 @@ const router = createRouter({
           component: () => import('@/views/HomeNav/About.vue'),
           meta: {
             keepAlive: true
-          },
+          }
         }
       ]
     },
     {
       // 社区搜索
-      path:'/communitysearch',
-      name:'CommunitySearch',
-      component: () => import( '@/views/Community/Search.vue'),
+      path: '/communitysearch',
+      name: 'CommunitySearch',
+      component: () => import('@/views/Community/Search.vue')
     },
     {
       // 社区卡片详情
-      path:'/communitygoodsdetail',
-      name:'GoodsDetail',
-      component: () => import('@/views/Community/GoodsDetail.vue'),
+      path: '/communitygoodsdetail',
+      name: 'GoodsDetail',
+      component: () => import('@/views/Community/GoodsDetail.vue')
     },
     {
       // 社区部落详情
-      path:'/clubdetail',
-      name:'ClubDetail',
-      component: () => import('@/views/Community/ClubDetail.vue'),
+      path: '/clubdetail',
+      name: 'ClubDetail',
+      component: () => import('@/views/Community/ClubDetail.vue')
     },
     {
       // 社区情报详情
-      path:'/infoDetail',
-      name:'InfoDetail',
-      component: () => import('@/views/Community/InfoDetail.vue'),
+      path: '/infoDetail',
+      name: 'InfoDetail',
+      component: () => import('@/views/Community/InfoDetail.vue')
     },
     {
       // 用户详情
-      path:'/uerinfo',
-      name:'UserInfo',
-      component: () => import('@/views/Community/UserInfo.vue'),
-    }
-    ,{
+      path: '/uerinfo',
+      name: 'UserInfo',
+      component: () => import('@/views/Community/UserInfo.vue')
+    },
+    {
       //商品详情
       name: 'Commodity',
       path: '/commodity',
-      component: () => import('@/views/Commodity/CommodityDetails.vue'),
+      component: () => import('@/views/Commodity/CommodityDetails.vue')
     },
     {
-      path:'/login',
-      name:'Login',
-      component: () => import('@/views/Login/Login.vue'),
+      path: '/login',
+      name: 'Login',
+      component: () => import('@/views/Login/Login.vue')
     },
     {
       //全部分类
       name: 'AllClassifications',
       path: '/classification',
-      component: () => import('@/views/Classification/AllClassifications.vue'),
+      component: () => import('@/views/Classification/AllClassifications.vue')
     },
     {
       //预定商品
       name: 'ReserveGoods',
       path: '/reserve',
-      component: () => import('@/views/ReserveGoods/reserve.vue'),
+      component: () => import('@/views/ReserveGoods/reserve.vue')
     },
     {
       //预定商品详情
       name: 'OrderDetails',
       path: '/order',
-      component: () => import('@/views/Commodity/OrderDetails.vue'),
+      component: () => import('@/views/Commodity/OrderDetails.vue')
     },
     {
       //分类详情
       name: 'ClassifyDetails',
       path: '/classify',
-      component: () => import('@/views/Commodity/ClassifyDetails.vue'),
+      component: () => import('@/views/Commodity/ClassifyDetails.vue')
     },
-
-  ],
+    {
+      path: '/homesearch',
+      name: 'HomeSearch',
+      component: () => import('@/views/other/HomeSearch.vue')
+    }
+  ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效
   // scrollBehavior (to, from, savedPosition) {
   //   console.log('scrollBehavior启动了',savedPosition);
@@ -174,5 +177,23 @@ const router = createRouter({
   // }
 })
 
-
+// 需要触发登录的页面的fullPath在pathArr添加
+const pathArr = []
+router.beforeEach((to, from, next) => {
+  if (pathArr.indexOf(to.path) !== -1) {
+    const token = localStorage.getItem('token')
+    if (token) {
+      next()
+    } else {
+      next({
+        path: '/login',
+        query: {
+          f: to.fullPath
+        }
+      })
+    }
+  } else {
+    next()
+  }
+})
 export default router

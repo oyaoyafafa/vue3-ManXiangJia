@@ -52,12 +52,12 @@ const clubDetailApi = (id) => axios.get('api/userorg/app/tribe/detail', {
 })
 
 //部落详情下方列表
-const clubArtcleApi = (id,type) => axios.get('api/userorg/app/tribe/article', {
+const clubArtcleApi = (id,type,n) => axios.get('api/userorg/app/tribe/article', {
     params: {
         tribeId:id,
         orderType:type,
         pageSize: 10,
-        pageNumber:1,
+        pageNumber:n,
         osType: 1
     }
 })

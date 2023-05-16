@@ -1,40 +1,44 @@
 <script setup lang="ts">
-import { communityGoodsCommentApi, communityGoodsDetailApi } from '@/api/community'
+import { goodsDetailStore } from '@/stores/community/goodDetail.ts'
+import { storeToRefs } from 'pinia'
 import CommentsItem from '@/components/Community/CommentsItem.vue'
 import { useRouter, useRoute } from 'vue-router'
+import { onMounted, ref } from 'vue'
+import Swiper from 'swiper'
 
-import { ref } from 'vue'
-const loading = ref(true)
+// 时间戳转化函数------------------------------------------------------------
+import { timestampToTime } from '@/js/tool.js'
+
 const $route = useRoute()
 const needId = $route.query.id
-const detail: any = ref(null)
-const comments = ref<
-  Array<{
-    tbAppUserDetail: any
-    createTime: Number
-    supportNum: Number
-    content: string
-  }>
->([])
 
-Promise.all([communityGoodsCommentApi(needId), communityGoodsDetailApi(needId)])
-  .then(([res, res1]) => {
-    console.log('rec', res, res1)
-    detail.value = res1.data.data
-    comments.value = res.data.data.list
-  })
-  .finally(() => {
-    loading.value = false
-  })
+const goodsDetail = goodsDetailStore()
+const { detail, loading, comments } = storeToRefs(goodsDetail)
+const { getGoodsDetail } = goodsDetail
+getGoodsDetail(needId)
 
-// 控制首页五个页面的滚动高度------------------------------------------------------------
-import { savePosition } from '@/js/pageBarScrollTop.js'
-savePosition()
+// 使用swiper组件
+onMounted(() => {
+  new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    slidesPerView: 'auto',
+    paginationClickable: true, // spaceBetween: 30, // freeMode: true,
+    observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+    observeParents: true // 修改swiper的父元素时，自动初始化swiper
+  })
+})
+const isfllow = ref(false)
+const toFollow = () => {
+  isfllow.value = !isfllow.value
+
+}
+
 </script>
 
 <template>
   <div class="detail" style="padding-bottom: 70rem">
-    <van-sticky>
+    <van-loading color="#1989fa" v-show="loading" />
+    <van-sticky v-show="!loading">
       <div class="top_tit">
         <i class="back_btn" @click="$router.back()">
           <svg t="1683880458227" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -49,13 +53,13 @@ savePosition()
         </i>
         <h3>
           <van-image width="40rem" height="40rem" round
-            :src="detail?.isUserDetail.header + '?imageView=1&type=webp&thumbnail=247x0'" />
-          <span>{{ detail?.isUserDetail.nickName }}</span>
+            :src="detail?.isUserDetail?.header + '?imageView=1&type=webp&thumbnail=247x0'" />
+          <span>{{ detail?.isUserDetail?.nickName }}</span>
         </h3>
         <div class="right">
-          <div class="follow_btn">
-            <span class="no_follow">关注</span>
-            <!-- <span class="follow">已关注</span> -->
+          <div class="follow_btn" @click="toFollow">
+            <span class="no_follow" v-if="!isfllow">关注</span>
+            <span class="follow" v-else>已关注</span>
           </div>
           <i>
             <svg t="1683881936622" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -73,20 +77,31 @@ savePosition()
         </div>
       </div>
     </van-sticky>
-    <div class="img">
+    <div class="img" v-show="!loading">
       <van-swipe lazy-render>
-        <van-swipe-item class="banner_item" v-for="image in detail?.images" :key="image.id" :style="[
+        <van-swipe-item class="banner_item" ref="bannerItem" v-for="image in detail?.images" :key="image.id" :style="[
           {
             backgroundImage: `url(${image.url}?imageView=1&type=webp&thumbnail=247x0)`
           }
         ]">
         </van-swipe-item>
+        <template #indicator="{ active, total }">
+          <div class="swiper-container swiper-selectedSong">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide  " :class="{ 'select-item': image === detail?.images[active] }"
+                v-for="image in detail?.images" :style="{
+                  backgroundImage: `url(${image.url}?imageView=1&type=webp&thumbnail=247x0)`
+                }"></div>
+              <!-- @click="checkImg()" -->
+            </div>
+          </div>
+        </template>
       </van-swipe>
       <h3>{{ detail?.title }}</h3>
       <p>{{ detail?.content }}</p>
     </div>
-    <div class="comment">
-      <p class="c_time">{{ detail?.createTime }}</p>
+    <div class="comment" v-show="!loading">
+      <p class="c_time">{{ timestampToTime(detail?.createTime) }}</p>
       <p class="all_comment">共{{ comments.length }}条评论</p>
       <ul v-if="comments.length">
         <CommentsItem v-for="commentsItem in comments" :commentsItem="commentsItem" />
@@ -177,6 +192,37 @@ savePosition()
     color: #828181;
     padding-left: 10rem;
   }
+
+  .swiper-container {
+    margin-top: 20rem;
+    height: 65.5rem;
+    width: 100vw;
+
+    .swiper-wrapper {
+      display: flex;
+      align-items: center;
+
+      .swiper-slide {
+        width: 60rem;
+        height: 60rem;
+        border-radius: 10rem;
+        margin-left: 10rem;
+        background-size: cover;
+        background-position: center;
+        transition: all .1s;
+
+        &.select-item {
+          width: 65rem;
+          height: 65rem;
+        }
+      }
+
+    }
+
+
+
+  }
+
 }
 
 .comment {
@@ -199,7 +245,7 @@ savePosition()
     margin-top: 20rem;
     height: 40rem;
     text-align: center;
-    padding-bottom: 100rem;
+    padding-bottom: 40rem;
 
     img {
       width: 40rem;

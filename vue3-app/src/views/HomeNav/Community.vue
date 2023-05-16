@@ -18,7 +18,7 @@
         </van-tabs>
       </main>
     </div>
-    <van-icon name="search" class="search_btn" @click.native="$router.push('/communitysearch')" />
+    <van-icon v-show="toSearch" name="search" class="search_btn" @click.native="$router.push('/communitysearch')" />
   </div>
 </template>
 
@@ -33,11 +33,18 @@ import Recommend from '@/views/Community/Recommend.vue'
 // 路由切换配合Vant tab标签页切换
 const $route = useRoute()
 const active = ref('/')
+const toSearch = ref(true)
+console.log( );
+
 watch(
   $route,
   (newroute) => {
     active.value = newroute.path.replace('/community', '') || '/'
-
+    if( active.value === "/club"||active.value ==="/information"){
+      toSearch.value = false
+    }else{
+      toSearch.value = true
+    }
   },
   { immediate: true }
 )

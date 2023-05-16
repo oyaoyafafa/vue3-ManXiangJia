@@ -22,7 +22,7 @@ export function savePosition() {
   onActivated(() => {
     
     document.documentElement.scrollTop = $route.meta.savedPosition || 0
-    console.log($route.meta.savedPosition);
+
     window.addEventListener('scroll', pageScroll)
   })
   // 每次滚动保存滚动值
