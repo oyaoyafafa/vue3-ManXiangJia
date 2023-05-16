@@ -96,37 +96,36 @@ const router = createRouter({
       ]
     },
     {
-
       // 社区搜索
-      path:'/communitysearch',
-      name:'CommunitySearch',
-      component: () => import( '@/views/Community/Search.vue'),
+      path: '/communitysearch',
+      name: 'CommunitySearch',
+      component: () => import('@/views/Community/Search.vue')
     },
     {
       // 社区卡片详情
-      path:'/communitygoodsdetail',
-      name:'GoodsDetail',
-      component: () => import('@/views/Community/GoodsDetail.vue'),
+      path: '/communitygoodsdetail',
+      name: 'GoodsDetail',
+      component: () => import('@/views/Community/GoodsDetail.vue')
     },
     {
       // 社区部落详情
-      path:'/clubdetail',
-      name:'ClubDetail',
-      component: () => import('@/views/Community/ClubDetail.vue'),
+      path: '/clubdetail',
+      name: 'ClubDetail',
+      component: () => import('@/views/Community/ClubDetail.vue')
     },
     {
       // 社区情报详情
-      path:'/infoDetail',
-      name:'InfoDetail',
-      component: () => import('@/views/Community/InfoDetail.vue'),
+      path: '/infoDetail',
+      name: 'InfoDetail',
+      component: () => import('@/views/Community/InfoDetail.vue')
     },
     {
       // 用户详情
-      path:'/uerinfo',
-      name:'UserInfo',
-      component: () => import('@/views/Community/UserInfo.vue'),
-    }
-    ,{
+      path: '/uerinfo',
+      name: 'UserInfo',
+      component: () => import('@/views/Community/UserInfo.vue')
+    },
+    {
       //商品详情
       name: 'Commodity',
       path: '/commodity',
@@ -138,11 +137,50 @@ const router = createRouter({
       component: () => import('@/views/Login/Login.vue')
     },
     {
-      path: '/homesearch',
+      //全部分类
+      name: 'AllClassifications',
+      path: '/classification',
+      component: () => import('@/views/Classification/AllClassifications.vue')
+    },
+    {
+      //预定商品
+      name: 'ReserveGoods',
+      path: '/reserve',
+      component: () => import('@/views/ReserveGoods/reserve.vue')
+    },
+    {
+      //预定商品详情
+      name: 'OrderDetails',
+      path: '/order',
+      component: () => import('@/views/Commodity/OrderDetails.vue')
+    },
+    {
+      //分类详情
+      name: 'ClassifyDetails',
+      path: '/classify',
+      component: () => import('@/views/Commodity/ClassifyDetails.vue'),
+    },
+    {
       name: 'HomeSearch',
+      path: '/homesearch',
       component: () => import('@/views/other/HomeSearch.vue')
+    },
+    // 动态详情
+    {
+      name: 'DynamicCondition',
+      path: '/dynamic',
+      component: () => import('@/views/Commodity/DynamicCondition.vue')
     }
   ]
+  // 仅当通过浏览器前进/后退 savedPosition 才有效
+  // scrollBehavior (to, from, savedPosition) {
+  //   console.log('scrollBehavior启动了',savedPosition);
+  //   if (savedPosition) {
+  //     return savedPosition
+  //   } else {
+  //     return {top:0}
+  //   }
+  // }
 })
 
 // 需要触发登录的页面的fullPath在pathArr添加

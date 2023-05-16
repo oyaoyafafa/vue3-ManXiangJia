@@ -35,3 +35,8 @@ app.use(router)
 app.mount('#app')
 
 
+// vant组件引入
+app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).use(Sticky )
+app.use(Lazyload, {
+    lazyComponent: true,
+});

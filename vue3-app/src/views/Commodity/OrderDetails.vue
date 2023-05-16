@@ -2,30 +2,35 @@
   <nav>
     <header>
       <img @click="routerBack" src="@/../public/images/ic_back_goods.png" alt="" />
-      <img @click="showShare = !showShare" :options="options" src="@/../public/images/ic_gif_share.gif" alt="" />
+      <img
+        @click="showShare = !showShare"
+        :options="options"
+        src="@/../public/images/ic_gif_share.gif"
+        alt=""
+      />
       <van-share-sheet v-model:show="showShare" :options="options" />
     </header>
     <section>
-      <!-- <img v-show="img.type === 1" v-for="img in deatil.images" :src="img.url"/> -->
-      <img v-if="deatil.images" :src="deatil.images[0].url"/>
-      <h1 v-if="deatil.integralNum != 0">￥{{ deatil.integralNum }}</h1>
-      <h1 v-else>￥---</h1>
+      <!-- <img v-show="img.type === 1" v-for="img in deatil.images " :src="img.url" alt="" /> -->
+      <img v-if="deatil.images" :src="deatil.images[0].url" />
+      <h1>￥{{ deatil.totalPrice }}</h1>
       <h2>{{ deatil.title }}</h2>
-      <p>
-        <span>品牌</span>
-        <span>{{ deatil.brandName }}</span>
-      </p>
-      <p v-if="deatil.tbGoodsDetail?.cargoNo != ''">
-        <span>货号</span>
-        <span>{{ deatil.tbGoodsDetail?.cargoNo }}</span>
-      </p>
-      <p>
+      <p
+        v-if="
+          deatil.tbPresellGoodsDetail?.material != '  ' &&
+          deatil.tbPresellGoodsDetail?.material != '   '
+        "
+      >
         <span>材质</span>
-        <span>{{ deatil.tbGoodsDetail?.material }}</span>
+        <span>{{ deatil.tbPresellGoodsDetail?.material }}</span>
       </p>
-      <p>
+      <p
+        v-if="
+          deatil.tbPresellGoodsDetail?.size != '  ' && deatil.tbPresellGoodsDetail?.size != '   '
+        "
+      >
         <span>尺寸</span>
-        <span>{{ deatil.tbGoodsDetail?.size }}</span>
+        <span>{{ deatil.tbPresellGoodsDetail?.size }}</span>
       </p>
     </section>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
@@ -46,19 +51,13 @@
         </li>
       </ul>
     </div>
-    <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
-    <ul class="recentlyBuy">
-      <h1 v-if="buy">最近购买({{ buy.length }})</h1>
-      <h1 v-else>最近购买(0)</h1>
-      <li v-for="item in buy">
-        <p>
-          <img :src="item.url || '@/../public/images/default_header.png'" alt="" />
-          <span>{{ item.name }}</span>
-        </p>
-        <p>{{ item.price }}</p>
-        <p>{{ shijianc(item.date) }}</p>
-      </li>
-    </ul>
+    <div class="time">
+      <p>
+        <span>发售时间</span>
+        <span>{{ shijianc(deatil.createTime) }}</span>
+      </p>
+      <p>该商品为预售商品，图片仅供参考，以实物为准</p>
+    </div>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
     <div class="pjia">
       <div>
@@ -69,7 +68,7 @@
         </p>
       </div>
     </div>
-    <div class="dongtai" @click="Todynamic"> 
+    <div class="dongtai">
       <div>
         <p>动态({{ dynamic.length }})</p>
         <p>
@@ -78,16 +77,16 @@
         </p>
       </div>
       <!-- <p class="title">
-        <img v-for="img in dynamic[0].images" :src="img.url" alt="" />
-      </p> -->
+          <img v-for="img in dynamic[0].images" :src="img.url" alt="" />
+        </p> -->
     </div>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
     <footer>
       <van-action-bar style="z-index: 899; margin-bottom: -3rem">
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
-        <van-action-bar-button class="add" :text="isInSoppingCar" @click="addShoppingCar" />
-        <van-action-bar-button class="buy" color="#18202d" text="立即购买" />
+        <van-action-bar-button v-if="deatil.isPayment" class="add" text="已结束" />
+        <van-action-bar-button v-else class="add" text="尾款待支付" />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
     </footer>
@@ -95,14 +94,8 @@
 </template>
 
 <script setup lang="ts">
-import {
-  commodityDetails,
-  commodityRecommend,
-  recentlyBuy,
-  dynamicApi,
-  commentApi
-} from '@/api/manxiangjia'
-import { ref, reactive, computed } from 'vue'
+import { orderDetails, commodityRecommend, dynamicApi, commentApi } from '@/api/manxiangjia'
+import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const showShare = ref(false)
@@ -129,21 +122,15 @@ const $router = useRouter()
 // console.log($route.query.id)
 
 const deatil = ref<any>([])
-commodityDetails($route.query.id).then((res: any) => {
-  console.log(res.data.data)
+orderDetails($route.query.id).then((res: any) => {
+  // console.log(res.data.data)
   deatil.value = res.data.data
 })
 
 const recommend = ref<any>([])
 commodityRecommend($route.query.id).then((res: any) => {
-  console.log(res.data.data.list)
+  // console.log(res.data.data.list)
   recommend.value = res.data.data.list
-})
-
-const buy = ref<any>([])
-recentlyBuy($route.query.id).then((res: any) => {
-  // console.log('buy', res.data.data.list)
-  buy.value = res.data.data.list
 })
 
 const comment = ref<any>([])
@@ -172,52 +159,22 @@ function toCommodity(id: any) {
   })
 }
 
-function Todynamic(){
-  $router.push({
-    path: '/dynamic',
-  })
-}
-
 function shijianc(time: any) {
   let date = new Date(time)
   let Y = date.getFullYear() + '-'
   let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
   let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' '
-  return Y + M + D
-}
-//添加购物车
-import { shoppingCarStore } from '@/stores/shoppingCar'
-import { storeToRefs } from 'pinia'
-import { showSuccessToast, showFailToast } from 'vant';
-import 'vant/es/toast/style'
-const shoppingCar = shoppingCarStore()
-const { shoppingCarList } = storeToRefs(shoppingCar)
-const { addShoppingCarList } = shoppingCar
-// 是否加入了购物车
-const isInSoppingCar = computed(() => {
-  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
-    return '加入购物车'
-  } else {
-    return "已在购物车"
-  }
-})
-const addShoppingCar = () => {
-  // console.log(11);
-  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) { showSuccessToast('添加成功') } else {
-    showFailToast('已在购物车中了哦');
-  }
-
-  addShoppingCarList({ goods: deatil.value })
- 
-
+  let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
+  let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':'
+  let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
+  return Y + M + D + h + m + s
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 nav {
   padding-bottom: 60rem;
   padding-top: 60rem;
-
   header {
     position: fixed;
     top: 0;
@@ -230,12 +187,10 @@ nav {
     padding: 5rem 10rem;
     // height: 60rem;
     z-index: 999;
-
     img {
       width: 30rem;
     }
   }
-
   section {
     .my-swipe .van-swipe-item {
       color: #fff;
@@ -248,19 +203,17 @@ nav {
     img {
       width: 100%;
     }
-
     h1,
     h2 {
       text-align: center;
       // margin-bottom: 10rem;
     }
-
     h1 {
       font-weight: bolder;
       font-size: 18rem;
       margin-bottom: 10rem;
+      margin-top: 10rem;
     }
-
     h2 {
       font-size: 16rem;
       padding: 0 10rem;
@@ -268,76 +221,57 @@ nav {
       margin-bottom: 15rem;
       font-weight: bold;
     }
-
     p {
       display: flex;
       justify-content: space-between;
       margin: 5rem 10rem;
-      &:nth-child(7) {
-        span {
-          &:nth-child(2) {
-            width: 320rem;
-            line-height: 14rem;
-            text-align: right;
-          }
-        }
-      }
     }
   }
-
   footer {
     .add {
-      border-radius: 5rem;
-      border: 1rem solid #18202d;
+      border-radius: 15rem;
+      border: 1rem solid #5f646e;
       color: #18202d;
+      height: 30rem;
+      line-height: 30rem;
     }
-
     .buy {
       margin-left: 5rem;
       border-radius: 5rem;
     }
-
     img {
       width: 100vw;
     }
   }
-
   .goods {
     .head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 5rem 10rem;
-
       img {
         width: 20rem;
       }
-
       h1 {
         font-size: 14rem;
         font-weight: bold;
       }
-
       p {
         display: flex;
         align-items: center;
         color: #a4a4a4;
       }
     }
-
     .item {
       display: flex;
       justify-content: space-around;
-
       li {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-
         P {
           font-weight: bold;
-
           &:nth-child(2) {
             transform: scale(0.9);
             width: 120rem;
@@ -346,39 +280,48 @@ nav {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
           }
-
           &:nth-child(3) {
             padding: 5rem 0;
           }
         }
-
         img {
           width: 80rem;
         }
       }
     }
   }
-
+  .time {
+    p {
+      font-weight: bold;
+      padding: 10rem 0;
+      &:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10rem;
+        border-bottom: 1rem solid #f8f8fa;
+        padding-top: 10rem;
+      }
+      &:nth-child(2) {
+        text-align: center;
+      }
+    }
+  }
   .recentlyBuy {
     padding: 0rem 10rem;
-
     h1 {
       margin-bottom: 15rem;
       margin-top: 10rem;
       font-size: 14rem;
       font-weight: bold;
     }
-
     li {
       display: flex;
       justify-content: space-between;
       margin-bottom: 15rem;
-
       p {
         &:nth-child(3) {
           color: #cfcfcf;
         }
-
         img {
           width: 20rem;
           border-radius: 50%;
@@ -387,22 +330,18 @@ nav {
       }
     }
   }
-
   .dongtai,
   .pjia {
     border-top: 1rem solid #f6f6f8;
-
     div {
       padding: 10rem;
       display: flex;
       justify-content: space-between;
-
       p {
         &:nth-child(1) {
           font-weight: 14rem;
           font-weight: bold;
         }
-
         &:nth-child(2) {
           display: flex;
           align-items: center;
@@ -410,29 +349,9 @@ nav {
         }
       }
     }
-
     img {
       width: 20rem;
     }
   }
-
-  // .pjia {
-  //   border-top: 1rem solid #f6f6f8;
-  //   div {
-  //     padding: 10rem;
-  //     display: flex;
-  //     justify-content: space-between;
-  //     p {
-  //       &:nth-child(1) {
-  //         font-weight: 14rem;
-  //         font-weight: bold;
-  //       }
-  //     }
-  //     img {
-  //       width: 20rem;
-  //     }
-  //   }
-  // }
 }
 </style>
-

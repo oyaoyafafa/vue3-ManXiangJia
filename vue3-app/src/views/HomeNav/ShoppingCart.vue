@@ -19,7 +19,7 @@
             为你推荐
           </van-divider>
           <ul class="recommend">
-            <li v-for="item in commend">
+            <li v-for="item in commend" @click="toCommodity(item.goodId)">
               <div>
                 <img :src="item.tbGoods.listedImage" alt="" />
               </div>
@@ -49,6 +49,8 @@ import { shoppingCartRecommendApi } from '@/api/shoppingCart'
 import { savePosition } from '@/js/pageBarScrollTop.js'
 import { ref, watch, computed } from 'vue'
 import { showToast } from 'vant'
+import { useRouter } from 'vue-router'
+
 const loading = ref(false)
 const commend = ref<Array<any>>([])
 
