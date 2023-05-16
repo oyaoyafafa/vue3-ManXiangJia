@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     ItemCard: typeof import('./src/components/Community/ItemCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ShoppingCarItem: typeof import('./src/components/HomeNav/shoppingCarItem.vue')['default']
     VanActionBar: typeof import('vant/es')['ActionBar']
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']

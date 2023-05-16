@@ -4,23 +4,18 @@
       <h1>购物车</h1>
     </header>
     <section>
-      <van-pull-refresh
-        class="content"
-        v-model="loading"
-        success-text="刷新成功"
-        @refresh="onRefresh"
-      >
+      <van-pull-refresh class="content" v-model="loading" success-text="刷新成功" @refresh="onRefresh">
         <div class="shop">
-          <div v-if="isAdd" class="nothing">
+          <div v-if="!isAdd" class="nothing">
             <img src="../../../public/images/分享/shopcar.png" alt="" />
             <p>购物车好空~</p>
             <p>快去看看更多好宝贝吧~</p>
           </div>
-          <div v-else></div>
-          <van-divider
-            class="line"
-            :style="{ width: '80%', color: '#1e2532', borderColor: '#111111', padding: '0 10px' }"
-          >
+          <div v-else class="hasLot">
+            <shoppingCarItem v-for="item in shoppingCarList" :item="item.goods" :isCheck="item.isCheck" />
+          </div>
+          <van-divider class="line"
+            :style="{ width: '80%', color: '#1e2532', borderColor: '#111111', padding: '0 10px' }">
             为你推荐
           </van-divider>
           <ul class="recommend">
@@ -35,16 +30,26 @@
         </div>
       </van-pull-refresh>
     </section>
+    <div class="to_order" v-show="isAdd">
+      <div class="all">
+        <input type="checkbox" :checked="isCheckAll" name="" id=""
+          @change="toCheck({ isCheck: $event.target?.checked })" />
+        全选
+      </div>
+      <div class="order">
+        <p>合计<span>¥{{ allPrice }}</span></p>
+        <span class="order_btn">结算</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { shoppingCartRecommendApi } from '@/api/shoppingCart'
-import {savePosition} from '@/js/pageBarScrollTop.js'
-import { ref, watch } from 'vue'
+import { savePosition } from '@/js/pageBarScrollTop.js'
+import { ref, watch, computed } from 'vue'
 import { showToast } from 'vant'
 const loading = ref(false)
-const isAdd = ref(true)
 const commend = ref<Array<any>>([])
 
 const onRefresh = () => {
@@ -55,18 +60,48 @@ const onRefresh = () => {
 }
 
 shoppingCartRecommendApi().then((res: any) => {
-  console.log(res.data.data.list)
   commend.value = res.data.data.list
 })
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
 savePosition();
 
+// 购物车列表
+import shoppingCarItem from '@/components/HomeNav/shoppingCarItem.vue'
+import { shoppingCarStore } from '@/stores/shoppingCar'
+import { storeToRefs } from 'pinia'
+// 购物车是否有物品
+const isAdd = computed(() => {
+  if (shoppingCarList.value.length) {
+    return true
+  } else {
+    return false
+  }
+})
+// 全选按钮
+const isCheckAll = computed(() => {
+  return shoppingCarList.value.every((o: any) => o.isCheck)
+})
+
+const allPrice = computed(() => {
+  return shoppingCarList.value.filter((o: any) => o.isCheck).reduce((sum: any, e: any) => sum + Number(e.allPrice || 0), 0)
+})
+const shoppingCar = shoppingCarStore()
+const { shoppingCarList } = storeToRefs(shoppingCar)
+const { checkAllGoods } = shoppingCar
+// 全选
+const checked = ref(false)
+const toCheck = ({ isCheck }:any) => {
+  checkAllGoods({ isCheck })
+}
+
+
 
 </script>
 
 <style lang="less" scoped>
 div {
+
   // width: 100vw;
   header {
     position: fixed;
@@ -76,6 +111,7 @@ div {
     width: 100%;
     background-color: #ffffff;
     height: 60rem;
+
     // padding-top: 20rem;
     h1 {
       font-weight: bold;
@@ -85,42 +121,56 @@ div {
       text-align: center;
     }
   }
+
   section {
     margin-top: 60rem;
     margin-bottom: 60rem;
     background-color: #f3f3f3;
     // height: 100vh;
     width: 100%;
+
     .shop {
       width: 350rem;
       margin: 0 auto;
       margin-bottom: 120rem;
+
       .nothing {
         width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
+
         img {
           margin-top: 40rem;
           width: 100rem;
           height: 70rem;
         }
+
         p {
           font-weight: bold;
+
           &:nth-child(2) {
             margin-bottom: -5rem;
           }
         }
       }
+
+      .hasLot {
+        margin: 10rem 0rem;
+        border-radius: 10rem;
+      }
+
       .line {
         margin: 0 auto;
         margin-top: 90rem;
       }
+
       .recommend {
         margin-top: 10rem;
         height: 450rem;
         display: flex;
         flex-wrap: wrap;
+
         li {
           width: 170rem;
           height: 210rem;
@@ -130,8 +180,10 @@ div {
           background-color: white;
           margin-bottom: 10rem;
           border-radius: 5rem;
+
           p {
             padding-bottom: 5rem;
+
             &:nth-child(2) {
               margin-left: 8rem;
               line-height: 12rem;
@@ -142,13 +194,16 @@ div {
               margin-bottom: 10rem;
               font-weight: bold;
             }
+
             &:nth-child(3) {
               margin-left: 5rem;
             }
           }
+
           div {
             overflow: hidden;
             width: 100%;
+
             img {
               width: 100%;
               height: 100%;
@@ -156,12 +211,83 @@ div {
               margin-bottom: 60rem;
             }
           }
+
           &:nth-child(2n-1) {
             margin-right: 10rem;
           }
         }
       }
     }
+  }
+
+  .to_order {
+    width: 100vw;
+    position: fixed;
+    bottom: 59rem;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 10rem;
+
+    .all {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      input{
+        margin-right: 10rem;
+      }
+    }
+
+    .order {
+      display: flex;
+      align-items: center;
+      p{
+        padding: 10rem;
+        margin-right: 10rem;
+        span{
+          font-size: 14rem;
+          font-weight: bold;
+        }
+      }
+      .order_btn{
+        background-image: linear-gradient(#5e636c, #1e2632);
+        color: #fff;
+        padding: 5rem 15rem;
+        border-radius: 50rem;
+      }
+    }
+  }
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    display: inline-block;
+    vertical-align: middle;
+    width:24rem;
+    height: 24rem;
+    border-radius: 50%;
+    background-size: 100% auto;
+    box-sizing: border-box;
+    background-position: 0 0;
+    background-color: white;
+    border: solid 1px rgb(195, 196, 200);
+  }
+
+  /* 复选框鼠标按下时增加的样式 */
+  // input[type="checkbox"]:active {
+  //   background-position: 0 -48px;
+  //   background-color: #80a231;
+  //   border: 0;
+  // }
+  /*复选框选中后增加的样式*/
+  input[type="checkbox"]:checked {
+    background-position: 0 -48px;
+    // background-color: #000;
+    background-image: url(https://hsp-prod.oss-cn-shanghai.aliyuncs.com/mall/h5/select.png);
+    background-size: cover;
+    background-position: center;
   }
 }
 </style>

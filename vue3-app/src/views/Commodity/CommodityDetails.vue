@@ -2,12 +2,7 @@
   <nav>
     <header>
       <img @click="routerBack" src="@/../public/images/ic_back_goods.png" alt="" />
-      <img
-        @click="showShare = !showShare"
-        :options="options"
-        src="@/../public/images/ic_gif_share.gif"
-        alt=""
-      />
+      <img @click="showShare = !showShare" :options="options" src="@/../public/images/ic_gif_share.gif" alt="" />
       <van-share-sheet v-model:show="showShare" :options="options" />
     </header>
     <section>
@@ -94,7 +89,7 @@
       <van-action-bar style="z-index: 899; margin-bottom: -3rem">
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
-        <van-action-bar-button class="add" text="加入购物车" />
+        <van-action-bar-button class="add" :text="isInSoppingCar" @click="addShoppingCar" />
         <van-action-bar-button class="buy" color="#18202d" text="立即购买" />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
@@ -110,7 +105,7 @@ import {
   dynamicApi,
   commentApi
 } from '@/api/manxiangjia'
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 const showShare = ref(false)
@@ -177,12 +172,39 @@ function shijianc(time: any) {
   let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' '
   return Y + M + D
 }
+//添加购物车
+import { shoppingCarStore } from '@/stores/shoppingCar'
+import { storeToRefs } from 'pinia'
+import { showSuccessToast, showFailToast } from 'vant';
+import 'vant/es/toast/style'
+const shoppingCar = shoppingCarStore()
+const { shoppingCarList } = storeToRefs(shoppingCar)
+const { addShoppingCarList } = shoppingCar
+// 是否加入了购物车
+const isInSoppingCar = computed(() => {
+  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
+    return '加入购物车'
+  } else {
+    return "已在购物车"
+  }
+})
+const addShoppingCar = () => {
+  // console.log(11);
+  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) { showSuccessToast('添加成功') } else {
+    showFailToast('已在购物车中了哦');
+  }
+
+  addShoppingCarList({ goods: deatil.value })
+ 
+
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 nav {
   padding-bottom: 60rem;
   padding-top: 60rem;
+
   header {
     position: fixed;
     top: 0;
@@ -195,10 +217,12 @@ nav {
     padding: 5rem 10rem;
     // height: 60rem;
     z-index: 999;
+
     img {
       width: 30rem;
     }
   }
+
   section {
     .my-swipe .van-swipe-item {
       color: #fff;
@@ -211,16 +235,19 @@ nav {
     img {
       width: 100%;
     }
+
     h1,
     h2 {
       text-align: center;
       // margin-bottom: 10rem;
     }
+
     h1 {
       font-weight: bolder;
       font-size: 18rem;
       margin-bottom: 10rem;
     }
+
     h2 {
       font-size: 16rem;
       padding: 0 10rem;
@@ -228,55 +255,67 @@ nav {
       margin-bottom: 15rem;
       font-weight: bold;
     }
+
     p {
       display: flex;
       justify-content: space-between;
       margin: 5rem 10rem;
     }
   }
+
   footer {
     .add {
       border-radius: 5rem;
       border: 1rem solid #18202d;
       color: #18202d;
     }
+
     .buy {
       margin-left: 5rem;
       border-radius: 5rem;
     }
+
     img {
       width: 100vw;
     }
   }
+
   .goods {
     .head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 5rem 10rem;
+
       img {
         width: 20rem;
       }
+
       h1 {
         font-size: 14rem;
         font-weight: bold;
       }
+
       p {
         display: flex;
         align-items: center;
         color: #a4a4a4;
       }
     }
+
     .item {
       display: flex;
       justify-content: space-around;
+
       li {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
+
         P {
           font-weight: bold;
+
           &:nth-child(2) {
             transform: scale(0.9);
             width: 120rem;
@@ -285,32 +324,39 @@ nav {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
           }
+
           &:nth-child(3) {
             padding: 5rem 0;
           }
         }
+
         img {
           width: 80rem;
         }
       }
     }
   }
+
   .recentlyBuy {
     padding: 0rem 10rem;
+
     h1 {
       margin-bottom: 15rem;
       margin-top: 10rem;
       font-size: 14rem;
       font-weight: bold;
     }
+
     li {
       display: flex;
       justify-content: space-between;
       margin-bottom: 15rem;
+
       p {
         &:nth-child(3) {
           color: #cfcfcf;
         }
+
         img {
           width: 20rem;
           border-radius: 50%;
@@ -319,18 +365,22 @@ nav {
       }
     }
   }
+
   .dongtai,
   .pjia {
     border-top: 1rem solid #f6f6f8;
+
     div {
       padding: 10rem;
       display: flex;
       justify-content: space-between;
+
       p {
         &:nth-child(1) {
           font-weight: 14rem;
           font-weight: bold;
         }
+
         &:nth-child(2) {
           display: flex;
           align-items: center;
@@ -338,10 +388,12 @@ nav {
         }
       }
     }
+
     img {
       width: 20rem;
     }
   }
+
   // .pjia {
   //   border-top: 1rem solid #f6f6f8;
   //   div {
@@ -361,3 +413,4 @@ nav {
   // }
 }
 </style>
+
