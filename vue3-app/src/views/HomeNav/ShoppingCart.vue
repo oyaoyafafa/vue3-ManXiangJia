@@ -24,7 +24,7 @@
             为你推荐
           </van-divider>
           <ul class="recommend">
-            <li v-for="item in commend">
+            <li v-for="item in commend" @click="toCommodity(item.goodId)">
               <div>
                 <img :src="item.tbGoods.listedImage" alt="" />
               </div>
@@ -43,6 +43,8 @@ import { shoppingCartRecommendApi } from '@/api/shoppingCart'
 import {savePosition} from '@/js/pageBarScrollTop.js'
 import { ref, watch } from 'vue'
 import { showToast } from 'vant'
+import { useRouter } from 'vue-router'
+
 const loading = ref(false)
 const isAdd = ref(true)
 const commend = ref<Array<any>>([])
@@ -61,6 +63,17 @@ shoppingCartRecommendApi().then((res: any) => {
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
 savePosition();
+
+const $router = useRouter()
+function toCommodity(id: any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/commodity',
+    query: {
+      id: id
+    }
+  })
+}
 
 
 </script>

@@ -136,8 +136,31 @@ const router = createRouter({
       path:'/login',
       name:'Login',
       component: () => import('@/views/Login/Login.vue'),
-    }
-
+    },
+    {
+      //全部分类
+      name: 'AllClassifications',
+      path: '/classification',
+      component: () => import('@/views/Classification/AllClassifications.vue'),
+    },
+    {
+      //预定商品
+      name: 'ReserveGoods',
+      path: '/reserve',
+      component: () => import('@/views/ReserveGoods/reserve.vue'),
+    },
+    {
+      //预定商品详情
+      name: 'OrderDetails',
+      path: '/order',
+      component: () => import('@/views/Commodity/OrderDetails.vue'),
+    },
+    {
+      //分类详情
+      name: 'ClassifyDetails',
+      path: '/classify',
+      component: () => import('@/views/Commodity/ClassifyDetails.vue'),
+    },
 
   ],
   // 仅当通过浏览器前进/后退 savedPosition 才有效

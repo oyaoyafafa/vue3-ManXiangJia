@@ -11,30 +11,25 @@
       <van-share-sheet v-model:show="showShare" :options="options" />
     </header>
     <section>
-      <!-- <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
-        <van-swipe-item v-for="img in deatil.images">
-          <img :src="img.url" alt="" />
-        </van-swipe-item>
-      </van-swipe> -->
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 1" alt="" />
-      <h1 v-if="deatil.integralNum != 0">￥{{ deatil.integralNum }}</h1>
-      <h1 v-else>￥---</h1>
+      <h1>￥{{ deatil.totalPrice }}</h1>
       <h2>{{ deatil.title }}</h2>
-      <p>
-        <span>品牌</span>
-        <span>{{ deatil.brandName }}</span>
-      </p>
-      <p v-if="deatil.tbGoodsDetail?.cargoNo != ''">
-        <span>货号</span>
-        <span>{{ deatil.tbGoodsDetail?.cargoNo }}</span>
-      </p>
-      <p>
+      <p
+        v-if="
+          deatil.tbPresellGoodsDetail?.material != '  ' &&
+          deatil.tbPresellGoodsDetail?.material != '   '
+        "
+      >
         <span>材质</span>
-        <span>{{ deatil.tbGoodsDetail?.material }}</span>
+        <span>{{ deatil.tbPresellGoodsDetail?.material }}</span>
       </p>
-      <p>
+      <p
+        v-if="
+          deatil.tbPresellGoodsDetail?.size != '  ' && deatil.tbPresellGoodsDetail?.size != '   '
+        "
+      >
         <span>尺寸</span>
-        <span>{{ deatil.tbGoodsDetail?.size }}</span>
+        <span>{{ deatil.tbPresellGoodsDetail?.size }}</span>
       </p>
     </section>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
@@ -55,19 +50,13 @@
         </li>
       </ul>
     </div>
-    <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
-    <ul class="recentlyBuy">
-      <h1 v-if="buy">最近购买({{ buy.length }})</h1>
-      <h1 v-else>最近购买(0)</h1>
-      <li v-for="item in buy">
-        <p>
-          <img :src="item.url || '@/../public/images/default_header.png'" alt="" />
-          <span>{{ item.name }}</span>
-        </p>
-        <p>{{ item.price }}</p>
-        <p>{{ shijianc(item.date) }}</p>
-      </li>
-    </ul>
+    <div class="time">
+      <p>
+        <span>发售时间</span>
+        <span>{{ shijianc(deatil.createTime) }}</span>
+      </p>
+      <p>该商品为预售商品，图片仅供参考，以实物为准</p>
+    </div>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
     <div class="pjia">
       <div>
@@ -87,16 +76,16 @@
         </p>
       </div>
       <!-- <p class="title">
-        <img v-for="img in dynamic[0].images" :src="img.url" alt="" />
-      </p> -->
+          <img v-for="img in dynamic[0].images" :src="img.url" alt="" />
+        </p> -->
     </div>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
     <footer>
       <van-action-bar style="z-index: 899; margin-bottom: -3rem">
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
-        <van-action-bar-button class="add" text="加入购物车" />
-        <van-action-bar-button class="buy" color="#18202d" text="立即购买" />
+        <van-action-bar-button v-if="deatil.isPayment" class="add" text="已结束" />
+        <van-action-bar-button v-else class="add" text="尾款待支付" />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
     </footer>
@@ -104,13 +93,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  commodityDetails,
-  commodityRecommend,
-  recentlyBuy,
-  dynamicApi,
-  commentApi
-} from '@/api/manxiangjia'
+import { orderDetails, commodityRecommend, dynamicApi, commentApi } from '@/api/manxiangjia'
 import { ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -138,7 +121,7 @@ const $router = useRouter()
 // console.log($route.query.id)
 
 const deatil = ref<any>([])
-commodityDetails($route.query.id).then((res: any) => {
+orderDetails($route.query.id).then((res: any) => {
   // console.log(res.data.data)
   deatil.value = res.data.data
 })
@@ -147,12 +130,6 @@ const recommend = ref<any>([])
 commodityRecommend($route.query.id).then((res: any) => {
   // console.log(res.data.data.list)
   recommend.value = res.data.data.list
-})
-
-const buy = ref<any>([])
-recentlyBuy($route.query.id).then((res: any) => {
-  // console.log('buy', res.data.data.list)
-  buy.value = res.data.data.list
 })
 
 const comment = ref<any>([])
@@ -176,7 +153,10 @@ function shijianc(time: any) {
   let Y = date.getFullYear() + '-'
   let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
   let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' '
-  return Y + M + D
+  let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':'
+  let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':'
+  let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds()
+  return Y + M + D + h + m + s
 }
 </script>
 
@@ -221,6 +201,7 @@ nav {
       font-weight: bolder;
       font-size: 18rem;
       margin-bottom: 10rem;
+      margin-top: 10rem;
     }
     h2 {
       font-size: 16rem;
@@ -237,9 +218,11 @@ nav {
   }
   footer {
     .add {
-      border-radius: 5rem;
-      border: 1rem solid #18202d;
+      border-radius: 15rem;
+      border: 1rem solid #5f646e;
       color: #18202d;
+      height: 30rem;
+      line-height: 30rem;
     }
     .buy {
       margin-left: 5rem;
@@ -296,6 +279,22 @@ nav {
       }
     }
   }
+  .time {
+    p {
+      font-weight: bold;
+      padding: 10rem 0;
+      &:nth-child(1) {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 10rem;
+        border-bottom: 1rem solid #f8f8fa;
+        padding-top: 10rem;
+      }
+      &:nth-child(2) {
+        text-align: center;
+      }
+    }
+  }
   .recentlyBuy {
     padding: 0rem 10rem;
     h1 {
@@ -343,22 +342,5 @@ nav {
       width: 20rem;
     }
   }
-  // .pjia {
-  //   border-top: 1rem solid #f6f6f8;
-  //   div {
-  //     padding: 10rem;
-  //     display: flex;
-  //     justify-content: space-between;
-  //     p {
-  //       &:nth-child(1) {
-  //         font-weight: 14rem;
-  //         font-weight: bold;
-  //       }
-  //     }
-  //     img {
-  //       width: 20rem;
-  //     }
-  //   }
-  // }
 }
 </style>

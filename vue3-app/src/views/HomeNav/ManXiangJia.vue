@@ -13,7 +13,7 @@
     <div class="classify">
       <div class="head">
         <h1>模玩分类</h1>
-        <p>
+        <p @click="toClassification">
           全部分类
           <img src="../../../public/images/sel_company.png" alt="" />
         </p>
@@ -23,16 +23,19 @@
           {{ things.name }}
         </span>
       </div> -->
-      <!-- <div class="swiper-container swiper-selectedSong">
-        <div class="swiper-wrapper">
-          <div
-            class="swiper-slide select-item class"
-            v-for="things in classify"
-          >
-          {{ things.name }}
+      <div class="class">
+        <div class="swiper-container swiper-selectedSong">
+          <div class="swiper-wrapper">
+            <!-- 预售 -->
+            <!-- <div class="swiper-slide select-item ">
+              {{ classify[0]?.name }}
+            </div> -->
+            <div @click="toClassify(things.id,things.name)" class="swiper-slide select-item" v-for="things in classify.slice(1)">
+              {{ things.name }}
+            </div>
+          </div>
         </div>
-        </div>
-      </div> -->
+      </div>
     </div>
     <div class="newUser">
       <img src="../../../public/images/我的/ic_main_poster.jpg" alt="" />
@@ -49,7 +52,7 @@
           <p>首创修复服务</p>
           <img src="../../../public/images/ic_repair_icon.png" alt="" />
         </div>
-        <div>
+        <div @click="toReserve">
           <img src="../../../public/images/ic_pre_sell.png" alt="" />
           <p>预售商品</p>
           <img src="../../../public/images/ic_pre_sell_hot.png" alt="" />
@@ -90,7 +93,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { savePosition } from '@/js/pageBarScrollTop.js'
 import { onMounted } from 'vue'
-import { Swiper, SwiperSlide } from 'swiper/vue';
+import Swiper from 'swiper'
 
 onMounted(() => {
   new Swiper('.swiper-container', {
@@ -117,7 +120,7 @@ bannerApi().then((res: any) => {
 })
 // 大图
 moplaySortApi().then((res: any) => {
-  console.log(res.data.data)
+  console.log("classify",res.data.data)
   classify.value = res.data.data
 })
 // 模玩分类
@@ -136,6 +139,7 @@ goodsAllApi().then((res: any) => {
 savePosition()
 
 const $router = useRouter()
+// 商品详情
 function toCommodity(id: any) {
   // console.log("id",id)
   $router.push({
@@ -145,13 +149,41 @@ function toCommodity(id: any) {
     }
   })
 }
+
+// 全部分类
+function toClassification() {
+  // console.log("id",id)
+  $router.push({
+    path: '/classification'
+  })
+}
+
+// 预售商品
+function toReserve(){
+  $router.push({
+    path: '/reserve'
+  })
+}
+
+// 模玩分类详情
+function toClassify(id: any,name:any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/classify',
+    query: {
+      id: id,
+      name:name
+    }
+  })
+}
+
 </script>
 
 <style lang="less" scoped>
 .input {
   position: fixed;
   width: 375rem;
-  height: 40rem;
+  height: 50rem;
   background-color: white;
   top: 0;
   left: 0;
@@ -218,17 +250,32 @@ function toCommodity(id: any) {
   .class {
     display: flex;
     // justify-content: start;
-    flex-wrap: nowrap;
+    // flex-wrap: nowrap;
     width: 360rem;
     margin: 16rem auto;
-    span {
-      border: 1px solid #f4f5f5;
-      margin-right: 15rem;
-      padding: 10rem 30rem;
-      background-color: #f4f5f5;
-      white-space: nowrap;
-      border-radius: 5rem;
+    .swiper-wrapper {
+      .swiper-slide {
+        border: 1px solid #f4f5f5;
+        margin-right: 10rem;
+        padding: 0rem 30rem;
+        background-color: #f4f5f5;
+        white-space: nowrap;
+        border-radius: 5rem;
+        width: 85rem;
+        line-height: 40rem;
+      }
     }
+
+    // .slid {
+    //   border: 1px solid #f4f5f5;
+    //   margin-right: 10rem;
+    //   padding: 0rem 30rem;
+    //   background-color: #f4f5f5;
+    //   white-space: nowrap;
+    //   border-radius: 5rem;
+    //   width: 85rem;
+    //   line-height: 40rem;
+    // }
   }
 }
 .newUser {
