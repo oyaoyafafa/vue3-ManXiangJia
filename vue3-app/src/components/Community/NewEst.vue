@@ -3,7 +3,6 @@ import { clubArtcleApi } from '@/api/community'
 import ItemCard from '@/components/Community/ItemCard.vue'
 
 import { ref } from 'vue'
-import { savePosition } from '@/js/pageBarScrollTop.js'
 console.log(111);
 
 defineProps<{
@@ -48,8 +47,6 @@ const onRefresh = (needId: any,active:any) => {
   onLoad(needId,active)
 }
 
-// 控制首页五个页面的滚动高度------------------------------------------------------------
-savePosition()
 </script>
 
 <template>
