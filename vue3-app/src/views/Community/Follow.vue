@@ -13,7 +13,6 @@ export default {
     const { getFollowList } = communityFollow
 
     const onLoad = (n: any) => {
-      console.log(111)
 
       getFollowList(n)
       num.value++

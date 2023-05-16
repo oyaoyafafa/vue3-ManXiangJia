@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// 时间戳转化函数------------------------------------------------------------
+import { timestampToTime } from '@/js/tool.js'
 defineProps<{
     commentsItem: any
 }>()
@@ -26,7 +28,7 @@ const toDetail = (id: any) => {
       <h3 class="user_name">{{( commentsItem?.detail?.nickName ||commentsItem?.tbAppUserDetail?.nickName )}}</h3>
       <p>
         <span>{{ commentsItem.content }}</span
-        >{{ commentsItem.createTime }}
+        >{{ timestampToTime(commentsItem.createTime)  }}
       </p>
     </div>
     <div>
