@@ -43,17 +43,15 @@ console.log('info')
 
 <template>
   <div class="information">
-    <!-- 情报 -->
-    <!-- <ul>
-        <InfoBanner v-for="bannerItem in bannerList" :bannerItem="bannerItem" />
-      </ul> -->
-    <div class="search">
+  
+    <div class="search" @click="$router.push('/communitysearch')">
       <div>
         <p>请输入你要查找的内容</p>
         <van-icon name="search" />
       </div>
     </div>
-    <div class="banner_list">
+     
+    <div class="banner_list" >
       <van-skeleton v-show="loading">
         <template #template>
           <div :style="{ display: 'flex', width: '100%' }">
@@ -61,7 +59,7 @@ console.log('info')
           </div>
         </template>
       </van-skeleton>
-      <van-swipe  lazy-render v-show="!loading">
+      <van-swipe :autoplay="3000" indicator-color="white" lazy-render >
         <van-swipe-item  @click.native="toDetail(bannerItem.id)"
           :style="[
             {
@@ -184,8 +182,8 @@ console.log('info')
     right: 15rem;
   }
 }
-/deep/ .van-swipe__indicators {
-  display: none;
-}
+// /deep/ .van-swipe__indicators {
+//   display: none;
+// }
 
 </style>

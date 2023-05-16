@@ -50,6 +50,7 @@ onMounted(() => {
         ></path>
       </svg>
     </i>
+    <van-back-top />
     <div class="top">
       <van-image width="100vw" height="auto" :src="detail?.topImage" />
       <h1>{{ detail?.title }}</h1>
@@ -149,6 +150,17 @@ onMounted(() => {
   .comments {
     p {
       color: #a1a1a1;
+    }
+  }
+  .footer_img {
+    margin-top: 20rem;
+    height: 40rem;
+    text-align: center;
+    padding-bottom: 100rem;
+
+    img {
+      width: 40rem;
+      height: 40rem;
     }
   }
 }
