@@ -16,7 +16,7 @@ const goods = computed(() => {
     <div>
         <ul>
             <li v-for="item in list.list">
-                <p class="pending"><span>待付款</span> <span>下单时间{{ timestampToTime(item.time) }}</span> </p>
+                <p class="pending"><span>{{ item.payStuats }}</span> <span>下单时间{{ timestampToTime(item.time) }}</span> </p>
                 <div>
                     <van-card :num="goods.num" :price="goods.allPrice" :desc="goods?.goods?.title"
                         :title="goods?.goods?.brandName" v-for="goods in item?.pending"

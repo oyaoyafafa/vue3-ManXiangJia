@@ -7,13 +7,16 @@ import { shoppingCarStore } from '@/stores/shoppingCar'
 const $route = useRoute()
 const active = ref(Number($route.query.n))
 const shoppingCar = shoppingCarStore()
-const { pendingList } = storeToRefs(shoppingCar)
+const { pendingList,allList } = storeToRefs(shoppingCar)
 
 
 </script>
 <template>
     <div>
         <van-tabs v-model:active="active">
+            <van-tab title="全部">
+                <OderPay  :list="allList"/>
+            </van-tab>
             <van-tab title="待付款">
                 <OderPay  :list="pendingList"/>
             </van-tab>
@@ -31,5 +34,8 @@ const { pendingList } = storeToRefs(shoppingCar)
 </template>
 
   
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+
+
+</style>
   
