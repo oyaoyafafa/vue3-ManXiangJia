@@ -177,7 +177,6 @@ const router = createRouter({
       name: 'Address',
       component: () => import('@/views/other/Address.vue')
     },
-<<<<<<< HEAD
 
     // ClassDetail 全部分类详情
     {
@@ -192,7 +191,6 @@ const router = createRouter({
       path: '/commentList',
       component: () => import('@/views/Commodity/CommentList.vue')
     },
-=======
      // 订单提交
      {
       name: 'Settlement',
@@ -205,7 +203,6 @@ const router = createRouter({
       path: '/aLlorder',
       component: () => import('@/views/other/ALlOrder.vue')
     }
->>>>>>> 3f072417cc622dc45cf4d8feaf9db066fbdaf2cc
   ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效
   // scrollBehavior (to, from, savedPosition) {
