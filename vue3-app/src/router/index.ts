@@ -141,7 +141,12 @@ const router = createRouter({
       path: '/homesearch',
       name: 'HomeSearch',
       component: () => import('@/views/other/HomeSearch.vue')
-    }
+    },
+    {
+      path: '/address',
+      name: 'Address',
+      component: () => import('@/views/other/Address.vue')
+    },
   ]
 })
 
