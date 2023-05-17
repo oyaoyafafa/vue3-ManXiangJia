@@ -5,21 +5,25 @@ import { getHotSearchText, getSearchRes, getSearchFliterTag } from '@/api/homeSe
 
 export const useHomeSearchStore = defineStore('homeSearch', () => {
   // 搜索记录
-  let historySearch = ref(JSON.parse(localStorage.getItem('vue3-homesearch')) || [] )
-  function addHistorySearch(text) {
-    
-    console.log(text);
+  let historySearch = ref(JSON.parse(localStorage.getItem('vue3-homesearch')||'[]') || [] )
+  function addHistorySearch(text:string) {
     historySearch.value = [...new Set([text,...historySearch.value])].slice(0,12)
     localStorage.setItem(
       "vue3-homesearch",
       JSON.stringify(historySearch.value)
     );
   }
-
+  function deleteHistorySearch() {
+    historySearch.value = [];
+    localStorage.setItem(
+      "vue3-homesearch",
+      JSON.stringify(historySearch.value)
+    );
+  }
   // 热门搜索
   let hotSearchText = ref([])
   function setHotSearchText() {
-    getHotSearchText().then((res) => {
+    getHotSearchText().then((res:any) => {
       hotSearchText.value = res.data.data
     })
   }
@@ -50,7 +54,7 @@ export const useHomeSearchStore = defineStore('homeSearch', () => {
         brands,//拼拍筛选
         minPrice,//最低价筛选
         maxPrice//最高价筛选
-      }).then((res) => {
+      }).then((res:any) => {
         if (orderType === 1) {
           newSearchRes.value = [...newSearchRes.value, ...res.data.data.list]
           resolve(res)
@@ -67,13 +71,13 @@ export const useHomeSearchStore = defineStore('homeSearch', () => {
   // 筛选搜索结果
   // 获取全部筛选标签
   function setSearchFilterTag() {
-    getSearchFliterTag().then((res) => {
+    getSearchFliterTag().then((res:any) => {
       SearchFilterTag.value = res.data.data
     })
   }
 
   // 清除搜索结果
-  function clearSearchRes(mode) {
+  function clearSearchRes(mode:string) {
     if (mode === 'new') {
       newSearchRes.value = []
     } else if (mode === 'hot') {
@@ -87,6 +91,7 @@ export const useHomeSearchStore = defineStore('homeSearch', () => {
   return {
     historySearch,
     addHistorySearch,
+    deleteHistorySearch,
     hotSearchText,
     setHotSearchText,
     setSearchRes,
