@@ -202,7 +202,13 @@ const router = createRouter({
       name: 'AllOrder',
       path: '/aLlorder',
       component: () => import('@/views/other/ALlOrder.vue')
-    }
+    },
+    // PointDetail积分商城详情
+    {
+      name: 'PointDetail',
+      path: '/point',
+      component: () => import('@/views/ReserveGoods/PointDetail.vue')
+    },
   ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效
   // scrollBehavior (to, from, savedPosition) {

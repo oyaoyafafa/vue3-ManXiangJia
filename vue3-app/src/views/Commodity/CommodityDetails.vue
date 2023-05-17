@@ -92,8 +92,12 @@
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
         <van-action-bar-button class="add" :text="isInSoppingCar" @click="addShoppingCar" />
-        <van-action-bar-button class="buy" color="#18202d" text="立即购买"
-          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })" />
+        <van-action-bar-button
+          class="buy"
+          color="#18202d"
+          text="立即购买"
+          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })"
+        />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
     </footer>
@@ -102,14 +106,18 @@
 
 <script setup lang="ts">
 import {
-  orderDetails,
+  commodityDetails,
   commodityRecommend,
   recentlyBuy,
   dynamicApi,
   commentApi
 } from '@/api/manxiangjia'
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { shoppingCarStore } from '@/stores/shoppingCar'
+import { storeToRefs } from 'pinia'
+import { showSuccessToast, showFailToast } from 'vant'
+import 'vant/es/toast/style'
 
 const showShare = ref(false)
 const options = [
@@ -135,7 +143,7 @@ const $router = useRouter()
 // console.log($route.query.id)
 
 const deatil = ref<any>([])
-orderDetails($route.query.id).then((res: any) => {
+commodityDetails($route.query.id).then((res: any) => {
   console.log('orderDetails', res.data.data)
   deatil.value = res.data.data
 })
@@ -178,6 +186,21 @@ function toCommodity(id: any) {
   })
 }
 
+watch(
+    () => $route.query,
+    (newValue, oldValue) => {
+      console.log(newValue)
+      console.log(oldValue)
+      // userId.value = newValue.id
+      $router.go(0)
+    },
+)
+
+// function toCommodity(id: any) {
+//   // console.log("id",id)
+//   $router.go()
+// }
+
 function Todynamic(id: any) {
   $router.push({
     path: '/dynamic',
@@ -204,13 +227,10 @@ function shijianc(time: any) {
   return Y + M + D
 }
 //添加购物车
-import { shoppingCarStore } from '@/stores/shoppingCar'
-import { storeToRefs } from 'pinia'
-import { showSuccessToast, showFailToast } from 'vant'
-import 'vant/es/toast/style'
+
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
-const { addShoppingCarList, BuyGoods,setAllList } = shoppingCar
+const { addShoppingCarList, BuyGoods, setAllList } = shoppingCar
 // 是否加入了购物车
 const isInSoppingCar = computed(() => {
   if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
@@ -233,9 +253,8 @@ const toPay = ({ goods, allPrice, num }: any) => {
   BuyGoods({ goods, allPrice, num })
   setAllList()
   $router.push({
-    path: '/settlement',
+    path: '/settlement'
   })
-
 }
 
 // settlement

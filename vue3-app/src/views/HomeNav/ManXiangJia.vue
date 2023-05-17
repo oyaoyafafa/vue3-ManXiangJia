@@ -18,18 +18,10 @@
           <img src="../../../public/images/sel_company.png" alt="" />
         </p>
       </div>
-      <!-- <div class="class">
-        <span v-for="things in classify">
-          {{ things.name }}
-        </span>
-      </div> -->
-      <div class="class">
+      <div class="classy">
         <div class="swiper-container swiper-selectedSong">
           <div class="swiper-wrapper">
             <!-- 预售 -->
-            <!-- <div class="swiper-slide select-item ">
-              {{ classify[0]?.name }}
-            </div> -->
             <div
               @click="toClassify(things.id, things.name)"
               class="swiper-slide select-item"
@@ -249,6 +241,7 @@ function toOrder(id: any) {
   margin: 0 auto;
   margin-top: 16rem;
   overflow: hidden;
+  background-color: white;
   .head {
     display: flex;
     justify-content: space-between;
@@ -269,18 +262,19 @@ function toOrder(id: any) {
       }
     }
   }
-  .class {
+  .classy {
     display: flex;
     // justify-content: start;
     // flex-wrap: nowrap;
     width: 360rem;
     margin: 16rem auto;
+    background-color: white;
     .swiper-wrapper {
       .swiper-slide {
         border: 1px solid #f4f5f5;
         margin-right: 10rem;
         padding: 0rem 30rem;
-        background-color: #f4f5f5;
+        background-color: #f5f5f7;
         white-space: nowrap;
         border-radius: 5rem;
         width: 85rem;

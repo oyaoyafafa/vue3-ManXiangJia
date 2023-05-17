@@ -67,7 +67,7 @@ export default {
     </van-pull-refresh>
   </div>
 </template>
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .fall_list {
   display: flex;
   justify-content: space-between;

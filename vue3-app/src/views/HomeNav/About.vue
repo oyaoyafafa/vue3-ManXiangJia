@@ -157,7 +157,7 @@ const toMyOrder = (n) => {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .box {
   background-color: #f4f5f5;
   width: 100vw;
