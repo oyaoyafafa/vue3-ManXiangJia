@@ -7,7 +7,7 @@
     </header>
     <section>
       <!-- <img v-show="img.type === 1" v-for="img in deatil.images" :src="img.url"/> -->
-      <img v-if="deatil.images" :src="deatil.images[0].url"/>
+      <img v-if="deatil.images" :src="deatil.images[0].url" />
       <h1 v-if="deatil.integralNum != 0">￥{{ deatil.integralNum }}</h1>
       <h1 v-else>￥---</h1>
       <h2>{{ deatil.title }}</h2>
@@ -69,7 +69,7 @@
         </p>
       </div>
     </div>
-    <div class="dongtai" @click="Todynamic"> 
+    <div class="dongtai" @click="Todynamic">
       <div>
         <p>动态({{ dynamic.length }})</p>
         <p>
@@ -87,7 +87,8 @@
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
         <van-action-bar-button class="add" :text="isInSoppingCar" @click="addShoppingCar" />
-        <van-action-bar-button class="buy" color="#18202d" text="立即购买" />
+        <van-action-bar-button class="buy" color="#18202d" text="立即购买"
+          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })" />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
     </footer>
@@ -172,7 +173,7 @@ function toCommodity(id: any) {
   })
 }
 
-function Todynamic(){
+function Todynamic() {
   $router.push({
     path: '/dynamic',
   })
@@ -192,7 +193,7 @@ import { showSuccessToast, showFailToast } from 'vant';
 import 'vant/es/toast/style'
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
-const { addShoppingCarList } = shoppingCar
+const { addShoppingCarList, BuyGoods,setAllList } = shoppingCar
 // 是否加入了购物车
 const isInSoppingCar = computed(() => {
   if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
@@ -206,11 +207,20 @@ const addShoppingCar = () => {
   if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) { showSuccessToast('添加成功') } else {
     showFailToast('已在购物车中了哦');
   }
-
   addShoppingCarList({ goods: deatil.value })
- 
 
 }
+const toPay = ({ goods, allPrice, num }: any) => {
+  // console.log(11);
+  BuyGoods({ goods, allPrice, num })
+  setAllList()
+  $router.push({
+    path: '/settlement',
+  })
+
+}
+
+// settlement
 </script>
 
 <style lang="less" scoped>
@@ -273,6 +283,7 @@ nav {
       display: flex;
       justify-content: space-between;
       margin: 5rem 10rem;
+
       &:nth-child(7) {
         span {
           &:nth-child(2) {

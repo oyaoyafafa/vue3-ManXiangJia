@@ -165,7 +165,7 @@ const router = createRouter({
       path: '/homesearch',
       component: () => import('@/views/other/HomeSearch.vue')
     },
-    // 动态详情
+    // 动态详情    
     {
       name: 'DynamicCondition',
       path: '/dynamic',
@@ -177,6 +177,18 @@ const router = createRouter({
       name: 'Address',
       component: () => import('@/views/other/Address.vue')
     },
+     // 订单提交
+     {
+      name: 'Settlement',
+      path: '/settlement',
+      component: () => import('@/views/other/Settlement.vue')
+    },
+    //全部订单
+    {
+      name: 'ALlOrder',
+      path: '/aLlorder',
+      component: () => import('@/views/other/ALlOrder.vue')
+    }
   ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效
   // scrollBehavior (to, from, savedPosition) {

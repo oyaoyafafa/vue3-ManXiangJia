@@ -10,44 +10,34 @@ const itemInfo = defineProps<{
 
 // 步进器
 const value = ref(1);
-// const checked = ref(false)
-// const checked = ref(itemInfo.isCheck)
-
-// const checked =  computed(() => {
-//     return itemInfo.isCheck
-// })
-
 
 const price = computed(() => {
     return value.value * itemInfo?.item?.integralNum
 })
 
-const toCheck = ({ id, isCheck, allPrice }: any) => {
-    checkGoods({ id, isCheck, allPrice })
+const toCheck = ({ id, isCheck, allPrice ,num}: any) => {
+    checkGoods({ id, isCheck, allPrice ,num})
 }
-const addGood = ({ id, allPrice }: any) => {
-    addGoods({ id, allPrice })
+const addGood = ({ id, allPrice,num }: any) => {
+    addGoods({ id, allPrice ,num})
 }
 const toDel = ({ id }: { id: number }) => {
 
     delGood({ id })
 }
-
-
-
 </script>
 <template>
     <div class="goodsItem">
         <div class="check_box">
             <input type="checkbox" :checked="isCheck" name="" id=""
-                @change="toCheck({ id: itemInfo?.item?.id, isCheck: $event.target.checked, allPrice: price })">
+                @change="toCheck({ id: itemInfo?.item?.id, isCheck: $event.target.checked, allPrice: price,num:value  })">
         </div>
         <van-swipe-cell>
-            <van-card :price="price" :desc="itemInfo?.item?.title" :title="itemInfo?.item?.title" class="goods-card"
+            <van-card :price="price" :desc="itemInfo?.item?.title" :title="itemInfo?.item?.brandName" class="goods-card"
                 :thumb="itemInfo?.item?.listedImage">
 
                 <template #footer>
-                    <van-stepper v-model="value" @click="addGood({ id: itemInfo?.item?.id, allPrice: price })" />
+                    <van-stepper v-model="value" @click="addGood({ id: itemInfo?.item?.id, allPrice: price,num:value })" />
                 </template>
             </van-card>
             <template #right>
