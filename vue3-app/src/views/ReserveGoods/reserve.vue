@@ -45,7 +45,7 @@ function toOrder(id: any) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 nav {
   header {
     display: flex;

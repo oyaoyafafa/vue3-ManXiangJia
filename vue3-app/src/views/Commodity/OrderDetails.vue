@@ -171,7 +171,7 @@ function shijianc(time: any) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 nav {
   padding-bottom: 60rem;
   // padding-top: 60rem;
