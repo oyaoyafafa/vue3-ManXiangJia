@@ -7,21 +7,39 @@
     </header>
     <main>
       <div class="title">
-        <div :class="{}">最新</div>
-        <div>销量</div>
+        <!-- <div @click="isShow = false" :class="{ active: !isShow }">最新</div>
+        <div @click="isShow = true" :class="{ active: isShow }">销量</div> -->
+
+        <van-tabs sticky color="#18202d" v-model:active="active">
+          <van-tab title="最新">
+            <footer>
+              <div @click="toOrder(goods.id)" class="goods" v-for="goods in classify">
+                <div>
+                  <img :src="goods.listedImage" alt="" />
+                </div>
+                <div>
+                  <p>{{ goods.title }}</p>
+                  <h1>￥{{ goods.sellPrice }}</h1>
+                </div>
+              </div>
+            </footer>
+          </van-tab>
+          <van-tab title="销量">
+            <footer>
+              <div @click="toOrder(goods.id)" class="goods" v-for="goods in classify2">
+                <div>
+                  <img :src="goods.listedImage" alt="" />
+                </div>
+                <div>
+                  <p>{{ goods.title }}</p>
+                  <h1>￥{{ goods.sellPrice }}</h1>
+                </div>
+              </div>
+            </footer>
+          </van-tab>
+        </van-tabs>
       </div>
     </main>
-    <footer>
-      <div @click="toOrder(goods.id)" class="goods" v-for="goods in classify">
-        <div>
-          <img :src="goods.listedImage" alt="" />
-        </div>
-        <div>
-          <p>{{ goods.title }}</p>
-          <h1>￥{{ goods.sellPrice }}</h1>
-        </div>
-      </div>
-    </footer>
   </div>
 </template>
 
@@ -32,15 +50,22 @@ import { ref, reactive } from 'vue'
 const $route = useRoute()
 const $router = useRouter()
 
-const isShow = ref(false)
+// const isShow = ref(false)
+const active = ref(0)
 
 function routerBack() {
   $router.back()
 }
 const classify = ref<any>([])
-classifyApi($route.query.id, $route.query.name, $route.query.orderType).then((res: any) => {
+classifyApi($route.query.id, $route.query.name, 1).then((res: any) => {
   console.log(res.data.data.list)
   classify.value = res.data.data.list
+})
+
+const classify2 = ref<any>([])
+classifyApi($route.query.id, $route.query.name, 2).then((res: any) => {
+  console.log(res.data.data.list)
+  classify2.value = res.data.data.list
 })
 
 function toOrder(id: any) {
@@ -78,19 +103,22 @@ header {
     }
   }
 }
-main {
-  .title {
-    display: flex;
-    font-size: 14rem;
-    justify-content: space-around;
-    div {
-      padding: 6rem 0;
-      border-bottom: 4rem solid #18202d;
-    }
-  }
-}
+// main {
+  // .title {
+  //   display: flex;
+  //   font-size: 14rem;
+  //   justify-content: space-around;
+  //   div {
+  //     padding: 6rem 0;
+  //     border-bottom: 4rem solid white;
+  //   }
+  //   .active {
+  //     border-bottom: 4rem solid #18202d;
+  //   }
+  // }
+// }
 footer {
-  margin-top: 15rem;
+  // margin-top: 15rem;
   display: flex;
   flex-wrap: wrap;
   .goods {
@@ -120,6 +148,7 @@ footer {
         justify-content: space-between;
         line-height: 14rem;
         P {
+          margin-left: 10rem;
           padding-right: 10rem;
           padding-top: 10rem;
           overflow: hidden;
@@ -129,6 +158,7 @@ footer {
           -webkit-box-orient: vertical;
         }
         h1 {
+          margin-left: 6rem;
           font-size: 14rem;
           font-weight: bold;
           padding-bottom: 8rem;

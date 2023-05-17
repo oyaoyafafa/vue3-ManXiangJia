@@ -115,6 +115,7 @@ const commentApi = (id) =>
       goodId: id
     }
   })
+  // goodsmanage/app/classify/classifygoods/ls
 
 // goodsmanage/app/presellgoods/detail/6604
 // 预售详情
@@ -142,11 +143,28 @@ const articlelist = (goodId) =>
   axios.get('/api/userorg/app/article/good/articlelist', {
     params: {
       goodId: goodId,
-      goodType:1,
-      pageNumber:1,
-      pageSize:10
+      goodType: 1,
+      pageNumber: 1,
+      pageSize: 10
     }
   })
+
+// goodsmanage/app/classify/classifygoods/ls
+// 全部分类内容
+const articlelclassifygoodsist = (id, title, orderType) =>
+  axios.get('/api/goodsmanage/app/classify/classifygoods/ls', {
+    params: {
+      id: id,
+      title: title,
+      orderType: orderType
+    }
+  })
+
+// goodsmanage/app/goods/brand/detail/ls/2
+// 全部分类头部
+const classifyhead = (brands) =>
+  axios.get('/api/goodsmanage/app/goods/brand/detail/ls/' + brands, {})
+
 
 export {
   bannerApi,
@@ -163,5 +181,7 @@ export {
   commentApi,
   orderDetails,
   classifyApi,
-  articlelist
+  articlelist,
+  articlelclassifygoodsist,
+  classifyhead,
 }

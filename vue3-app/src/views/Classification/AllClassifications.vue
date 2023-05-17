@@ -10,7 +10,7 @@
         <img src="../../../public/images/search_icon.png" />
       </div>
     </div>
-    <div class="menu_detail">
+    <!-- <div class="menu_detail">
       <div class="menu_list">
         <van-sidebar v-model="tabValue">
           <van-sidebar-item
@@ -21,11 +21,23 @@
       </div>
       <div class="goodListId">
         <div class="goods">
-          <p>11111</p>
-          <p>222222</p>
+
         </div>
       </div>
-    </div>
+    </div> -->
+    <van-tabs color="#18202d" sticky class="item" v-model:active="active">
+      <van-tab v-for="item in sort" :title="item.name">
+        <div class="goods" v-for="goods in item.models">
+          <p class="title">{{ goods.name }}</p>
+          <div class="good">
+            <div @click="toAllclass(things.id,things.name,things.brands)" class="things" v-for="things in goods.classifies">
+              <img :src="things.image" alt="" />
+              <p>{{ things.name }}</p>
+            </div>
+          </div>
+        </div>
+      </van-tab>
+    </van-tabs>
   </nav>
 </template>
 
@@ -36,6 +48,7 @@ import { useRoute, useRouter } from 'vue-router'
 const $router = useRouter()
 const tabValue = ref(0)
 const a = {}
+const active = ref(0)
 
 const sort = ref<Array<any>>([])
 moplatAllSortApi().then((res: any) => {
@@ -46,16 +59,30 @@ function routerBack() {
   $router.back()
 }
 
+function toAllclass(id:any,title:any,brands:any){
+  $router.push({
+    path:"/allclass",
+    query:{
+      id:id,
+      title:title,
+      orderType:1,
+      brands:brands
+    }
+  })
+}
 </script>
 
 <style lang="scss" scoped>
 nav {
   header {
+    height: 40rem;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     img {
       width: 10rem;
+      &:nth-child(1) {
+        margin-left: 10rem;
+      }
     }
     h1 {
       margin-left: 130rem;
@@ -65,6 +92,7 @@ nav {
   }
   .input {
     width: 375rem;
+    margin-bottom: 10rem;
     input {
       width: 360rem;
       border-radius: 25rem;
@@ -90,13 +118,41 @@ nav {
     .menu_list {
       text-align: center;
     }
-    .goodListId{
+    .goodListId {
       position: absolute;
       top: 0;
       right: 0;
       width: 300rem;
       background-color: pink;
-      height: 600rem;
+      height: 575rem;
+      overflow: scroll;
+      .goods {
+        height: 800rem;
+      }
+    }
+  }
+  .item {
+    .goods {
+      .title {
+        font-size: 16rem;
+        text-align: center;
+        font-weight: bold;
+      }
+      .good {
+        display: flex;
+        flex-wrap: wrap;
+        .things {
+          width: 120rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin: 10rem 0;
+          img {
+            width: 50rem;
+            height: 50rem;
+          }
+        }
+      }
     }
   }
 }

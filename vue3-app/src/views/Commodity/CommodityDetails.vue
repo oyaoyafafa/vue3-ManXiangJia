@@ -57,7 +57,7 @@
       <h1 v-else>最近购买(0)</h1>
       <li v-for="item in buy">
         <p>
-          <img :src="item.url || '@/../public/images/default_header.png'" alt="" />
+          <img src="@/../public/images/default_header.png" alt="" />
           <span>{{ item.name }}</span>
         </p>
         <p>{{ item.price }}</p>
@@ -65,7 +65,7 @@
       </li>
     </ul>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
-    <div class="pjia">
+    <div @click="ToComment($route.query.id)" class="pjia">
       <div>
         <p>商品评价({{ comment.length }})</p>
         <p>
@@ -101,7 +101,7 @@
 
 <script setup lang="ts">
 import {
-  commodityDetails,
+  orderDetails,
   commodityRecommend,
   recentlyBuy,
   dynamicApi,
@@ -134,8 +134,8 @@ const $router = useRouter()
 // console.log($route.query.id)
 
 const deatil = ref<any>([])
-commodityDetails($route.query.id).then((res: any) => {
-  console.log(res.data.data)
+orderDetails($route.query.id).then((res: any) => {
+  console.log('orderDetails', res.data.data)
   deatil.value = res.data.data
 })
 
@@ -186,6 +186,15 @@ function Todynamic(id: any) {
   })
 }
 
+function ToComment(id: any) {
+  $router.push({
+    path: '/commentList',
+    query: {
+      goodId: id
+    }
+  })
+}
+
 function shijianc(time: any) {
   let date = new Date(time)
   let Y = date.getFullYear() + '-'
@@ -196,7 +205,7 @@ function shijianc(time: any) {
 //添加购物车
 import { shoppingCarStore } from '@/stores/shoppingCar'
 import { storeToRefs } from 'pinia'
-import { showSuccessToast, showFailToast } from 'vant';
+import { showSuccessToast, showFailToast } from 'vant'
 import 'vant/es/toast/style'
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
@@ -206,18 +215,18 @@ const isInSoppingCar = computed(() => {
   if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
     return '加入购物车'
   } else {
-    return "已在购物车"
+    return '已在购物车'
   }
 })
 const addShoppingCar = () => {
   // console.log(11);
-  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) { showSuccessToast('添加成功') } else {
-    showFailToast('已在购物车中了哦');
+  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
+    showSuccessToast('添加成功')
+  } else {
+    showFailToast('已在购物车中了哦')
   }
 
   addShoppingCarList({ goods: deatil.value })
- 
-
 }
 </script>
 
@@ -240,10 +249,10 @@ nav {
     z-index: 999;
 
     img {
-      &:nth-child(1){
+      &:nth-child(1) {
         width: 20rem;
       }
-      &:nth-child(2){
+      &:nth-child(2) {
         width: 30rem;
       }
     }
@@ -448,4 +457,3 @@ nav {
   // }
 }
 </style>
-

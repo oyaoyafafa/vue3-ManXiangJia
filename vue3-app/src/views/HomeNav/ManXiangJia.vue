@@ -30,7 +30,11 @@
             <!-- <div class="swiper-slide select-item ">
               {{ classify[0]?.name }}
             </div> -->
-            <div @click="toClassify(things.id,things.name)" class="swiper-slide select-item" v-for="things in classify.slice(1)">
+            <div
+              @click="toClassify(things.id, things.name)"
+              class="swiper-slide select-item"
+              v-for="things in classify.slice(1)"
+            >
               {{ things.name }}
             </div>
           </div>
@@ -95,6 +99,7 @@ import { savePosition } from '@/js/pageBarScrollTop.js'
 import { onMounted } from 'vue'
 import Swiper from 'swiper'
 
+
 onMounted(() => {
   new Swiper('.swiper-container', {
     pagination: '.swiper-pagination',
@@ -120,7 +125,7 @@ bannerApi().then((res: any) => {
 })
 // 大图
 moplaySortApi().then((res: any) => {
-  console.log("classify",res.data.data)
+  console.log('classify', res.data.data)
   classify.value = res.data.data
 })
 // 模玩分类
@@ -159,29 +164,28 @@ function toClassification() {
 }
 
 // 预售商品
-function toReserve(){
+function toReserve() {
   $router.push({
     path: '/reserve'
   })
 }
 
 // 搜索
-function toHomesearch(){
+function toHomesearch() {
   $router.push({
     path: '/homesearch'
   })
 }
 
-
 // 模玩分类详情
-function toClassify(id: any,name:any) {
+function toClassify(id: any, name: any) {
   // console.log("id",id)
   $router.push({
     path: '/classify',
     query: {
       id: id,
-      name:name,
-      orderType:1
+      name: name,
+      orderType: 1
     }
   })
 }
@@ -195,7 +199,6 @@ function toOrder(id: any) {
     }
   })
 }
-
 </script>
 
 <style lang="less" scoped>
