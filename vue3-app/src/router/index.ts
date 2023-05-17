@@ -170,7 +170,8 @@ const router = createRouter({
       name: 'DynamicCondition',
       path: '/dynamic',
       component: () => import('@/views/Commodity/DynamicCondition.vue')
-    }
+    },
+    // 地址
     {
       path: '/address',
       name: 'Address',
