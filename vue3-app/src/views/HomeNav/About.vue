@@ -3,25 +3,48 @@
     <header>
       <h1>我的漫想家</h1>
       <div class="login">
-        <span class="userLogin" @click="$router.push({
-          path:'/login',
-          query:{
-            f:'/about'
-          }
-        })">
+        <span class="userLogin">
           <img class="user" src="../../../public/images/我的/default_header.png" alt="" />
-          <span v-if="!isLogin">
-            <h1 style="font-weight: bold;">点击注册/登录</h1>
+          <span v-if="!login">
+            <h1
+              style="font-weight: bold"
+              @click="
+                $router.push({
+                  path: '/login',
+                  query: {
+                    f: '/about'
+                  }
+                })
+              "
+            >
+              点击注册/登录
+            </h1>
             <span>购物得积分</span>
           </span>
-          <span v-if="isLogin">
-            <h1 style="font-weight: bold;">漫想家92637277</h1>
+          <span v-if="login">
+            <h1 style="font-weight: bold">漫想家92637277</h1>
             <span>ID 92637277 | 积分 0</span>
           </span>
         </span>
-        <img class="setting" src="../../../public/images/我的/ic_mine_setting.png" alt="" />
+        <img
+          @click="
+            login
+              ? $router.push({
+                  path: '/address'
+                })
+              : $router.push({
+                  path: '/login',
+                  query: {
+                    f: '/about'
+                  }
+                })
+          "
+          class="setting"
+          src="../../../public/images/我的/ic_mine_setting.png"
+          alt=""
+        />
       </div>
-      <div v-if="!isLogin" class="userMsg">
+      <div v-if="!login" class="userMsg">
         <div>
           <p>-</p>
           <p>粉丝</p>
@@ -35,7 +58,7 @@
           <p>动态</p>
         </div>
       </div>
-      <div v-if="isLogin" class="userMsg">
+      <div v-if="login" class="userMsg">
         <div>
           <p>0</p>
           <p>粉丝</p>
@@ -106,13 +129,17 @@
 
 <script setup>
 import { ref } from 'vue'
-import {useRouter} from 'vue-router'
-const isLogin = ref(false)
-const $router = useRouter();
+import { useRouter } from 'vue-router'
+const $router = useRouter()
+
+import { useUserStore } from '@/stores/user.ts'
+import { storeToRefs } from 'pinia'
+const userStore = useUserStore()
+const { login } = storeToRefs(userStore)
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
-import {savePosition} from '@/js/pageBarScrollTop.js'
-savePosition();
+import { savePosition } from '@/js/pageBarScrollTop.js'
+savePosition()
 </script>
 
 <style lang="scss" scoped>
@@ -233,7 +260,7 @@ savePosition();
     background-color: white;
     box-shadow: 0 0px 2px rgba(0, 0, 0, 0.4);
     h1 {
-      margin:6rem 10rem;
+      margin: 6rem 10rem;
       padding-top: 8rem;
       font-size: 14rem;
       font-weight: bold;

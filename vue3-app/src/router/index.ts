@@ -170,7 +170,13 @@ const router = createRouter({
       name: 'DynamicCondition',
       path: '/dynamic',
       component: () => import('@/views/Commodity/DynamicCondition.vue')
-    }
+    },
+    // 地址
+    {
+      path: '/address',
+      name: 'Address',
+      component: () => import('@/views/other/Address.vue')
+    },
   ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效
   // scrollBehavior (to, from, savedPosition) {

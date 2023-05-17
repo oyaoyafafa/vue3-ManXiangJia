@@ -48,7 +48,7 @@
               <input type="number" v-model="username2" placeholder="请输入手机号" />
             </section>
             <section class="password1">
-              <input type="password1" v-model="password2"  placeholder="请输入密码" />
+              <input type="password1" v-model="password2" placeholder="请输入密码" />
             </section>
             <section class="agreement">
               <van-checkbox v-model="checked2">
@@ -83,7 +83,7 @@
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { showToast } from 'vant'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '@/stores/user.ts'
 export default {
   setup() {
     const active = ref(0)
@@ -97,15 +97,14 @@ export default {
     const username1 = ref('123456')
     const password1 = ref('111111')
 
-
     const username2 = ref('123456')
     const password2 = ref('111111')
 
-    
+    const userStore = useUserStore()
     // 登录功能
     function login(mode) {
       console.log('login')
-      
+
       if (mode === 'code') {
         if (checked1.value === false) {
           showToast('请您详细阅读并同意用户注册协议和隐私政策')
@@ -121,6 +120,7 @@ export default {
           if (password1.value == code.value) {
             // 登录成功
             // 1. 存储 token
+            userStore.successLogin();
             localStorage.setItem('token', res)
             // 2. 跳转
             back()
@@ -128,7 +128,6 @@ export default {
             // 登录失败
             localStorage.removeItem('token')
             showToast('验证码不正确')
-            
           }
         })
       } else if (mode == 'password1') {
@@ -137,7 +136,7 @@ export default {
           return
         }
         new Promise((resolve) => {
-          loading.value = true;
+          loading.value = true
           setTimeout(() => {
             resolve('xxxxyyyyzzzz')
           }, 3000)
@@ -146,6 +145,7 @@ export default {
           if (username2.value == '123456' && password2.value == '111111') {
             // 登录成功
             // 1. 存储 token
+            userStore.successLogin();
             localStorage.setItem('token', res)
             // 2. 跳转
             back()

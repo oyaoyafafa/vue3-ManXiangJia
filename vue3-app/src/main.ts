@@ -10,7 +10,7 @@ import router from './router'
 
 
 
-import { List, PullRefresh, Image as VanImage, Lazyload ,Icon ,Tab, Tabs, IndexBar, IndexAnchor,Loading, Swipe, SwipeItem,Search, Checkbox, CheckboxGroup,Toast,Popup,Collapse, CollapseItem ,Sticky ,Card,Stepper  ,SwipeCell  ,SubmitBar  } from 'vant';
+import { List, PullRefresh, Image as VanImage, Lazyload ,Icon ,Tab, Tabs, IndexBar, IndexAnchor,Loading, Swipe, SwipeItem,Search, Checkbox, CheckboxGroup,Toast,Popup,Collapse, CollapseItem ,Sticky ,Card,Stepper  ,SwipeCell  ,SubmitBar  ,AddressEdit  ,RadioGroup, Radio } from 'vant';
 
 import {BackTop  } from 'vant';
 import { VueMasonryPlugin } from 'vue-masonry';
@@ -19,7 +19,7 @@ import 'swiper/dist/css/swiper.min.css';
 
 const app = createApp(App)
 // vant组件引入
-app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).use(Checkbox).use(CheckboxGroup).use(Toast).use(Sticky ).use(BackTop).use(Card).use(Stepper ).use(SwipeCell).use(SubmitBar)
+app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).use(Checkbox).use(CheckboxGroup).use(Toast).use(Sticky ).use(BackTop).use(Card).use(Stepper ).use(SwipeCell).use(SubmitBar).use(AddressEdit).use(Radio).use(RadioGroup)
 
 app.use(Lazyload, {
     lazyComponent: true,
@@ -35,8 +35,3 @@ app.use(router)
 app.mount('#app')
 
 
-// vant组件引入
-app.use(List).use(PullRefresh).use(VanImage).use(Icon ).use(Tab ).use(Tabs ).use(IndexBar ).use(IndexAnchor ).use(Loading ).use(Swipe ).use(SwipeItem ).use(Search ).use(Sticky )
-app.use(Lazyload, {
-    lazyComponent: true,
-});
