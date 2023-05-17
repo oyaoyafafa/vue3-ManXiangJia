@@ -58,7 +58,7 @@ function routerBack() {
 }
 const classify = ref<any>([])
 classifyApi($route.query.id, $route.query.name, 1).then((res: any) => {
-  console.log(res.data.data.list)
+  console.log('classifyApi', res.data.data.list)
   classify.value = res.data.data.list
 })
 
@@ -104,18 +104,18 @@ header {
   }
 }
 // main {
-  // .title {
-  //   display: flex;
-  //   font-size: 14rem;
-  //   justify-content: space-around;
-  //   div {
-  //     padding: 6rem 0;
-  //     border-bottom: 4rem solid white;
-  //   }
-  //   .active {
-  //     border-bottom: 4rem solid #18202d;
-  //   }
-  // }
+// .title {
+//   display: flex;
+//   font-size: 14rem;
+//   justify-content: space-around;
+//   div {
+//     padding: 6rem 0;
+//     border-bottom: 4rem solid white;
+//   }
+//   .active {
+//     border-bottom: 4rem solid #18202d;
+//   }
+// }
 // }
 footer {
   // margin-top: 15rem;

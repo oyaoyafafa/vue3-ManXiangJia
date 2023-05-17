@@ -8,7 +8,7 @@
       <div class="mask"></div>
       <div class="head">
         <img @click="routerBack" src="@/../public/images/back_white.png" alt="" />
-        <div class="input1">
+        <div @click="toHomesearch" class="input1">
           <input type="text" placeholder="请输入您要查找的内容" />
           <div class="search">
             <img src="../../../public/images/search_icon.png" />
@@ -22,9 +22,9 @@
       <p>{{ head.describes }}</p>
     </div>
   </div>
-  <van-tabs sticky style="border-top: 1rem solid #f7f7f8;" color="#18202d" v-model:active="active">
+  <van-tabs sticky style="border-top: 1rem solid #f7f7f8" color="#18202d" v-model:active="active">
     <van-tab class="item" title="最新">
-      <div class="goods1" v-for="goods in goodsist">
+      <div @click="toCommodity(goods.id)" class="goods1" v-for="goods in goodsist">
         <div>
           <img :src="goods.listedImage" alt="" />
         </div>
@@ -35,7 +35,7 @@
       </div>
     </van-tab>
     <van-tab class="item" title="销量">
-      <div class="goods1" v-for="goods in goodsist1">
+      <div @click="toCommodity(goods.id)" class="goods1" v-for="goods in goodsist1">
         <div>
           <img :src="goods.listedImage" alt="" />
         </div>
@@ -57,19 +57,15 @@ const $route = useRoute()
 const active = ref(0)
 
 const goodsist = ref<Array<any>>([])
-articlelclassifygoodsist($route.query.id, $route.query.title, 1).then(
-  (res: any) => {
-    goodsist.value = res.data.data.list
-    console.log('goodsist', res.data.data.list)
-  }
-)
+articlelclassifygoodsist($route.query.id, $route.query.title, 1).then((res: any) => {
+  goodsist.value = res.data.data.list
+  console.log('goodsist', res.data.data.list)
+})
 const goodsist1 = ref<Array<any>>([])
-articlelclassifygoodsist($route.query.id, $route.query.title, 2).then(
-  (res: any) => {
-    goodsist1.value = res.data.data.list
-    console.log('goodsist', res.data.data.list)
-  }
-)
+articlelclassifygoodsist($route.query.id, $route.query.title, 2).then((res: any) => {
+  goodsist1.value = res.data.data.list
+  console.log('goodsist', res.data.data.list)
+})
 // classifyhead
 const head = ref<any>([])
 classifyhead($route.query.brands).then((res: any) => {
@@ -77,8 +73,24 @@ classifyhead($route.query.brands).then((res: any) => {
   console.log(res.data.data)
 })
 
+function toCommodity(id: any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/commodity',
+    query: {
+      id: id
+    }
+  })
+}
+
 function routerBack() {
   $router.back()
+}
+
+function toHomesearch() {
+  $router.push({
+    path: '/homesearch'
+  })
 }
 </script>
 
@@ -119,7 +131,7 @@ div {
           margin-left: 7.5rem;
           background-color: #909090;
           padding-left: 30rem;
-        //   opacity: 0.5;
+          //   opacity: 0.5;
         }
         input::-webkit-input-placeholder {
           color: #cccccc;

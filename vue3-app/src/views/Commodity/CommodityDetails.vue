@@ -101,13 +101,13 @@
 
 <script setup lang="ts">
 import {
-  orderDetails,
+  commodityDetails,
   commodityRecommend,
   recentlyBuy,
   dynamicApi,
   commentApi
 } from '@/api/manxiangjia'
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { shoppingCarStore } from '@/stores/shoppingCar'
 import { storeToRefs } from 'pinia'
@@ -138,7 +138,7 @@ const $router = useRouter()
 // console.log($route.query.id)
 
 const deatil = ref<any>([])
-orderDetails($route.query.id).then((res: any) => {
+commodityDetails($route.query.id).then((res: any) => {
   console.log('orderDetails', res.data.data)
   deatil.value = res.data.data
 })
@@ -180,6 +180,10 @@ function toCommodity(id: any) {
     }
   })
 }
+// function toCommodity(id: any) {
+//   // console.log("id",id)
+//   $router.go()
+// }
 
 function Todynamic(id: any) {
   $router.push({

@@ -4,7 +4,7 @@
       <img @click="routerBack" src="@/../public/images/picker_icon_back_black.png" alt="" />
       <h1>全部分类</h1>
     </header>
-    <div class="input">
+    <div @click="toHomesearch" class="input">
       <input type="text" placeholder="请输入您要查找的内容" />
       <div class="search">
         <img src="../../../public/images/search_icon.png" />
@@ -30,7 +30,11 @@
         <div class="goods" v-for="goods in item.models">
           <p class="title">{{ goods.name }}</p>
           <div class="good">
-            <div @click="toAllclass(things.id,things.name,things.brands)" class="things" v-for="things in goods.classifies">
+            <div
+              @click="toAllclass(things.id, things.name, things.brands)"
+              class="things"
+              v-for="things in goods.classifies"
+            >
               <img :src="things.image" alt="" />
               <p>{{ things.name }}</p>
             </div>
@@ -59,15 +63,20 @@ function routerBack() {
   $router.back()
 }
 
-function toAllclass(id:any,title:any,brands:any){
+function toAllclass(id: any, title: any, brands: any) {
   $router.push({
-    path:"/allclass",
-    query:{
-      id:id,
-      title:title,
-      orderType:1,
-      brands:brands
+    path: '/allclass',
+    query: {
+      id: id,
+      title: title,
+      orderType: 1,
+      brands: brands
     }
+  })
+}
+function toHomesearch() {
+  $router.push({
+    path: '/homesearch'
   })
 }
 </script>
