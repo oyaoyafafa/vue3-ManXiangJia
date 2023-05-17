@@ -23,6 +23,7 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import ItemCard from '@/components/Community/ItemCard.vue'
 import { useRoute, useRouter } from 'vue-router'
 import { articlelist } from '@/api/manxiangjia'
 const $router = useRouter()
@@ -36,7 +37,7 @@ articlelist($route.query.goodId).then((res: any) => {
 function routerBack() {
   $router.back()
 }
-function toGoodsdetail(id){
+function toGoodsdetail(id:any){
   $router.push({
     path:"/communitygoodsdetail",
     query: {

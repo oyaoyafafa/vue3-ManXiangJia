@@ -38,7 +38,7 @@
       </div>
       <div class="order">
         <p>合计<span>¥{{ allPrice }}</span></p>
-        <span class="order_btn">结算</span>
+        <span class="order_btn" @click="toOrder">结算</span>
       </div>
     </div>
   </div>
@@ -60,6 +60,15 @@ const onRefresh = () => {
     loading.value = false
   }, 1000)
 }
+function toCommodity(id: any) {
+  // console.log("id",id)
+  $router.push({
+    path: '/commodity',
+    query: {
+      id: id
+    }
+  })
+}
 
 shoppingCartRecommendApi().then((res: any) => {
   commend.value = res.data.data.list
@@ -72,6 +81,11 @@ savePosition();
 import shoppingCarItem from '@/components/HomeNav/shoppingCarItem.vue'
 import { shoppingCarStore } from '@/stores/shoppingCar'
 import { storeToRefs } from 'pinia'
+import { showFailToast } from 'vant';
+import 'vant/es/toast/style'
+
+
+const $router = useRouter()
 // 购物车是否有物品
 const isAdd = computed(() => {
   if (shoppingCarList.value.length) {
@@ -90,11 +104,24 @@ const allPrice = computed(() => {
 })
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
-const { checkAllGoods } = shoppingCar
+const { checkAllGoods, orderCheckGoods ,setAllList} = shoppingCar
 // 全选
 const checked = ref(false)
-const toCheck = ({ isCheck }:any) => {
+const toCheck = ({ isCheck }: any) => {
   checkAllGoods({ isCheck })
+}
+
+const toOrder = () => {
+  orderCheckGoods()
+
+  if (shoppingCarList.value.filter((o: any) => o.isCheck).length) {
+    setAllList()
+    $router.push({
+      path: '/settlement',
+    })
+  } else {
+    showFailToast("请选择商品结算哦")
+  }
 }
 
 
@@ -235,7 +262,8 @@ div {
       flex: 1;
       display: flex;
       align-items: center;
-      input{
+
+      input {
         margin-right: 10rem;
       }
     }
@@ -243,15 +271,18 @@ div {
     .order {
       display: flex;
       align-items: center;
-      p{
+
+      p {
         padding: 10rem;
         margin-right: 10rem;
-        span{
+
+        span {
           font-size: 14rem;
           font-weight: bold;
         }
       }
-      .order_btn{
+
+      .order_btn {
         background-image: linear-gradient(#5e636c, #1e2632);
         color: #fff;
         padding: 5rem 15rem;
@@ -267,7 +298,7 @@ div {
     outline: none;
     display: inline-block;
     vertical-align: middle;
-    width:24rem;
+    width: 24rem;
     height: 24rem;
     border-radius: 50%;
     background-size: 100% auto;

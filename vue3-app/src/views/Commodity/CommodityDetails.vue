@@ -92,7 +92,8 @@
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
         <van-action-bar-button class="add" :text="isInSoppingCar" @click="addShoppingCar" />
-        <van-action-bar-button class="buy" color="#18202d" text="立即购买" />
+        <van-action-bar-button class="buy" color="#18202d" text="立即购买"
+          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })" />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
     </footer>
@@ -209,7 +210,7 @@ import { showSuccessToast, showFailToast } from 'vant'
 import 'vant/es/toast/style'
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
-const { addShoppingCarList } = shoppingCar
+const { addShoppingCarList, BuyGoods,setAllList } = shoppingCar
 // 是否加入了购物车
 const isInSoppingCar = computed(() => {
   if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
@@ -225,9 +226,19 @@ const addShoppingCar = () => {
   } else {
     showFailToast('已在购物车中了哦')
   }
-
   addShoppingCarList({ goods: deatil.value })
 }
+const toPay = ({ goods, allPrice, num }: any) => {
+  // console.log(11);
+  BuyGoods({ goods, allPrice, num })
+  setAllList()
+  $router.push({
+    path: '/settlement',
+  })
+
+}
+
+// settlement
 </script>
 
 <style lang="less" scoped>
@@ -295,6 +306,7 @@ nav {
       display: flex;
       justify-content: space-between;
       margin: 5rem 10rem;
+
       &:nth-child(7) {
         span {
           &:nth-child(2) {
