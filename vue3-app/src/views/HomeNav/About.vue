@@ -4,9 +4,9 @@
       <h1>我的漫想家</h1>
       <div class="login">
         <span class="userLogin" @click="$router.push({
-          path:'/login',
-          query:{
-            f:'/about'
+          path: '/login',
+          query: {
+            f: '/about'
           }
         })">
           <img class="user" src="../../../public/images/我的/default_header.png" alt="" />
@@ -51,7 +51,7 @@
       </div>
     </header>
     <div class="order">
-      <div class="head">
+      <div class="head"  @click="toMyOrder(0)">
         <p>我的订单</p>
         <p>
           <span>全部订单</span>
@@ -59,19 +59,19 @@
         </p>
       </div>
       <div class="payMsg">
-        <p>
+        <p  @click="toMyOrder(0)">
           <img src="../../../public/images/我的/ic_mine_pay.png" alt="" />
           <span>待付款</span>
         </p>
-        <p>
+        <p  @click="toMyOrder(1)">
           <img src="../../../public/images/我的/ic_mine_delivered.png" alt="" />
           <span>待发货</span>
         </p>
-        <p>
+        <p  @click="toMyOrder(2)">
           <img src="../../../public/images/我的/ic_mine_received.png" alt="" />
           <span>待收货</span>
         </p>
-        <p>
+        <p  @click="toMyOrder(3)">
           <img src="../../../public/images/我的/ic_mine_finish.png" alt="" />
           <span>已完成</span>
         </p>
@@ -106,57 +106,76 @@
 
 <script setup>
 import { ref } from 'vue'
-import {useRouter} from 'vue-router'
+import { useRouter } from 'vue-router'
 const isLogin = ref(false)
 const $router = useRouter();
 
 // 控制首页五个页面的滚动高度------------------------------------------------------------
-import {savePosition} from '@/js/pageBarScrollTop.js'
+import { savePosition } from '@/js/pageBarScrollTop.js'
 savePosition();
+const toMyOrder = (n) => {
+  $router.push({
+    path: '/allorder',
+    query:{
+      n
+    }
+  })
+}
+
 </script>
+
 
 <style lang="scss" scoped>
 .box {
   background-color: #f4f5f5;
   width: 100vw;
   height: 100vh;
+
   header {
     width: 100%;
     background-color: #18202d;
     height: 33vh;
     padding-top: 20rem;
     color: #f5f5f6;
+
     h1 {
       text-align: center;
       font-size: 16rem;
     }
+
     .login {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 32rem 15rem;
       height: 30rem;
+
       .userLogin {
         display: flex;
         align-items: center;
+
         .user {
           width: 50rem;
           margin-right: 10rem;
         }
       }
+
       .setting {
         margin-bottom: 20rem;
         width: 16rem;
         height: 16rem;
       }
     }
+
     .userMsg {
       display: flex;
       justify-content: space-around;
       align-items: center;
       margin-top: -10rem;
+
       div {
         text-align: center;
+
         p {
           &:nth-child(2) {
             color: #8e9299;
@@ -165,6 +184,7 @@ savePosition();
       }
     }
   }
+
   .order {
     width: 350rem;
     height: 100rem;
@@ -175,22 +195,27 @@ savePosition();
     position: relative;
     top: -45rem;
     left: 0;
+
     .head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin: 10rem 6rem;
+
       p {
         margin: 5rem;
+
         &:nth-child(1) {
           font-size: 14rem;
           font-weight: bold;
         }
+
         &:nth-child(2) {
           display: flex;
           align-items: center;
           color: #848990;
           line-height: 12rem;
+
           img {
             width: 10rem;
             height: 10rem;
@@ -199,16 +224,19 @@ savePosition();
         }
       }
     }
+
     .payMsg {
       display: flex;
       justify-content: space-around;
       padding-top: 5rem;
+
       P {
         img {
           width: 18rem;
           height: 18rem;
           margin-bottom: 5rem;
         }
+
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -216,38 +244,45 @@ savePosition();
       }
     }
   }
+
   .newUser {
     margin: 0 auto;
     margin-top: -40rem;
     width: 350rem;
+
     img {
       border-radius: 2rem;
       width: 100%;
       // height: 65rem;
     }
   }
+
   .common {
     width: 350rem;
     height: 100rem;
     margin: 0 auto;
     background-color: white;
     box-shadow: 0 0px 2px rgba(0, 0, 0, 0.4);
+
     h1 {
-      margin:6rem 10rem;
+      margin: 6rem 10rem;
       padding-top: 8rem;
       font-size: 14rem;
       font-weight: bold;
     }
+
     .funtion {
       display: flex;
       justify-content: space-around;
       padding-top: 5rem;
+
       P {
         img {
           width: 18rem;
           height: 18rem;
           margin-bottom: 5rem;
         }
+
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -255,5 +290,4 @@ savePosition();
       }
     }
   }
-}
-</style>
+}</style>

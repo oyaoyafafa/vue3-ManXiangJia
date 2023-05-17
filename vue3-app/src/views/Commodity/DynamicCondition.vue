@@ -13,13 +13,15 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import ItemCard from '@/components/Community/ItemCard.vue'
 import { useRoute, useRouter } from 'vue-router'
 const $router = useRouter()
 
-// const presale = ref<Array<any>>([])
-// goodsPresaleApi().then((res: any) => {
-//   presale.value = res.data.data.list
-//   console.log(res.data.data.list)
+
+// const artic = ref<Array<any>>([])
+// articlelist($route.query.goodId).then((res: any) => {
+//   artic.value = res.data.data.list
+//   console.log(res)
 // })
 function routerBack() {
   $router.back()
