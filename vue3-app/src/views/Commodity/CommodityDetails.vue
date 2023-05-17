@@ -1,7 +1,7 @@
 <template>
   <nav>
     <header>
-      <img @click="routerBack" src="@/../public/images/ic_back_goods.png" alt="" />
+      <img @click="routerBack" src="@/../public/images/back_black.png" alt="" />
       <img
         @click="showShare = !showShare"
         :options="options"
@@ -12,7 +12,7 @@
     </header>
     <section>
       <!-- <img v-show="img.type === 1" v-for="img in deatil.images" :src="img.url"/> -->
-      <img v-if="deatil.images" :src="deatil.images[0].url"/>
+      <img v-if="deatil.images" :src="deatil.images[0].url" />
       <h1 v-if="deatil.integralNum != 0">￥{{ deatil.integralNum }}</h1>
       <h1 v-else>￥---</h1>
       <h2>{{ deatil.title }}</h2>
@@ -74,7 +74,7 @@
         </p>
       </div>
     </div>
-    <div class="dongtai" @click="Todynamic"> 
+    <div class="dongtai" @click="Todynamic($route.query.id)">
       <div>
         <p>动态({{ dynamic.length }})</p>
         <p>
@@ -159,7 +159,7 @@ commentApi($route.query.id).then((res: any) => {
 
 const dynamic = ref<any>([])
 dynamicApi($route.query.id).then((res: any) => {
-  // console.log(res.data.data.list)
+  console.log(res.data.data.list)
   dynamic.value = res.data.data.list
 })
 
@@ -177,9 +177,12 @@ function toCommodity(id: any) {
   })
 }
 
-function Todynamic(){
+function Todynamic(id: any) {
   $router.push({
     path: '/dynamic',
+    query: {
+      goodId: id
+    }
   })
 }
 
@@ -209,7 +212,12 @@ nav {
     // height: 60rem;
     z-index: 999;
     img {
-      width: 30rem;
+      &:nth-child(1){
+        width: 20rem;
+      }
+      &:nth-child(2){
+        width: 30rem;
+      }
     }
   }
   section {

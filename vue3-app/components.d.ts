@@ -21,7 +21,5 @@ declare module '@vue/runtime-core' {
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
     VanShareSheet: typeof import('vant/es')['ShareSheet']
-    VanSidebar: typeof import('vant/es')['Sidebar']
-    VanSidebarItem: typeof import('vant/es')['SidebarItem']
   }
 }
