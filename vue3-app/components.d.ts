@@ -39,14 +39,5 @@ declare module '@vue/runtime-core' {
     VanRadio: typeof import('vant/es')['Radio']
     VanRadioGroup: typeof import('vant/es')['RadioGroup']
     VanShareSheet: typeof import('vant/es')['ShareSheet']
-    VanSkeleton: typeof import('vant/es')['Skeleton']
-    VanSkeletonImage: typeof import('vant/es')['SkeletonImage']
-    VanSkeletonParagraph: typeof import('vant/es')['SkeletonParagraph']
-    VanStepper: typeof import('vant/es')['Stepper']
-    VanSwipe: typeof import('vant/es')['Swipe']
-    VanSwipeCell: typeof import('vant/es')['SwipeCell']
-    VanSwipeItem: typeof import('vant/es')['SwipeItem']
-    VanTab: typeof import('vant/es')['Tab']
-    VanTabs: typeof import('vant/es')['Tabs']
   }
 }
