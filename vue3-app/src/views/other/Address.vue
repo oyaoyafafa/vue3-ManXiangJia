@@ -62,7 +62,7 @@ import { ref, watch } from 'vue'
 const showAddress = ref(false)
 const Addaddress = ref(false)
 
-// import { areaList } from '@vant/area-data'
+import { areaList } from '@vant/area-data'
 // 地址vant组件属性
 const searchResult = ref([])
 const edit = ref(null)
