@@ -202,8 +202,10 @@ const router = createRouter({
 })
 
 // 需要触发登录的页面的fullPath在pathArr添加
-const pathArr = []
+const pathArr = ['/allorder']
 router.beforeEach((to, from, next) => {
+  console.log(to.path);
+  console.log(from.path);
   if (pathArr.indexOf(to.path) !== -1) {
     const token = localStorage.getItem('token')
     if (token) {
@@ -212,7 +214,7 @@ router.beforeEach((to, from, next) => {
       next({
         path: '/login',
         query: {
-          f: to.fullPath
+          f: from.fullPath
         }
       })
     }
