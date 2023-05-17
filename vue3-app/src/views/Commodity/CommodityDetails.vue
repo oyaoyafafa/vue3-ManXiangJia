@@ -109,6 +109,10 @@ import {
 } from '@/api/manxiangjia'
 import { ref, reactive, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { shoppingCarStore } from '@/stores/shoppingCar'
+import { storeToRefs } from 'pinia'
+import { showSuccessToast, showFailToast } from 'vant'
+import 'vant/es/toast/style'
 
 const showShare = ref(false)
 const options = [
@@ -203,10 +207,7 @@ function shijianc(time: any) {
   return Y + M + D
 }
 //添加购物车
-import { shoppingCarStore } from '@/stores/shoppingCar'
-import { storeToRefs } from 'pinia'
-import { showSuccessToast, showFailToast } from 'vant'
-import 'vant/es/toast/style'
+
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
 const { addShoppingCarList } = shoppingCar
