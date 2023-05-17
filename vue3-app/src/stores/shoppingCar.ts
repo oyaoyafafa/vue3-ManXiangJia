@@ -60,10 +60,12 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     orderList.value = [{ goods, allPrice, num }]
   }
   // 待支付
-  const setPendingGoods = ()=>{
+  const setPendingGoods = ({allPrice,allNum}:any)=>{
     pendingList.value = [{
       isPay:false,
       time:Date.now(),
+      allPrice,
+      allNum,
       pending: orderList.value 
     } ,... pendingList.value]
     // pendingList.value =  allList.value.filter((o: any) => o.isPay)

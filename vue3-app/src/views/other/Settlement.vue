@@ -9,11 +9,14 @@ const {setPendingGoods} = shoppingCar
 const allPrice = computed(() => {
     return orderList.value.filter((o: any) => o.isCheck).reduce((sum: any, e: any) => sum + Number(e.allPrice || 0), 0)
 })
+const allNum = computed(() => {
+    return orderList.value.filter((o: any) => o.isCheck).reduce((sum: any, e: any) => sum + Number(e.num || 0), 0)
+})
 const show = ref(false)
 // const { checkAllGoods, orderCheckGoods } = shoppingCar
-const toPay = () => {
+const toPay = ({allPrice,allNum}:any) => {
     show.value = !show.value
-    setPendingGoods()
+    setPendingGoods({allPrice,allNum})
 }
 </script>
 <template>
@@ -88,7 +91,7 @@ const toPay = () => {
                 <p>合计</p>
                 <span>¥{{ allPrice }}</span>
             </div>
-            <span class="pay_btn" @click="toPay()">去支付</span>
+            <span class="pay_btn" @click="toPay({allPrice,allNum})">去支付</span>
         </div>
         <van-action-sheet v-model:show="show" title="请选择支付方式">
             <h1>¥ <span>{{ allPrice }}</span></h1>
