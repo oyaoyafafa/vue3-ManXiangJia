@@ -18,19 +18,15 @@
           <img src="../../../public/images/sel_company.png" alt="" />
         </p>
       </div>
-      <!-- <div class="class">
-        <span v-for="things in classify">
-          {{ things.name }}
-        </span>
-      </div> -->
-      <div class="class">
+      <div class="classy">
         <div class="swiper-container swiper-selectedSong">
           <div class="swiper-wrapper">
             <!-- 预售 -->
-            <!-- <div class="swiper-slide select-item ">
-              {{ classify[0]?.name }}
-            </div> -->
-            <div @click="toClassify(things.id,things.name)" class="swiper-slide select-item" v-for="things in classify.slice(1)">
+            <div
+              @click="toClassify(things.id, things.name)"
+              class="swiper-slide select-item"
+              v-for="things in classify.slice(1)"
+            >
               {{ things.name }}
             </div>
           </div>
@@ -95,6 +91,7 @@ import { savePosition } from '@/js/pageBarScrollTop.js'
 import { onMounted } from 'vue'
 import Swiper from 'swiper'
 
+
 onMounted(() => {
   new Swiper('.swiper-container', {
     pagination: '.swiper-pagination',
@@ -120,7 +117,7 @@ bannerApi().then((res: any) => {
 })
 // 大图
 moplaySortApi().then((res: any) => {
-  console.log("classify",res.data.data)
+  console.log('classify', res.data.data)
   classify.value = res.data.data
 })
 // 模玩分类
@@ -159,29 +156,28 @@ function toClassification() {
 }
 
 // 预售商品
-function toReserve(){
+function toReserve() {
   $router.push({
     path: '/reserve'
   })
 }
 
 // 搜索
-function toHomesearch(){
+function toHomesearch() {
   $router.push({
     path: '/homesearch'
   })
 }
 
-
 // 模玩分类详情
-function toClassify(id: any,name:any) {
+function toClassify(id: any, name: any) {
   // console.log("id",id)
   $router.push({
     path: '/classify',
     query: {
       id: id,
-      name:name,
-      orderType:1
+      name: name,
+      orderType: 1
     }
   })
 }
@@ -195,7 +191,6 @@ function toOrder(id: any) {
     }
   })
 }
-
 </script>
 
 <style lang="less" scoped>
@@ -246,6 +241,7 @@ function toOrder(id: any) {
   margin: 0 auto;
   margin-top: 16rem;
   overflow: hidden;
+  background-color: white;
   .head {
     display: flex;
     justify-content: space-between;
@@ -266,18 +262,19 @@ function toOrder(id: any) {
       }
     }
   }
-  .class {
+  .classy {
     display: flex;
     // justify-content: start;
     // flex-wrap: nowrap;
     width: 360rem;
     margin: 16rem auto;
+    background-color: white;
     .swiper-wrapper {
       .swiper-slide {
         border: 1px solid #f4f5f5;
         margin-right: 10rem;
         padding: 0rem 30rem;
-        background-color: #f4f5f5;
+        background-color: #f5f5f7;
         white-space: nowrap;
         border-radius: 5rem;
         width: 85rem;
@@ -373,10 +370,11 @@ footer {
           margin: 0 5rem;
         }
         p {
+          line-height: 15rem;
           padding-bottom: 5rem;
           &:nth-child(2) {
             margin-left: 8rem;
-            line-height: 12rem;
+            line-height: 15rem;
             height: 20rem;
             transform: scale(0.8);
             transform-origin: 10rem 0;

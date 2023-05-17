@@ -44,14 +44,30 @@ export const useUserStore = defineStore('user', () => {
     localStorage.setItem('vue3-address', JSON.stringify(addresses.value))
   }
   // 默认地址索引
-  let defaultAddressIndex = ref(localStorage.getItem('vue3-DefaultAddressIndex')||0)
+  let defaultAddressIndex = ref(localStorage.getItem('vue3-DefaultAddressIndex') || 0)
   // 更新默认地址索引
   function updateDefaultAddressIndex(index: number) {
-    defaultAddressIndex.value = index;
-    localStorage.setItem('vue3-DefaultAddressIndex',String(index))
-    
+    defaultAddressIndex.value = index
+    localStorage.setItem('vue3-DefaultAddressIndex', String(index))
   }
- 
+
+  // 用户关注
+  const attentionList = ref(
+    localStorage.getItem('vue3-attentionList')
+      ? JSON.parse(localStorage.getItem('vue3-attentionList') || '[]')
+      : []
+  )
+  // 添加关注
+  function addAttention(user: any) {
+    attentionList.value = [user, ...attentionList.value]
+    localStorage.setItem('vue3-attentionList', JSON.stringify([...attentionList.value]))
+  }
+  // 删除关注
+  function removeAttention(userId: number) {
+    attentionList.value = attentionList.value.filter((o: any) => o.userId !== userId)
+    localStorage.setItem('vue3-attentionList', JSON.stringify([...attentionList.value]))
+  }
+
   return {
     login,
     userdata,
@@ -60,6 +76,9 @@ export const useUserStore = defineStore('user', () => {
     addAddress,
     removeAddress,
     defaultAddressIndex,
-    updateDefaultAddressIndex
+    updateDefaultAddressIndex,
+    attentionList,
+    addAttention,
+    removeAttention
   }
 })

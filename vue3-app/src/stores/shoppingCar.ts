@@ -4,9 +4,9 @@ import { defineStore } from 'pinia'
 export const shoppingCarStore = defineStore('shoppingCar', () => {
   let shoppingCarList = ref(JSON.parse(localStorage.getItem('shoppingCarList')) || [])
   let orderList = ref([])
-  let pendingList = ref(JSON.parse(localStorage.getItem('pendingList')) || [])
+  // let pendingList = ref(JSON.parse(localStorage.getItem('pendingList')) || [])
   let allList = ref(JSON.parse(localStorage.getItem('allList')) || [])
-
+  
 
   // 添加进购物车
   const addShoppingCarList = ({ goods }: any) => {
@@ -47,7 +47,7 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     shoppingCarList.value = shoppingCarList.value.map((o: any) => ({
       ...o,
       isCheck,
-      allPrice: o.allPrice||o.goods.sellPrice,
+      allPrice: o.allPrice || o.goods.sellPrice,
       value: o.num
     }))
   }
@@ -60,32 +60,62 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     orderList.value = [{ goods, allPrice, num }]
   }
   // 待支付
-  const setPendingGoods = ({allPrice,allNum}:any)=>{
-    pendingList.value = [{
-      isPay:false,
-      time:Date.now(),
-      allPrice,
-      allNum,
-      pending: orderList.value 
-    } ,... pendingList.value]
-    // pendingList.value =  allList.value.filter((o: any) => o.isPay)
-    localStorage.setItem('pendingList', JSON.stringify(pendingList.value))
-  }
+  // const setPendingGoods = ({ allPrice, allNum }: any) => {
+  //   pendingList.value = [
+  //     {
+  //       isPay: true,
+  //       time: Date.now(),
+  //       allPrice,
+  //       allNum,
+  //       pending: orderList.value
+  //     },
+  //     ...pendingList.value
+  //   ]
+  //   // pendingList.value =  allList.value.filter((o: any) => o.isPay)
+  //   localStorage.setItem('pendingList', JSON.stringify(pendingList.value))
+  // }
   // const changeF
-  // 所以订单
-  const setAllList = ()=>{
-    allList.value = [{
-      isPay:false,
-      time:Date.now(),
-      pending: orderList.value 
-    },...allList.value]
+  // 所有订单
+  const setAllList = () => {
+    const time = Date.now()
+    allList.value = [
+      {
+        payStuats: 0,//待支付状态
+        isPay: false,
+        time,
+        pending: orderList.value
+      },
+      ...allList.value
+    ]
+    setTimeout(() => {
+      // 1 已取消状态
+      allList.value = allList.value.map((o:any) => (o.time === time ? { ...o, payStuats: 1 } : o))
+      localStorage.setItem('allList', JSON.stringify(allList.value))
+      console.log(allList.value);
+      
+    }, 10000)
     localStorage.setItem('allList', JSON.stringify(allList.value))
   }
-  
+  // 提交已经支付订单
+  function addPrepaid() {
+    allList.value = [
+      {
+        payStuats: 2,// 已支付状态
+        isPay: false,
+        time: Date.now(),
+        pending: orderList.value
+      },
+      ...allList.value
+    ]
+    localStorage.setItem('allList', JSON.stringify(allList.value))
+
+  }
+ 
+
   return {
     shoppingCarList,
     orderList,
-    pendingList,
+    // pendingList,
     allList,
     addShoppingCarList,
     checkGoods,
@@ -94,7 +124,8 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     addGoods,
     delGood,
     BuyGoods,
-    setPendingGoods,
-    setAllList
+    // setPendingGoods,
+    setAllList,
+    addPrepaid
   }
 })

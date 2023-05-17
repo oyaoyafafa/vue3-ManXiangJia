@@ -177,6 +177,20 @@ const router = createRouter({
       name: 'Address',
       component: () => import('@/views/other/Address.vue')
     },
+
+    // ClassDetail 全部分类详情
+    {
+      path: '/allclass',
+      name: 'ClassDetail',
+      component: () => import('@/views/Classification/ClassDetail.vue')
+    },
+
+    // CommentList全部评论
+    {
+      name: 'CommentList',
+      path: '/commentList',
+      component: () => import('@/views/Commodity/CommentList.vue')
+    },
      // 订单提交
      {
       name: 'Settlement',
@@ -185,10 +199,22 @@ const router = createRouter({
     },
     //全部订单
     {
-      name: 'ALlOrder',
+      name: 'AllOrder',
       path: '/aLlorder',
       component: () => import('@/views/other/ALlOrder.vue')
-    }
+    },
+    // PointDetail积分商城详情
+    {
+      name: 'PointDetail',
+      path: '/point',
+      component: () => import('@/views/ReserveGoods/PointDetail.vue')
+    },
+    // 我的关注
+    {
+      name: 'MyAttention',
+      path: '/myAttention',
+      component: () => import('@/views/other/myAttention.vue')
+    },
   ]
   // 仅当通过浏览器前进/后退 savedPosition 才有效
   // scrollBehavior (to, from, savedPosition) {
@@ -202,10 +228,8 @@ const router = createRouter({
 })
 
 // 需要触发登录的页面的fullPath在pathArr添加
-const pathArr = ['/allorder']
+const pathArr = ['/allorder','/settlement']
 router.beforeEach((to, from, next) => {
-  console.log(to.path);
-  console.log(from.path);
   if (pathArr.indexOf(to.path) !== -1) {
     const token = localStorage.getItem('token')
     if (token) {
