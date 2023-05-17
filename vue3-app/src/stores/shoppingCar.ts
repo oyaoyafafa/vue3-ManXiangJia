@@ -7,7 +7,6 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
   let pendingList = ref(JSON.parse(localStorage.getItem('pendingList')) || [])
   let allList = ref(JSON.parse(localStorage.getItem('allList')) || [])
 
-
   // 添加进购物车
   const addShoppingCarList = ({ goods }: any) => {
     // console.log(goods.id)
@@ -47,7 +46,7 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     shoppingCarList.value = shoppingCarList.value.map((o: any) => ({
       ...o,
       isCheck,
-      allPrice: o.allPrice||o.goods.sellPrice,
+      allPrice: o.allPrice || o.goods.sellPrice,
       value: o.num
     }))
   }
@@ -60,28 +59,43 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     orderList.value = [{ goods, allPrice, num }]
   }
   // 待支付
-  const setPendingGoods = ({allPrice,allNum}:any)=>{
-    pendingList.value = [{
-      isPay:false,
-      time:Date.now(),
-      allPrice,
-      allNum,
-      pending: orderList.value 
-    } ,... pendingList.value]
+  const setPendingGoods = ({ allPrice, allNum }: any) => {
+    pendingList.value = [
+      {
+        isPay: true,
+        time: Date.now(),
+        allPrice,
+        allNum,
+        pending: orderList.value
+      },
+      ...pendingList.value
+    ]
     // pendingList.value =  allList.value.filter((o: any) => o.isPay)
     localStorage.setItem('pendingList', JSON.stringify(pendingList.value))
   }
   // const changeF
-  // 所以订单
-  const setAllList = ()=>{
-    allList.value = [{
-      isPay:false,
-      time:Date.now(),
-      pending: orderList.value 
-    },...allList.value]
+  // 所有订单
+  const setAllList = () => {
+    const time = Date.now()
+    allList.value = [
+      {
+        payStuats: 0,
+        isPay: false,
+        time,
+        pending: orderList.value
+      },
+      ...allList.value
+    ]
+    setTimeout(() => {
+      allList.value = allList.value.map((o:any) => (o.time === time ? { ...o, payStuats: 1 } : o))
+      localStorage.setItem('allList', JSON.stringify(allList.value))
+      console.log(allList.value);
+      
+    }, 10000)
     localStorage.setItem('allList', JSON.stringify(allList.value))
+    
   }
-  
+
   return {
     shoppingCarList,
     orderList,
