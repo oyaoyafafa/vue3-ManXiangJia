@@ -18,7 +18,10 @@
     <main>
       <!-- 历史记录 -->
       <section v-show="!showRes && historySearch.length" class="SearchHistory">
-        <h3>历史搜索</h3>
+        <div class="title">
+          <h3>历史搜索</h3>
+          <div @click="deleteHistory" class="delete-history"></div>
+        </div>
         <ul>
           <li
             class="hotSearch-Botton"
@@ -60,7 +63,7 @@
                 <van-collapse-item title="分类" name="1">
                   <ul class="taglist">
                     <li
-                      @click="typeId = tag.id"
+                      @click="typeId = typeId == tag.id ? null : tag.id"
                       :class="{ active: tag.id == typeId }"
                       v-for="tag in SearchFilterTag.types"
                       :key="tag.id"
@@ -72,7 +75,7 @@
                 <van-collapse-item title="品牌" name="2">
                   <ul class="taglist">
                     <li
-                      @click="brandId = tag.id"
+                      @click="brandId = brandId == tag.id ? null : tag.id"
                       :class="{ active: tag.id == brandId }"
                       v-for="tag in SearchFilterTag.brands"
                       :key="tag.id"
@@ -84,7 +87,7 @@
                 <van-collapse-item title="IP人物" name="3">
                   <ul class="taglist">
                     <li
-                      @click="IPId = tag.id"
+                      @click="IPId = IPId == tag.id ? null : tag.id"
                       :class="{ active: tag.id == IPId }"
                       v-for="tag in SearchFilterTag.attributes"
                       :key="tag.id"
@@ -95,7 +98,7 @@
                 ><van-collapse-item title="属性" name="4">
                   <ul class="taglist">
                     <li
-                      @click="attributeId = tag.id"
+                      @click="attributeId = attributeId == tag.id ? null : tag.id"
                       :class="{ active: tag.id == attributeId }"
                       v-for="tag in SearchFilterTag.ips"
                       :key="tag.id"
@@ -113,44 +116,12 @@
                   </div>
                   <ul class="priceList">
                     <li
-                      @click="
-                        minPrice = '';
-                        maxPrice = 300;
-                      "
+                      v-for="index in 5"
+                      :key="index"
+                      :class="{ active: activePrice == index }"
+                      @click="updatePriceTag(index)"
                     >
-                      0-300
-                    </li>
-                    <li
-                      @click="
-                        minPrice = 300;
-                        maxPrice = 1000;
-                      "
-                    >
-                      300-1000
-                    </li>
-                    <li
-                      @click="
-                        minPrice = 1000;
-                        maxPrice = 3000;
-                      "
-                    >
-                      1000-3000
-                    </li>
-                    <li
-                      @click="
-                        minPrice = 3000;
-                        maxPrice = 10000;
-                      "
-                    >
-                      3000-10000
-                    </li>
-                    <li
-                      @click="
-                        minPrice = 10000;
-                        maxPrice = '';
-                      "
-                    >
-                      10000以上
+                      {{ PriceTagText(index) }}
                     </li>
                   </ul>
                 </section>
@@ -230,7 +201,7 @@
       </div>
     </main>
     <section class="button" :class="{ active: show }">
-      <div>重置</div>
+      <div @click="resetTag">重置</div>
       <div @click="toFilter">确定</div>
     </section>
   </div>
@@ -250,7 +221,7 @@ function clearSearchText() {
   searchText.value = ''
 }
 
- // 获取热门搜索
+// 获取热门搜索
 import { useHomeSearchStore } from '@/stores/homeSearch.ts'
 import { storeToRefs } from 'pinia'
 const HomeSearchStore = useHomeSearchStore()
@@ -258,7 +229,9 @@ HomeSearchStore.setHotSearchText()
 const { hotSearchText } = storeToRefs(HomeSearchStore)
 // 获取搜索记录
 const { historySearch } = storeToRefs(HomeSearchStore)
-
+function deleteHistory() {
+  HomeSearchStore.deleteHistorySearch()
+}
 // 搜索
 import { useRouter } from 'vue-router'
 const $router = useRouter()
@@ -347,6 +320,7 @@ const onRefresh = (mode) => {
 }
 // 筛选搜索
 const showNewRes = ref(true)
+
 // 保存切换高度
 const goodsList = ref(null)
 let tabScrollTop = {
@@ -381,28 +355,78 @@ const IPId = ref(null)
 const attributeId = ref(null)
 const maxPrice = ref('')
 const minPrice = ref('')
+// 价格标签高亮参数
+const activePrice = ref(null)
+function updatePriceTag(index) {
+  // 取得标签价格范围
+  let priceRange = PriceTagText(index).split('-')
+  // 处理特殊标签
+  if (priceRange[0].includes('以上')) {
+    priceRange[0] = priceRange[0].replace('以上', '')
+    priceRange[1] = ''
+  }
+  if (activePrice.value == index) {
+    minPrice.value = ''
+    maxPrice.value = ''
+    activePrice.value = null
+  } else {
+    minPrice.value = priceRange[0]
+    maxPrice.value = priceRange[1]
+    activePrice.value = index
+  }
+}
+function PriceTagText(index) {
+  switch (index) {
+    case 1:
+      return '0-300'
+      break
+    case 2:
+      return '300-1000'
+      break
+    case 3:
+      return '1000-3000'
+      break
+    case 4:
+      return '3000-10000'
+      break
+    case 5:
+      return '10000以上'
+      break
+  }
+}
+
+// 重置标签按钮
+function resetTag() {
+  typeId.value = null
+  brandId.value = null
+  IPId.value = null
+  attributeId.value = null
+  minPrice.value = ''
+  maxPrice.value = ''
+  activePrice.value = null
+}
 // 筛选搜索
 function toFilter() {
   HomeSearchStore.clearSearchRes()
   HomeSearchStore.setSearchRes({
-    title:filterSearchText.value,
-    orderType:1, //1最新 2销量
-    types:typeId.value, //分类筛选
-    ips:IPId.value, //Ip人物筛选
-    attributes :attributeId.value, //属性筛选
-    brands:brandId.value, //拼拍筛选
-    minPrice :minPrice.value, //最低价筛选
-    maxPrice :maxPrice.value //最高价筛选
+    title: filterSearchText.value,
+    orderType: 1, //1最新 2销量
+    types: typeId.value, //分类筛选
+    ips: IPId.value, //Ip人物筛选
+    attributes: attributeId.value, //属性筛选
+    brands: brandId.value, //拼拍筛选
+    minPrice: minPrice.value, //最低价筛选
+    maxPrice: maxPrice.value //最高价筛选
   })
   HomeSearchStore.setSearchRes({
-    title:filterSearchText.value,
-    orderType:2, //1最新 2销量
-    types:typeId.value, //分类筛选
-    ips:IPId.value, //Ip人物筛选
-    attributes :attributeId.value, //属性筛选
-    brands:brandId.value, //拼拍筛选
-    minPrice :minPrice.value, //最低价筛选
-    maxPrice :maxPrice.value //最高价筛选
+    title: filterSearchText.value,
+    orderType: 2, //1最新 2销量
+    types: typeId.value, //分类筛选
+    ips: IPId.value, //Ip人物筛选
+    attributes: attributeId.value, //属性筛选
+    brands: brandId.value, //拼拍筛选
+    minPrice: minPrice.value, //最低价筛选
+    maxPrice: maxPrice.value //最高价筛选
   })
 }
 </script>
@@ -469,7 +493,12 @@ function toFilter() {
     padding: 10rem;
     padding-top: 0rem;
 
-    .hotSearchs,.SearchHistory {
+    .hotSearchs,
+    .SearchHistory {
+      // <div class="title">
+      //     <h3>历史搜索</h3>
+      //     <div class="delete-history"></div>
+      //   </div>
       h3 {
         color: #333;
         font-weight: 600;
@@ -486,6 +515,21 @@ function toFilter() {
           padding: 5rem 8rem;
           margin-right: 5rem;
           margin-bottom: 5rem;
+        }
+      }
+      .title {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        h3 {
+          color: #333;
+        font-weight: 600;
+        }
+        .delete-history {
+          width: 15rem;
+            height: 15rem;
+            background: url('@/../public/images/address_del_icon.png') no-repeat;
+            background-size: cover;
         }
       }
     }
@@ -695,6 +739,10 @@ function toFilter() {
       border-radius: 3rem;
       &:nth-child(3n + 2) {
         margin: 0 5rem 5rem 5rem;
+      }
+      &.active {
+        background-color: #333333;
+        color: #fff;
       }
     }
   }
