@@ -123,7 +123,7 @@ const $router = useRouter()
 
 const deatil = ref<any>([])
 orderDetails($route.query.id).then((res: any) => {
-  // console.log(res.data.data)
+  console.log("deatil",res)
   deatil.value = res.data.data
 })
 
@@ -171,10 +171,10 @@ function shijianc(time: any) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 nav {
   padding-bottom: 60rem;
-  padding-top: 60rem;
+  // padding-top: 60rem;
   header {
     position: fixed;
     top: 0;
@@ -192,6 +192,7 @@ nav {
     }
   }
   section {
+    margin-top: 40rem;
     .my-swipe .van-swipe-item {
       color: #fff;
       font-size: 20px;

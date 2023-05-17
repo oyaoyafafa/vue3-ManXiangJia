@@ -82,8 +82,10 @@ const onChangeDetail = (val) => {
   }
 }
 // back返回
-import { useRouter } from 'vue-router'
+import { useRouter ,useRoute} from 'vue-router'
 const $router = useRouter()
+const $route = useRoute()
+
 function back() {
   if (Addaddress.value) {
     Addaddress.value = false

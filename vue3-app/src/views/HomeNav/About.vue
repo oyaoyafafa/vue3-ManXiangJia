@@ -87,19 +87,19 @@
         </p>
       </div>
       <div class="payMsg">
-        <p  @click="toMyOrder(0)">
+        <p  @click="toMyOrder(1)">
           <img src="../../../public/images/我的/ic_mine_pay.png" alt="" />
           <span>待付款</span>
         </p>
-        <p  @click="toMyOrder(1)">
+        <p  @click="toMyOrder(2)">
           <img src="../../../public/images/我的/ic_mine_delivered.png" alt="" />
           <span>待发货</span>
         </p>
-        <p  @click="toMyOrder(2)">
+        <p  @click="toMyOrder(3)">
           <img src="../../../public/images/我的/ic_mine_received.png" alt="" />
           <span>待收货</span>
         </p>
-        <p  @click="toMyOrder(3)">
+        <p  @click="toMyOrder(4)">
           <img src="../../../public/images/我的/ic_mine_finish.png" alt="" />
           <span>已完成</span>
         </p>
@@ -157,7 +157,7 @@ const toMyOrder = (n) => {
 </script>
 
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .box {
   background-color: #f4f5f5;
   width: 100vw;

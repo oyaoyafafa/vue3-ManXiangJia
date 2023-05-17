@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import { shoppingCarStore } from '@/stores/shoppingCar'
+import { useUserStore } from '@/stores/user.ts'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
+import { useRouter ,useRoute} from 'vue-router'
+const $router = useRouter()
+const $route = useRoute()
 
+// 地址
+const userStore = useUserStore()
+const { addresses, defaultAddressIndex } = storeToRefs(userStore)
+// 购物车
 const shoppingCar = shoppingCarStore()
-const { orderList ,allList} = storeToRefs(shoppingCar)
-const {setPendingGoods} = shoppingCar
+const { orderList, allList } = storeToRefs(shoppingCar)
+// const { setPendingGoods } = shoppingCar
 const allPrice = computed(() => {
     return orderList.value.filter((o: any) => o.isCheck).reduce((sum: any, e: any) => sum + Number(e.allPrice || 0), 0)
 })
@@ -14,16 +22,38 @@ const allNum = computed(() => {
 })
 const show = ref(false)
 // const { checkAllGoods, orderCheckGoods } = shoppingCar
-const toPay = ({allPrice,allNum}:any) => {
+const toPay = ({ allPrice, allNum }: any) => {
     show.value = !show.value
-    setPendingGoods({allPrice,allNum})
+    // setPendingGoods({ allPrice, allNum })
+}
+const checkAdress = () => {
+    $router.push({
+        path: '/address',
+        query: {
+            f: $route.fullPath
+        }
+    })
+}
+// 放弃支付
+function giveupPay() {
+    // 添加订单到待支付
+    shoppingCar.setAllList()
+    $router.back()
+}
+// 提交 已支付订单
+import { showToast } from 'vant';
+function submitOrder() {
+    showToast('购买成功');
+    show.value =false;
+    shoppingCar.addPrepaid()
+    $router.back()
 }
 </script>
 <template>
     <div id="settlement">
         <van-sticky>
             <h1 class="back">
-                <i class="back_btn" @click="$router.back()">
+                <i class="back_btn" @click="giveupPay">
                     <svg t="1683880458227" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3542" width="20rem" height="20rem" fill="black">
                         <path
@@ -47,7 +77,7 @@ const toPay = ({allPrice,allNum}:any) => {
             </h1>
         </van-sticky>
         <ul class="addres">
-            <li>
+            <li @click="checkAdress">
 
                 <p> <svg t="1684309049691" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="1988" width="10" height="10">
@@ -91,7 +121,7 @@ const toPay = ({allPrice,allNum}:any) => {
                 <p>合计</p>
                 <span>¥{{ allPrice }}</span>
             </div>
-            <span class="pay_btn" @click="toPay({allPrice,allNum})">去支付</span>
+            <span class="pay_btn" @click="toPay({ allPrice, allNum })">去支付</span>
         </div>
         <van-action-sheet v-model:show="show" title="请选择支付方式">
             <h1>¥ <span>{{ allPrice }}</span></h1>
@@ -121,7 +151,7 @@ const toPay = ({allPrice,allNum}:any) => {
                     <input type="checkbox" name="" id="">
                 </div>
             </div>
-            <span class="sure">确定</span>
+            <span @click="submitOrder" class="sure">确定</span>
         </van-action-sheet>
 
     </div>
@@ -309,9 +339,9 @@ const toPay = ({allPrice,allNum}:any) => {
 
         /* 复选框鼠标按下时增加的样式 */
         // input[type="checkbox"]:active {
-        //     background-position: 0 -48px;
-        //     background-color: #80a231;
-        //     border: 0;
+        //   background-position: 0 -48px;
+        //   background-color: #80a231;
+        //   border: 0;
         // }
         /*复选框选中后增加的样式*/
         input[type="checkbox"]:checked {
@@ -334,13 +364,14 @@ const toPay = ({allPrice,allNum}:any) => {
             }
         }
     }
-    .sure{
+
+    .sure {
         display: block;
         width: 95%;
         margin: 5rem auto;
         text-align: center;
         padding: 10rem;
-        background-color:#18202d;
+        background-color: #18202d;
         color: white;
     }
 }

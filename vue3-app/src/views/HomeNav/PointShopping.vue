@@ -3,11 +3,6 @@
     <header>
       <h1>积分商城</h1>
     </header>
-    <!-- <div class="myPoint">
-      <div class="uesr">
-        <img src="@/../public/images/default_header.png" alt="" />
-      </div>
-    </div> -->
     <van-pull-refresh
       class="content"
       v-model="loading"
@@ -17,14 +12,14 @@
       <section class="myPoint">
         <div class="uesr">
           <img src="@/../public/images/default_header.png" alt="" />
-          <p>--</p>
-          <p>--</p>
+          <p></p>
+          <p>0</p>
           <span>我的兑换</span>
         </div>
         <div class="conversion">
           <h1>积分兑换</h1>
           <ul class="list">
-            <li v-for="item in conversion" v-lazy="item">
+            <li @click="toPoint(item.goodsId,item.integral)" v-for="item in conversion" v-lazy="item">
               <img :src="item.listImage" alt="" />
               <p>{{ item.name }}</p>
               <p style="font-weight: bold">{{ item.integral }} <span>积分</span></p>
@@ -40,11 +35,11 @@
 import { pointListApi } from '@/api/pointShopping'
 import { ref } from 'vue'
 import { showToast } from 'vant'
-import {savePosition} from '@/js/pageBarScrollTop.js'
+import { savePosition } from '@/js/pageBarScrollTop.js'
+import { useRoute, useRouter } from 'vue-router'
+const $router = useRouter()
 const conversion = ref<Array<any>>([])
 const loading = ref(false)
-
-
 
 const onRefresh = () => {
   setTimeout(() => {
@@ -58,11 +53,21 @@ pointListApi().then((res: any) => {
   conversion.value = res.data.data.list
 })
 
+function toPoint(goodsId:any,integral:any) {
+  $router.push({
+    path: '/point',
+    query: {
+      goodsId: goodsId,
+      integral:integral
+    }
+  })
+}
+
 // 控制首页五个页面的滚动高度------------------------------------------------------------
-savePosition();
+savePosition()
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .box {
   header {
     position: fixed;
@@ -82,10 +87,10 @@ savePosition();
     }
   }
   .myPoint {
-    margin-top: 60rem;
-    margin-bottom: 560rem;
+    margin-top: 50rem;
+    margin-bottom: 70rem;
     width: 100vw;
-    height: 100vh;
+    // height: 100vh;
     .uesr {
       width: 350rem;
       height: 230rem;
@@ -125,6 +130,7 @@ savePosition();
       }
     }
     .conversion {
+      background-color: white;
       h1 {
         font-weight: bold;
         font-size: 14rem;
@@ -134,7 +140,7 @@ savePosition();
       .list {
         display: flex;
         flex-wrap: wrap;
-        justify-content:center;
+        justify-content: center;
         li {
           display: flex;
           flex-direction: column;

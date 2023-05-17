@@ -140,7 +140,7 @@
               @load="onLoad('new')"
             >
               <div class="newlist">
-                <div class="new" v-for="goods in newSearchRes" :key="goods.id">
+                <div @click="toCommodity(goods.id)" class="new" v-for="goods in newSearchRes" :key="goods.id">
                   <div class="pic">
                     <van-image
                       width="177.5"
@@ -175,7 +175,7 @@
               @load="onLoad('hot')"
             >
               <div class="hotlist">
-                <div class="new" v-for="goods in hotSearchRes" :key="goods.id">
+                <div @click="toCommodity(goods.id)" class="new" v-for="goods in hotSearchRes" :key="goods.id">
                   <div class="pic">
                     <van-image
                       width="177.5"
@@ -253,6 +253,15 @@ function toSearch(searchText) {
     }
   })
   search(searchText)
+}
+// 商品详情
+function toCommodity(id) {
+  $router.push({
+    path: '/commodity',
+    query: {
+      id: id
+    }
+  })
 }
 function search(text) {
   HomeSearchStore.addHistorySearch(text)
@@ -523,13 +532,13 @@ function toFilter() {
         justify-content: space-between;
         h3 {
           color: #333;
-        font-weight: 600;
+          font-weight: 600;
         }
         .delete-history {
           width: 15rem;
-            height: 15rem;
-            background: url('@/../public/images/address_del_icon.png') no-repeat;
-            background-size: cover;
+          height: 15rem;
+          background: url('@/../public/images/address_del_icon.png') no-repeat;
+          background-size: cover;
         }
       }
     }
