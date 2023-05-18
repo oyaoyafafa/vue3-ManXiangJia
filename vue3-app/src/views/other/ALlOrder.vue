@@ -37,6 +37,7 @@ const { allList } = storeToRefs(shoppingCar)
             </van-tab>
         </van-tabs>
     </div>
+
 </template>
 
   
@@ -52,8 +53,10 @@ h1 {
         font-weight: bold;
     }
 }
+
 /deep/.van-tabs__content {
 
   overflow: scroll;}
+
 </style>
   

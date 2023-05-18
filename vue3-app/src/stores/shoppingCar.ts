@@ -115,7 +115,21 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     ]
     localStorage.setItem('allList', JSON.stringify(allList.value))
   }
+//  待付款->已付款
 
+function accountPaid(item:any) {
+  allList.value = allList.value.map((o:any) => {
+    return o.time === item.value.time ? { ...o, payStuats: 2 } : o
+  })
+  localStorage.setItem('allList', JSON.stringify(allList.value))
+}
+// 取消订单
+function giveUpOrder(item:any) {
+  allList.value = allList.value.map((o:any) => {
+    return o.time === item.time ? { ...o, payStuats: 1 } : o
+  })
+  localStorage.setItem('allList', JSON.stringify(allList.value))
+}
   return {
     shoppingCarList,
     orderList,
@@ -131,6 +145,8 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     // setPendingGoods,
     setAllList,
     addPrepaid,
-    cancelOrder
+    accountPaid,
+    cancelOrder,
+    giveUpOrder
   }
 })
