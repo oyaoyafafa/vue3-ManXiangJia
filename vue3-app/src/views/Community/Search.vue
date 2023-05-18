@@ -8,7 +8,7 @@ const $router = useRouter()
 const value = ref('')
 const loading = ref(true)
 const seachResList = ref([])
-const seachHistoryList = ref(JSON.parse(localStorage.getItem('seachHistoryList')) || [])
+const seachHistoryList = ref(JSON.parse(localStorage.getItem('seachHistoryList')||'[]') || [])
 
 watch(
   () => seachHistoryList.value,
@@ -48,6 +48,8 @@ const onCancel = () => {
     $router.back()
   }
 }
+
+
 </script>
 
 <template>

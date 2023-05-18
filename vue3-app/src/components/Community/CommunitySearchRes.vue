@@ -1,7 +1,44 @@
 <script setup lang="ts">
-defineProps<{
+const props = defineProps<{
   seachResItem: any
 }>()
+
+// 关注功能
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
+import { showToast } from 'vant'
+import 'vant/es/toast/style'
+const userStore = useUserStore()
+const { attentionList } = storeToRefs(userStore)
+
+function clickAttention() {
+  let mode = 'add'
+  attentionList.value.map((o: any) => {
+    if (o.userId == props.seachResItem.userId) {
+      mode = 'remove'
+    }
+  })
+  if (mode === 'add') {
+    userStore.addAttention(props.seachResItem)
+    showToast('关注成功')
+  } else if (mode === 'remove') {
+    console.log(props.seachResItem.userId);
+    userStore.removeAttention(props.seachResItem.userId)
+    showToast('已取消关注')
+  }
+}
+
+// 判断是否已经关注
+function isAttention() {
+  let status = false
+  attentionList.value.map((o: any) => {
+    if (o.userId == props.seachResItem.userId) {
+      status = true
+    }
+  })
+  return status
+} 
+
 </script>
 
 <template>
@@ -42,8 +79,8 @@ defineProps<{
       </p>
     </div>
     <div class="follow_btn">
-      <span class="no_follow">关注</span>
-      <!-- <span class="followed" >已关注</span> -->
+      <span v-show="!isAttention()" class="no_follow" @click="clickAttention">关注</span>
+      <span v-show="isAttention()" class="followed" @click="clickAttention" >已关注</span>
     </div>
   </div>
 </template>
@@ -65,19 +102,19 @@ defineProps<{
     }
   }
   .follow_btn {
-    .no_follow{
-        background-image: linear-gradient(#5e636c , #1e2632);
-    color: #fff;
-    padding: 5rem 15rem;
-    border-radius: 50rem;
+    .no_follow {
+      background-image: linear-gradient(#5e636c, #1e2632);
+      color: #fff;
+      padding: 5rem 15rem;
+      border-radius: 50rem;
     }
-   .followed{
-    padding: 5rem 10rem;
-    border-radius: 50rem;
+    .followed {
+      padding: 5rem 10rem;
+      border-radius: 50rem;
 
-    color: #646464;
-    border: 1px solid #ccc;
-   }
+      color: #646464;
+      border: 1px solid #ccc;
+    }
   }
 }
 </style>

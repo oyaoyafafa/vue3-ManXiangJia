@@ -13,7 +13,7 @@ const { addresses, defaultAddressIndex } = storeToRefs(userStore)
 // 购物车
 const shoppingCar = shoppingCarStore()
 const { orderList, allList } = storeToRefs(shoppingCar)
-const { setPendingGoods } = shoppingCar
+// const { setPendingGoods } = shoppingCar
 const allPrice = computed(() => {
     return orderList.value.filter((o: any) => o.isCheck).reduce((sum: any, e: any) => sum + Number(e.allPrice || 0), 0)
 })
@@ -24,7 +24,7 @@ const show = ref(false)
 // const { checkAllGoods, orderCheckGoods } = shoppingCar
 const toPay = ({ allPrice, allNum }: any) => {
     show.value = !show.value
-    setPendingGoods({ allPrice, allNum })
+    // setPendingGoods({ allPrice, allNum })
 }
 const checkAdress = () => {
     $router.push({
@@ -34,12 +34,26 @@ const checkAdress = () => {
         }
     })
 }
+// 放弃支付
+function giveupPay() {
+    // 添加订单到待支付
+    shoppingCar.setAllList()
+    $router.back()
+}
+// 提交 已支付订单
+import { showToast } from 'vant';
+function submitOrder() {
+    showToast('购买成功');
+    show.value =false;
+    shoppingCar.addPrepaid()
+    $router.back()
+}
 </script>
 <template>
     <div id="settlement">
         <van-sticky>
             <h1 class="back">
-                <i class="back_btn" @click="$router.back()">
+                <i class="back_btn" @click="giveupPay">
                     <svg t="1683880458227" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3542" width="20rem" height="20rem" fill="black">
                         <path
@@ -137,7 +151,7 @@ const checkAdress = () => {
                     <input type="checkbox" name="" id="">
                 </div>
             </div>
-            <span class="sure">确定</span>
+            <span @click="submitOrder" class="sure">确定</span>
         </van-action-sheet>
 
     </div>
