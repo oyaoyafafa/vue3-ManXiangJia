@@ -91,8 +91,8 @@ const toDetail = (id: any) => {
       </p>
     </div>
     <div class="follow_btn">
-      <span v-show="!isAttention()" class="no_follow" @click="clickAttention">关注</span>
-      <span v-show="isAttention()" class="followed" @click="clickAttention" >已关注</span>
+      <span v-show="!isAttention()" class="no_follow" @click.stop="clickAttention">关注</span>
+      <span v-show="isAttention()" class="followed" @click.stop="clickAttention" >已关注</span>
     </div>
   </div>
 </template>

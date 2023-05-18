@@ -241,12 +241,18 @@ const isInSoppingCar = computed(() => {
 })
 const addShoppingCar = () => {
   // console.log(11);
-  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
-    showSuccessToast('添加成功')
+  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)&&deatil.value.integralNum ) {
+      showSuccessToast('添加成功')
+        addShoppingCarList({ goods: deatil.value })
   } else {
-    showFailToast('已在购物车中了哦')
+    if(deatil.value.integralNum === 0){
+      showFailToast('已售罄')
+    }else{
+      showFailToast('已在购物车中了哦')
+    }
+    
   }
-  addShoppingCarList({ goods: deatil.value })
+
 }
 const toPay = ({ goods, allPrice, num ,isCheck}: any) => {
   if (deatil.value.integralNum != 0) {
