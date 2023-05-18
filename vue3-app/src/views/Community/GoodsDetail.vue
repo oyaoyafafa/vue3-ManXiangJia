@@ -85,7 +85,7 @@ const toFollow = () => {
       <van-swipe lazy-render>
         <van-swipe-item class="banner_item" ref="bannerItem" v-for="image in detail?.images" :key="image.id" :style="[
           {
-            backgroundImage: `url(${image.url}?imageView=1&type=webp&thumbnail=247x0)`
+            backgroundImage: `url(${image.url})`
           }
         ]">
         </van-swipe-item>
@@ -94,7 +94,7 @@ const toFollow = () => {
             <div class="swiper-wrapper">
               <div class="swiper-slide  " :class="{ 'select-item': image === detail?.images[active] }"
                 v-for="image in detail?.images" :style="{
-                  backgroundImage: `url(${image.url}?imageView=1&type=webp&thumbnail=247x0)`
+                  backgroundImage: `url(${image.url})`
                 }"></div>
               <!-- @click="checkImg()" -->
             </div>
