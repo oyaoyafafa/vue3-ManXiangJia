@@ -38,11 +38,23 @@ function isAttention() {
   })
   return status
 } 
+// 用户详情
+import { useRouter, useRoute } from 'vue-router'
+const $router = useRouter()
+const toDetail = (id: any) => {
+  
+  $router.push({
+    path: '/uerinfo',
+    query: {
+      id
+    }
+  })
+}
 
 </script>
 
 <template>
-  <div class="information">
+  <div class="information" @click="toDetail(seachResItem.userId)">
     <van-image round width="40rem" height="40rem" :src="seachResItem.header" />
     <div class="nick_name">
       <h3>
