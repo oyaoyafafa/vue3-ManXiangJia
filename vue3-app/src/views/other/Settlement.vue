@@ -3,7 +3,7 @@ import { shoppingCarStore } from '@/stores/shoppingCar'
 import { useUserStore } from '@/stores/user.ts'
 import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
-import { useRouter ,useRoute} from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 const $router = useRouter()
 const $route = useRoute()
 
@@ -12,7 +12,7 @@ const userStore = useUserStore()
 const { addresses, defaultAddressIndex } = storeToRefs(userStore)
 // 购物车
 const shoppingCar = shoppingCarStore()
-const { orderList, allList } = storeToRefs(shoppingCar)
+const { orderList } = storeToRefs(shoppingCar)
 // const { setPendingGoods } = shoppingCar
 const allPrice = computed(() => {
     return orderList.value.filter((o: any) => o.isCheck).reduce((sum: any, e: any) => sum + Number(e.allPrice || 0), 0)
@@ -22,7 +22,7 @@ const allNum = computed(() => {
 })
 const show = ref(false)
 // const { checkAllGoods, orderCheckGoods } = shoppingCar
-const toPay = ({ allPrice, allNum }: any) => {
+const toPay = () => {
     show.value = !show.value
     // setPendingGoods({ allPrice, allNum })
 }
@@ -35,17 +35,17 @@ const checkAdress = () => {
     })
 }
 // 放弃支付
-function giveupPay() {
+function giveupPay({ allPrice, allNum }: any) {
     // 添加订单到待支付
-    shoppingCar.setAllList()
+    shoppingCar.setAllList({ allPrice, allNum })
     $router.back()
 }
 // 提交 已支付订单
 import { showToast } from 'vant';
-function submitOrder() {
+function submitOrder({ allPrice, allNum }: any) {
     showToast('购买成功');
-    show.value =false;
-    shoppingCar.addPrepaid()
+    show.value = false;
+    shoppingCar.addPrepaid({ allPrice, allNum })
     $router.back()
 }
 </script>
@@ -53,7 +53,7 @@ function submitOrder() {
     <div id="settlement">
         <van-sticky>
             <h1 class="back">
-                <i class="back_btn" @click="giveupPay">
+                <i class="back_btn" @click="giveupPay({ allPrice, allNum })">
                     <svg t="1683880458227" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="3542" width="20rem" height="20rem" fill="black">
                         <path
@@ -77,12 +77,40 @@ function submitOrder() {
             </h1>
         </van-sticky>
         <ul class="addres">
-            <li @click="checkAdress">
+            <li @click="checkAdress" v-if="!addresses.length" class="no_address">
 
                 <p> <svg t="1684309049691" class="icon" viewBox="0 0 1024 1024" version="1.1"
-                        xmlns="http://www.w3.org/2000/svg" p-id="1988" width="10" height="10">
+                        xmlns="http://www.w3.org/2000/svg" p-id="1988" width="10rem" height="10rem">
                         <path d="M512 512m-448 0a7 7 0 1 0 896 0 7 7 0 1 0-896 0Z" fill="#010101" p-id="1989"></path>
                     </svg><span>请选择收货地址</span> </p>
+                <i>
+                    <svg t="1684307670205" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="4529" width="22" height="22">
+                        <path d="M658.56 557.392L322.536 221.384l45.248-45.256 336.016 336.008z" p-id="4530"></path>
+                        <path d="M704.088 512.2L364.12 852.16l-45.256-45.248 339.976-339.976z" p-id="4531"></path>
+                    </svg>
+                </i>
+            </li>
+            <li @click="checkAdress" v-else class="check_address">
+                <div class="desc">
+                    <p class="name"><svg t="1684373298387" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                            xmlns="http://www.w3.org/2000/svg" p-id="3526" width="20rem" height="20rem">
+                            <path
+                                d="M428.732 627.417c4.94 7.985 2.47 18.462-5.514 23.4-7.985 4.94-18.462 2.472-23.4-5.513C357.597 577.054 333 508.67 333 442.644c0-100.233 81.998-181.116 182.32-179.624 104.273 1.563 183.298 91.58 176.246 197.465-3.868 58.121-25.991 117.807-61.682 177.373-25.582 42.695-55.692 81.437-85.981 114.364-16.842 18.31-45.703 18.4-62.564 0.086a735.854 735.854 0 0 1-26.556-30.56 865.375 865.375 0 0 1-4.012-4.914c-5.911-7.294-4.79-18 2.504-23.91 7.294-5.912 18-4.791 23.91 2.503a831.39 831.39 0 0 0 3.855 4.721 701.86 701.86 0 0 0 25.319 29.138c3.351 3.64 9.113 3.623 12.52-0.081 28.837-31.35 57.574-68.325 81.84-108.822 33.146-55.32 53.459-110.123 56.922-162.156 5.783-86.828-58.405-159.945-142.828-161.21C433.475 295.807 367 361.377 367 442.643c0 58.746 22.547 121.43 61.732 184.774z"
+                                fill="#4F4F4F" p-id="3527"></path>
+                            <path
+                                d="M565.757 403.762c-4.466-8.259-1.392-18.574 6.866-23.04 8.259-4.467 18.574-1.393 23.04 6.866C603.066 401.275 607 416.623 607 432.503 607 484.689 564.692 527 512.505 527 460.31 527 418 484.691 418 432.503 418 380.31 460.31 338 512.505 338c10.341 0 20.483 1.67 30.119 4.908 8.9 2.99 13.69 12.629 10.7 21.529s-12.629 13.69-21.529 10.7a60.436 60.436 0 0 0-19.29-3.137C479.087 372 452 399.087 452 432.503c0 33.41 27.088 60.497 60.505 60.497C545.914 493 573 465.912 573 432.503c0-10.196-2.511-19.991-7.243-28.741z"
+                                fill="#4F4F4F" p-id="3528"></path>
+                        </svg><span style="margin-right: 5rem;">{{ addresses[defaultAddressIndex].name
+                        }}</span>{{ addresses[defaultAddressIndex].tel }}</p>
+                    <p class="city">
+                        <span>{{ addresses[defaultAddressIndex].province }}</span>
+                        <span>{{ addresses[defaultAddressIndex].city }}</span>
+                        <span>{{ addresses[defaultAddressIndex].addressDetail }}</span>
+                    </p>
+                </div>
+
+
                 <i>
                     <svg t="1684307670205" class="icon" viewBox="0 0 1024 1024" version="1.1"
                         xmlns="http://www.w3.org/2000/svg" p-id="4529" width="22" height="22">
@@ -121,7 +149,7 @@ function submitOrder() {
                 <p>合计</p>
                 <span>¥{{ allPrice }}</span>
             </div>
-            <span class="pay_btn" @click="toPay({ allPrice, allNum })">去支付</span>
+            <span class="pay_btn" @click="toPay">去支付</span>
         </div>
         <van-action-sheet v-model:show="show" title="请选择支付方式">
             <h1>¥ <span>{{ allPrice }}</span></h1>
@@ -151,7 +179,7 @@ function submitOrder() {
                     <input type="checkbox" name="" id="">
                 </div>
             </div>
-            <span @click="submitOrder" class="sure">确定</span>
+            <span @click="submitOrder({ allPrice, allNum })" class="sure">确定</span>
         </van-action-sheet>
 
     </div>
@@ -179,7 +207,7 @@ function submitOrder() {
     background-color: #f3f3f3;
     padding: 15rem 10rem;
 
-    li {
+    .no_address {
         padding: 20rem 10rem;
         background: #fff;
         display: flex;
@@ -202,6 +230,30 @@ function submitOrder() {
                 margin-top: -3rem;
             }
 
+        }
+    }
+
+    .check_address {
+        padding: 20rem 10rem;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 10rem;
+        .desc{
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            .name{
+                display: flex;
+                align-items: center;
+                svg{
+                    margin-top: -4rem;
+                }
+            }
+            .city{
+                padding-left: 20rem;
+            }
         }
     }
 }
