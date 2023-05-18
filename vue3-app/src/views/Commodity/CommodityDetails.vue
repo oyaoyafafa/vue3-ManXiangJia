@@ -96,7 +96,7 @@
           class="buy"
           color="#18202d"
           text="立即购买"
-          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })"
+          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 ,isCheck:true})"
         />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
@@ -248,10 +248,10 @@ const addShoppingCar = () => {
   }
   addShoppingCarList({ goods: deatil.value })
 }
-const toPay = ({ goods, allPrice, num }: any) => {
+const toPay = ({ goods, allPrice, num ,isCheck}: any) => {
   if (deatil.value.integralNum != 0) {
     // console.log(11);
-    BuyGoods({ goods, allPrice, num })
+    BuyGoods({ goods, allPrice, num ,isCheck})
     // setAllList()
     $router.push({
       path: '/settlement'
