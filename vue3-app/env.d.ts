@@ -1,5 +1,8 @@
 /// <reference types="vite/client" />
- 
+declare module '@/js/pageBarScrollTop.js'
+declare module '@/api/community'
+declare module '@/stores/community/infoDetail.ts'
+declare module '@/api/search'
 declare module '*.vue' {
 	import { DefineComponent } from 'vue';
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types

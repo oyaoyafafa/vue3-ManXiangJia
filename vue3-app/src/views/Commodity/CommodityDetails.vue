@@ -1,8 +1,13 @@
 <template>
   <nav>
     <header>
-      <img @click="routerBack" src="@/../public/images/ic_back_goods.png" alt="" />
-      <img @click="showShare = !showShare" :options="options" src="@/../public/images/ic_gif_share.gif" alt="" />
+      <img @click="routerBack" src="@/../public/images/back_black.png" alt="" />
+      <img
+        @click="showShare = !showShare"
+        :options="options"
+        src="@/../public/images/ic_gif_share.gif"
+        alt=""
+      />
       <van-share-sheet v-model:show="showShare" :options="options" />
     </header>
     <section>
@@ -52,7 +57,7 @@
       <h1 v-else>最近购买(0)</h1>
       <li v-for="item in buy">
         <p>
-          <img :src="item.url || '@/../public/images/default_header.png'" alt="" />
+          <img src="@/../public/images/default_header.png" alt="" />
           <span>{{ item.name }}</span>
         </p>
         <p>{{ item.price }}</p>
@@ -60,7 +65,7 @@
       </li>
     </ul>
     <p style="background-color: #f5f5f7; height: 10rem; width: 100vw"></p>
-    <div class="pjia">
+    <div @click="ToComment($route.query.id)" class="pjia">
       <div>
         <p>商品评价({{ comment.length }})</p>
         <p>
@@ -69,7 +74,7 @@
         </p>
       </div>
     </div>
-    <div class="dongtai" @click="Todynamic">
+    <div class="dongtai" @click="Todynamic($route.query.id)">
       <div>
         <p>动态({{ dynamic.length }})</p>
         <p>
@@ -87,8 +92,12 @@
         <van-action-bar-icon icon="service-o" text="客服" />
         <van-action-bar-icon icon="like-o" text="喜欢" />
         <van-action-bar-button class="add" :text="isInSoppingCar" @click="addShoppingCar" />
-        <van-action-bar-button class="buy" color="#18202d" text="立即购买"
-          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })" />
+        <van-action-bar-button
+          class="buy"
+          color="#18202d"
+          text="立即购买"
+          @click="toPay({ goods: deatil, allPrice: deatil.sellPrice, num: 1 })"
+        />
       </van-action-bar>
       <img v-for="img in deatil.images" :src="img.url" v-show="img.type === 2" alt="" />
     </footer>
@@ -103,8 +112,12 @@ import {
   dynamicApi,
   commentApi
 } from '@/api/manxiangjia'
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { shoppingCarStore } from '@/stores/shoppingCar'
+import { storeToRefs } from 'pinia'
+import { showSuccessToast, showFailToast } from 'vant'
+import 'vant/es/toast/style'
 
 const showShare = ref(false)
 const options = [
@@ -131,7 +144,7 @@ const $router = useRouter()
 
 const deatil = ref<any>([])
 commodityDetails($route.query.id).then((res: any) => {
-  console.log(res.data.data)
+  console.log('orderDetails', res.data.data)
   deatil.value = res.data.data
 })
 
@@ -155,7 +168,7 @@ commentApi($route.query.id).then((res: any) => {
 
 const dynamic = ref<any>([])
 dynamicApi($route.query.id).then((res: any) => {
-  // console.log(res.data.data.list)
+  console.log(res.data.data.list)
   dynamic.value = res.data.data.list
 })
 
@@ -173,9 +186,36 @@ function toCommodity(id: any) {
   })
 }
 
-function Todynamic() {
+watch(
+  () => $route.query,
+  (newValue, oldValue) => {
+    console.log(newValue)
+    console.log(oldValue)
+    // userId.value = newValue.id
+    $router.go(0)
+  }
+)
+
+// function toCommodity(id: any) {
+//   // console.log("id",id)
+//   $router.go()
+// }
+
+function Todynamic(id: any) {
   $router.push({
     path: '/dynamic',
+    query: {
+      goodId: id
+    }
+  })
+}
+
+function ToComment(id: any) {
+  $router.push({
+    path: '/commentList',
+    query: {
+      goodId: id
+    }
   })
 }
 
@@ -187,37 +227,38 @@ function shijianc(time: any) {
   return Y + M + D
 }
 //添加购物车
-import { shoppingCarStore } from '@/stores/shoppingCar'
-import { storeToRefs } from 'pinia'
-import { showSuccessToast, showFailToast } from 'vant';
-import 'vant/es/toast/style'
+
 const shoppingCar = shoppingCarStore()
 const { shoppingCarList } = storeToRefs(shoppingCar)
-const { addShoppingCarList, BuyGoods,setAllList } = shoppingCar
+const { addShoppingCarList, BuyGoods, setAllList } = shoppingCar
 // 是否加入了购物车
 const isInSoppingCar = computed(() => {
   if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
     return '加入购物车'
   } else {
-    return "已在购物车"
+    return '已在购物车'
   }
 })
 const addShoppingCar = () => {
   // console.log(11);
-  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) { showSuccessToast('添加成功') } else {
-    showFailToast('已在购物车中了哦');
+  if (shoppingCarList.value.every((o: any) => o.goods.id !== deatil.value.id)) {
+    showSuccessToast('添加成功')
+  } else {
+    showFailToast('已在购物车中了哦')
   }
   addShoppingCarList({ goods: deatil.value })
-
 }
 const toPay = ({ goods, allPrice, num }: any) => {
-  // console.log(11);
-  BuyGoods({ goods, allPrice, num })
-  setAllList()
-  $router.push({
-    path: '/settlement',
-  })
-
+  if (deatil.value.integralNum != 0) {
+    // console.log(11);
+    BuyGoods({ goods, allPrice, num })
+    // setAllList()
+    $router.push({
+      path: '/settlement'
+    })
+  } else {
+    showFailToast('已售罄')
+  }
 }
 
 // settlement
@@ -242,7 +283,12 @@ nav {
     z-index: 999;
 
     img {
-      width: 30rem;
+      &:nth-child(1) {
+        width: 20rem;
+      }
+      &:nth-child(2) {
+        width: 30rem;
+      }
     }
   }
 
@@ -446,4 +492,3 @@ nav {
   // }
 }
 </style>
-

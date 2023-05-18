@@ -8,7 +8,13 @@ import { storeToRefs } from 'pinia'
 export default {
   setup() {
     const communityRecommendFall = communityRecommendStore()
-    const { recommendList, loading, finished, refreshing } = storeToRefs(communityRecommendFall)
+    const {
+      recommendList,
+      loading,
+      finished,
+      refreshing
+    }: { recommendList: any; loading: any; finished: any; refreshing: any } =
+      storeToRefs(communityRecommendFall)
     const { getRecommendFallList } = communityRecommendFall
 
     const onLoad = () => {
@@ -63,7 +69,7 @@ export default {
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 // .pets {
 //   // margin: 0 auto;
 // }

@@ -115,7 +115,7 @@ const toOrder = () => {
   orderCheckGoods()
 
   if (shoppingCarList.value.filter((o: any) => o.isCheck).length) {
-    setAllList()
+
     $router.push({
       path: '/settlement',
     })

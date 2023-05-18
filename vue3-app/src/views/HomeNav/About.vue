@@ -3,12 +3,7 @@
     <header>
       <h1>我的漫想家</h1>
       <div class="login">
-        <span class="userLogin" @click="$router.push({
-          path: '/login',
-          query: {
-            f: '/about'
-          }
-        })">
+        <span class="userLogin" >
           <img class="user" src="../../../public/images/我的/default_header.png" alt="" />
           <span v-if="!login">
             <h1
@@ -69,8 +64,8 @@
           <p>粉丝</p>
         </div>
         <div>
-          <p>0</p>
-          <p>关注</p>
+          <p>{{attentionList.length}}</p>
+          <p @click="$router.push('/myAttention')">关注</p>
         </div>
         <div>
           <p>0</p>
@@ -79,7 +74,7 @@
       </div>
     </header>
     <div class="order">
-      <div class="head"  @click="toMyOrder(0)">
+      <div class="head" @click="toMyOrder(0)">
         <p>我的订单</p>
         <p>
           <span>全部订单</span>
@@ -87,19 +82,19 @@
         </p>
       </div>
       <div class="payMsg">
-        <p  @click="toMyOrder(1)">
+        <p @click="toMyOrder(1)">
           <img src="../../../public/images/我的/ic_mine_pay.png" alt="" />
           <span>待付款</span>
         </p>
-        <p  @click="toMyOrder(2)">
+        <p @click="toMyOrder(2)">
           <img src="../../../public/images/我的/ic_mine_delivered.png" alt="" />
           <span>待发货</span>
         </p>
-        <p  @click="toMyOrder(3)">
+        <p @click="toMyOrder(3)">
           <img src="../../../public/images/我的/ic_mine_received.png" alt="" />
           <span>待收货</span>
         </p>
-        <p  @click="toMyOrder(4)">
+        <p @click="toMyOrder(4)">
           <img src="../../../public/images/我的/ic_mine_finish.png" alt="" />
           <span>已完成</span>
         </p>
@@ -153,11 +148,11 @@ const toMyOrder = (n) => {
     }
   })
 }
-
+// 主要获取关注列表长度
+const { attentionList } = storeToRefs(userStore)
 </script>
 
-
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .box {
   background-color: #f4f5f5;
   width: 100vw;
@@ -322,4 +317,5 @@ const toMyOrder = (n) => {
       }
     }
   }
-}</style>
+}
+</style>

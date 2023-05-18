@@ -7,7 +7,7 @@ import { shoppingCarStore } from '@/stores/shoppingCar'
 const $route = useRoute()
 const active = ref(Number($route.query.n))
 const shoppingCar = shoppingCarStore()
-const { pendingList,allList } = storeToRefs(shoppingCar)
+const { allList } = storeToRefs(shoppingCar)
 
 
 </script>
@@ -18,16 +18,13 @@ const { pendingList,allList } = storeToRefs(shoppingCar)
                 <OderPay  :list="allList"/>
             </van-tab>
             <van-tab title="待付款">
-                <OderPay  :list="pendingList"/>
+                <OderPay  :list="allList.filter((o:any)=>o.payStuats == 0)"/>
             </van-tab>
-            <van-tab title="待发货">
-                <OderPay  :list="[]" />
+            <van-tab title="已付款">
+                <OderPay  :list="allList.filter((o:any)=>o.payStuats == 2)" />
             </van-tab>
-            <van-tab title="待收货">
-                <OderPay :list="[]" />
-            </van-tab>
-            <van-tab title="已完成">
-                <OderPay :list="[]"/>
+            <van-tab title="已取消">
+                <OderPay :list="allList.filter((o:any)=>o.payStuats == 1)" />
             </van-tab>
         </van-tabs>
     </div>
