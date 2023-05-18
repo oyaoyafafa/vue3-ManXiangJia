@@ -57,7 +57,7 @@ const toFollow = () => {
         </i>
         <h3>
           <van-image width="40rem" height="40rem" round
-            :src="detail?.isUserDetail?.header + '?imageView=1&type=webp&thumbnail=247x0'" />
+            :src="detail?.isUserDetail?.header " />
           <span>{{ detail?.isUserDetail?.nickName }}</span>
         </h3>
         <div class="right">

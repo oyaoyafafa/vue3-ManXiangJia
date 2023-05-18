@@ -22,7 +22,7 @@ const toDetail = (id: any) => {
       width="33rem"
       height="33rem"
       round
-      :src="(commentsItem?.detail?.header ||commentsItem?.tbAppUserDetail?.header )+ '?imageView=1&type=webp&thumbnail=247x0'"
+      :src="(commentsItem?.detail?.header ||commentsItem?.tbAppUserDetail?.header )"
     />
     <div class="user">
       <h3 class="user_name">{{( commentsItem?.detail?.nickName ||commentsItem?.tbAppUserDetail?.nickName )}}</h3>

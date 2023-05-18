@@ -9,7 +9,7 @@ defineProps<{
     class="information"
       :style="[
         {
-          backgroundImage: `url(${bannerItem.topImage}?imageView=1&type=webp&thumbnail=247x0)`
+          backgroundImage: `url(${bannerItem.topImage})`
         },
         { width: '340rem' }
       ]"

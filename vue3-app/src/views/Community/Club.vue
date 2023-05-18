@@ -78,7 +78,7 @@ savePosition()
           />
           <van-cell @click="toDetail(cluballItem.id)">
             <van-image
-              :src="cluballItem.logoImage + '?imageView=1&type=webp&thumbnail=247x0'"
+              :src="cluballItem.logoImage "
               round
               width="30rem"
               height="30rem"

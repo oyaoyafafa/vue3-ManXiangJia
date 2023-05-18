@@ -18,12 +18,12 @@ const toDetail = (id: any) => {
 
 <template>
   <div class="item" v-masonry-tile @click="toDetail(item.id)">
-    <van-image :src="item.images[0].videoImage || item.images[0].url + '?imageView=1&type=webp&thumbnail=247x0'
+    <van-image :src="item.images[0].videoImage || item.images[0].url
       " width="173rem" height="auto" />
     <div class="desc">
       <h3>{{ item.title }}</h3>
       <div class="author">
-        <van-image :src="item.isUserDetail.header + '?imageView=1&type=webp&thumbnail=247x0'" round width="15rem"
+        <van-image :src="item.isUserDetail.header " round width="15rem"
           height="15rem" />
         <p>{{ item.isUserDetail.nickName }}</p>
         <span><van-icon name="like-o" class="like_o" />{{ item.supportNum }}</span>

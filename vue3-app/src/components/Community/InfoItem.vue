@@ -20,7 +20,7 @@ const toDetail = (id: any) => {
   <div class="information"  @click="toDetail(downItem.id)">
   
     <div class="img">
-      <img :src="downItem.topImage + '?fop=imageView/0/w/76/h/76)'" alt="" />
+      <img :src="downItem.topImage" alt="" />
     </div>
     <div class="tit">
       <h3>{{ downItem.title }}</h3>

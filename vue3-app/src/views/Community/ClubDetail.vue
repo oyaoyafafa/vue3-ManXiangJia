@@ -24,7 +24,7 @@ getclubDetail(needId)
   <div class="detail">
     <div class="top" :style="[
       {
-        backgroundImage: `url(${detail?.topImage}?imageView=1&type=webp&thumbnail=247x0)`
+        backgroundImage: `url(${detail?.topImage}`
       }
     ]">
       <div class="mask"></div>
@@ -48,7 +48,7 @@ getclubDetail(needId)
       <div class="admin_info">
         <div class="admin">
           <van-image width="36rem" height="36rem" round
-            :src="detail?.adminDetail.header + '?imageView=1&type=webp&thumbnail=247x0'" />
+            :src="detail?.adminDetail.header " />
           <div class="adm_name">
             <h3>{{ detail?.adminDetail.nickName }}</h3>
             <p>部长</p>

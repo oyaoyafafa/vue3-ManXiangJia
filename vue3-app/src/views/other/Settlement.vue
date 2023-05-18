@@ -43,10 +43,15 @@ function giveupPay({ allPrice, allNum }: any) {
 // 提交 已支付订单
 import { showToast } from 'vant';
 function submitOrder({ allPrice, allNum }: any) {
-    showToast('购买成功');
-    show.value = false;
-    shoppingCar.addPrepaid({ allPrice, allNum })
-    $router.back()
+    if (addresses.value.length) {
+        showToast('购买成功');
+        show.value = false;
+        shoppingCar.addPrepaid({ allPrice, allNum })
+        $router.back()
+    }else{
+        showToast('请选择地址');
+    }
+
 }
 </script>
 <template>
@@ -240,18 +245,22 @@ function submitOrder({ allPrice, allNum }: any) {
         align-items: center;
         justify-content: space-between;
         border-radius: 10rem;
-        .desc{
+
+        .desc {
             display: flex;
             flex-flow: column;
             justify-content: center;
-            .name{
+
+            .name {
                 display: flex;
                 align-items: center;
-                svg{
+
+                svg {
                     margin-top: -4rem;
                 }
             }
-            .city{
+
+            .city {
                 padding-left: 20rem;
             }
         }
@@ -426,6 +435,5 @@ function submitOrder({ allPrice, allNum }: any) {
         background-color: #18202d;
         color: white;
     }
-}
-</style>
+}</style>
   
