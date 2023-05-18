@@ -110,7 +110,11 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     localStorage.setItem('allList', JSON.stringify(allList.value))
 
   }
- 
+//  待付款->已付款
+function accountPaid(item:any) {
+  allList.value = allList.value.map((o:any) => (o.time === item.time ? { ...o, payStuats: 2 } : o))
+  localStorage.setItem('allList', JSON.stringify(allList.value))
+}
 
   return {
     shoppingCarList,
@@ -126,6 +130,7 @@ export const shoppingCarStore = defineStore('shoppingCar', () => {
     BuyGoods,
     // setPendingGoods,
     setAllList,
-    addPrepaid
+    addPrepaid,
+    accountPaid
   }
 })
