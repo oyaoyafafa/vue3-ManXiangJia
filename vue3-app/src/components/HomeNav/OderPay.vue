@@ -51,17 +51,17 @@ const delOrder = ({ id }: any) => {
           <van-card :num="goods.num" :price="goods.allPrice" :desc="goods?.goods?.title" :title="goods?.goods?.brandName"
             v-for="goods in item?.pending" :thumb="goods?.goods?.listedImage" />
         </div>
-        <p v-show="item.payStuats === 1">
+        <p v-show="item.payStuats !== 2">
           共计{{ item.allNum }}件商品,需要支付<span>¥{{ item.allPrice }}</span>
         </p>
-        <p v-show="item.payStuats !== 1">
+        <p v-show="item.payStuats === 2">
           共计{{ item.allNum }}件商品,已支付<span>¥{{ item.allPrice }}</span>
         </p>
         <div class="btn">
           <div>
             <span class="canle" @click="delOrder({ id: item.time })">删除订单</span>
-            <span class="submit" v-show="item.payStuats === 1">提交订单</span>
-            <span class="submit" v-show="item.payStuats !== 1">已成功付款</span>
+            <span class="submit" v-show="item.payStuats !== 2">提交订单</span>
+            <span class="submit" v-show="item.payStuats === 2">已成功付款</span>
           </div>
         </div>
       </li>
