@@ -23,10 +23,8 @@ declare module '@vue/runtime-core' {
     VanActionBarButton: typeof import('vant/es')['ActionBarButton']
     VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
     VanActionSheet: typeof import('vant/es')['ActionSheet']
-    VanAddressEdit: typeof import('vant/es')['AddressEdit']
     VanCard: typeof import('vant/es')['Card']
-    VanRadio: typeof import('vant/es')['Radio']
-    VanRadioGroup: typeof import('vant/es')['RadioGroup']
+    VanPullRefresh: typeof import('vant/es')['PullRefresh']
     VanShareSheet: typeof import('vant/es')['ShareSheet']
     VanSticky: typeof import('vant/es')['Sticky']
   }
